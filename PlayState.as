@@ -5,6 +5,7 @@ package {
 		protected var _tank:Tank;
 		protected var _battery:Battery;
 		protected var _bullets:FlxGroup;
+		protected var _enemy:Enemy;
 
 		override public function create():void {
 			_battery = new Battery();
@@ -28,8 +29,17 @@ package {
 			add(_tank);
 			add(_battery);
 			add(_bullets);
-			
+
+			_enemy = new Enemy();
+			add(_enemy);
+
 			FlxG.mouse.show();
+		}
+
+		override public function update():void {
+			super.update();
+			//collide();
+			FlxU.overlap(_bullets, _enemy);
 		}
 	}
 }

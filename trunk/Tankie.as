@@ -7,7 +7,7 @@ package {
 	public class Tankie extends FlxGame {
 		public function Tankie():void {
 			super(320, 240, PlayState);
-			FlxState.bgColor = 0xff131c1b;
+			FlxState.bgColor = 0xff333c3b;
 			useDefaultHotKeys = true;
 		}
 	}

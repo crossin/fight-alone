@@ -17,15 +17,20 @@ package {
 		private var ImgTank:Class;
 
 		public function Tank(bty:Battery, blts:Array){
-			super(FlxG.width / 2 - 8, FlxG.height / 2 - 8, ImgTank);
+			super(FlxG.width / 2 - 8, FlxG.height / 2 - 8);
+			loadGraphic(ImgTank, true);
+
 			battery = bty;
 			bullets = blts;
 			bullet_index = 0;
-			maxVelocity.x = 100;
-			maxVelocity.y = 100;
+			maxVelocity.x = 50;
+			maxVelocity.y = 50;
 			drag.x = maxVelocity.x * 4;
 			drag.y = maxVelocity.y * 4;
 			antialiasing = true;
+
+			addAnimation("stop", [0]);
+			addAnimation("move", [0, 1], 12);
 		}
 
 		override public function update():void {
@@ -35,7 +40,7 @@ package {
 			angularVelocity = 0;
 			angle = (angle + 360) % 360;
 			direct = new FlxPoint();
-			if (FlxG.keys.LEFT){
+			if (FlxG.keys.LEFT || FlxG.keys.A){
 				acceleration.x -= drag.x;
 				//if (angle > 90 && angle < 265){
 				//angularVelocity += 240;
@@ -46,7 +51,7 @@ package {
 				//}
 				direct.x = -1;
 			}
-			if (FlxG.keys.RIGHT){
+			if (FlxG.keys.RIGHT || FlxG.keys.D){
 				acceleration.x += drag.x;
 				//if (angle > 95 && angle < 270){
 				//angularVelocity -= 240;
@@ -57,7 +62,7 @@ package {
 				//}
 				direct.x = 1;
 			}
-			if (FlxG.keys.UP){
+			if (FlxG.keys.UP || FlxG.keys.W){
 				acceleration.y -= drag.y;
 				//if (angle > 5 && angle < 180){
 				//angularVelocity -= 240;
@@ -68,7 +73,7 @@ package {
 				//}
 				direct.y = -1;
 			}
-			if (FlxG.keys.DOWN){
+			if (FlxG.keys.DOWN || FlxG.keys.S){
 				acceleration.y += drag.y;
 				//if (angle >= 0 && angle < 175){
 				//angularVelocity += 240;
@@ -85,6 +90,11 @@ package {
 				velocity.y *= (maxVelocity.y / speed);
 			}
 
+			if (velocity.x != 0 || velocity.y != 0){
+				play("move");
+			} else {
+				play("stop");
+			}
 
 			if (direct.x != 0 || direct.y != 0){
 				angle_dest = (FlxU.getAngle(direct.x, direct.y) + 450) % 360;
@@ -109,6 +119,8 @@ package {
 			super.update();
 
 			if (FlxG.mouse.justPressed()){
+				battery.play("idle");
+				battery.play("shot");
 				var b:FlxSprite = bullets[bullet_index];
 				b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 				b.angle = battery.angle; //FlxU.getAngle(FlxG.mouse.x - x, FlxG.mouse.x - y);
@@ -118,6 +130,7 @@ package {
 				bullet_index++;
 				if (bullet_index >= bullets.length)
 					bullet_index = 0;
+
 			}
 		}
 	}

@@ -11,18 +11,21 @@ package {
 		private var ImgEnemy:Class;
 
 
-		protected var _gibs:FlxEmitter;
-		protected var _timer:Number;
-		protected var _tank:Tank;
-		protected var _xDest:Number;
-		protected var _yDest:Number;
-		protected var _maxHealth:Number;
-		protected var _lifeBar:FlxSprite;
-		protected var _lifeBarBack:FlxSprite;
+		private var _gibs:FlxEmitter;
+		private var _timer:Number;
+		private var _tank:Tank;
+		private var _xDest:Number;
+		private var _yDest:Number;
+		private var _maxHealth:Number;
+		private var _lifeBar:FlxSprite;
+		private var _lifeBarBack:FlxSprite;
+		private var shotClock:Number;
+		private var _bullets:Array;
+		private static var _bulletIndex:uint;
 
 
-		public function Enemy(tank:Tank, gibs:FlxEmitter){
-			super(100, 100);
+		public function Enemy(tank:Tank, gibs:FlxEmitter, bullets:Array){
+			super(FlxU.random() * 320, FlxU.random() * 240);
 			loadGraphic(ImgEnemy, true);
 			//height = height - 1; //draw the crate 1 pixel into the floor
 			//acceleration.y = 400;
@@ -41,6 +44,9 @@ package {
 			maxVelocity.x = 10;
 			maxVelocity.y = 10;
 
+			_bullets = bullets;
+			restartClock();
+
 			addAnimation("idle", [0]);
 			addAnimation("move", [0, 1], 12);
 
@@ -54,10 +60,10 @@ package {
 
 		override public function update():void {
 			_timer += FlxG.elapsed;
-			if (_timer > 1){
+			if (_timer > 4 * FlxU.random()){
 				_timer = 0;
-				_xDest = _tank.x;
-				_yDest = _tank.y;
+				_xDest = _tank.x + 100 - FlxU.random() * 200;
+				_yDest = _tank.y + 100 - FlxU.random() * 200;
 			}
 			var dx:Number = _xDest - x;
 			var dy:Number = _yDest - y;
@@ -72,27 +78,27 @@ package {
 			//} else if (_timer < 0.2){
 			//	thrust = 40;
 			//} else {
-			//if (FlxU.abs(angle - angle_dest) < 1 || FlxU.abs(angle - angle_dest) > 359){
-			//angle = angle_dest;
-			//angularVelocity = 0;
+			if (FlxU.abs(angle - angle_dest) < 1 || FlxU.abs(angle - angle_dest) > 359){
+				//angle = angle_dest;
+				angularVelocity = 0;
 
-			//} else {
-			if (angle_dest < 180){
-				if (angle > angle_dest && angle - angle_dest < 180){
-					angularVelocity = -100;
-				} else {
-					angularVelocity = 100;
-				}
 			} else {
-				if (angle_dest > angle && angle_dest - angle < 180){
-					angularVelocity = 100;
+				if (angle_dest < 180){
+					if (angle > angle_dest && angle - angle_dest < 180){
+						angularVelocity = -100;
+					} else {
+						angularVelocity = 100;
+					}
 				} else {
-					angularVelocity = -100;
+					if (angle_dest > angle && angle_dest - angle < 180){
+						angularVelocity = 100;
+					} else {
+						angularVelocity = -100;
+					}
 				}
 			}
-			//}
 
-			acceleration = FlxU.rotatePoint(200, 0, 0, 0, angle_dest);
+			acceleration = FlxU.rotatePoint(200, 0, 0, 0, angle);
 			//}
 
 			//if (da < angle)
@@ -120,6 +126,12 @@ package {
 			//_lifeBar.fill(c);
 			//_lifeBar.visible = false;
 
+			//shoot
+			shotClock -= FlxG.elapsed;
+			if (shotClock < 0){
+				restartClock();
+				shoot();
+			}
 
 			_lifeBar.update();
 			_lifeBarBack.update();
@@ -166,6 +178,23 @@ package {
 			_gibs.at(this);
 			_gibs.start(true, 1, 8);
 			//FlxG.score += 200;
+		}
+
+		private function shoot():void {
+			var b:FlxSprite = _bullets[_bulletIndex];
+			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+			b.angle = angle; //FlxU.getAngle(FlxG.mouse.x - x, FlxG.mouse.x - y);
+			b.velocity = FlxU.rotatePoint(150, 0, 0, 0, b.angle);
+			//b.velocity.x += velocity.x;
+			//b.velocity.y += velocity.y;
+			_bulletIndex++;
+			if (_bulletIndex >= _bullets.length)
+				_bulletIndex = 0;
+
+		}
+
+		private function restartClock():void {
+			shotClock = 1 + FlxU.random() * 3;
 		}
 	}
 }

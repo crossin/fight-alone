@@ -12,6 +12,7 @@ package {
 		private var battery:Battery;
 		private var bullets:Array;
 		private var bullet_index:int;
+		private var shotClock:Number;
 
 		[Embed(source="tank.png")]
 		private var ImgTank:Class;
@@ -20,6 +21,7 @@ package {
 			super(FlxG.width / 2 - 8, FlxG.height / 2 - 8);
 			loadGraphic(ImgTank, true);
 
+			health = 50;
 			battery = bty;
 			bullets = blts;
 			bullet_index = 0;
@@ -28,6 +30,7 @@ package {
 			drag.x = maxVelocity.x * 4;
 			drag.y = maxVelocity.y * 4;
 			antialiasing = true;
+			restartClock();
 
 			addAnimation("stop", [0]);
 			addAnimation("move", [0, 1], 12);
@@ -40,6 +43,9 @@ package {
 			angularVelocity = 0;
 			angle = (angle + 360) % 360;
 			direct = new FlxPoint();
+
+			shotClock -= FlxG.elapsed;
+
 			if (FlxG.keys.LEFT || FlxG.keys.A){
 				acceleration.x -= drag.x;
 				//if (angle > 90 && angle < 265){
@@ -95,6 +101,12 @@ package {
 			} else {
 				play("stop");
 			}
+			
+			//trace(FlxU.quadTreeBounds.width);
+			x = (x < 0) ? 0 : x;
+			x = (x + width > 400) ? 400 - width : x;
+			y = (y < 0) ? 0 : y;
+			y = (y + height > 300) ? 300 - height : y;
 
 			if (direct.x != 0 || direct.y != 0){
 				angle_dest = (FlxU.getAngle(direct.x, direct.y) + 450) % 360;
@@ -118,20 +130,48 @@ package {
 			}
 			super.update();
 
-			if (FlxG.mouse.justPressed()){
-				battery.play("idle");
-				battery.play("shot");
-				var b:FlxSprite = bullets[bullet_index];
-				b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
-				b.angle = battery.angle; //FlxU.getAngle(FlxG.mouse.x - x, FlxG.mouse.x - y);
-				b.velocity = FlxU.rotatePoint(150, 0, 0, 0, b.angle);
-				//b.velocity.x += velocity.x;
-				//b.velocity.y += velocity.y;
-				bullet_index++;
-				if (bullet_index >= bullets.length)
-					bullet_index = 0;
-
+			if (FlxG.mouse.pressed()){
+				if (shotClock < 0){
+					shoot();
+				}
 			}
+		}
+
+		override public function hurt(Damage:Number):void {
+			//FlxG.play(SndHit);
+			flicker(0.2);
+			battery.flicker(0.2);
+			//FlxG.score += 10;
+			super.hurt(Damage);
+		}
+
+		override public function kill():void {
+			if (dead)
+				return;
+
+			battery.kill();
+			super.kill();
+			flicker(-1);
+		}
+
+		private function shoot():void {
+			restartClock();
+			battery.play("idle");
+			battery.play("shot");
+			var b:FlxSprite = bullets[bullet_index];
+			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+			b.angle = battery.angle; //FlxU.getAngle(FlxG.mouse.x - x, FlxG.mouse.x - y);
+			b.velocity = FlxU.rotatePoint(150, 0, 0, 0, b.angle);
+			//b.velocity.x += velocity.x;
+			//b.velocity.y += velocity.y;
+			bullet_index++;
+			if (bullet_index >= bullets.length)
+				bullet_index = 0;
+
+		}
+
+		private function restartClock():void {
+			shotClock = 0.3;
 		}
 	}
 

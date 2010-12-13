@@ -12,7 +12,9 @@ package {
 		protected var _tank:Tank;
 		protected var _battery:Battery;
 		protected var _bullets:FlxGroup;
-		protected var _enemy:Enemy;
+		protected var _enemyBullets:FlxGroup;
+		//protected var _enemy:Enemy;
+		protected var _enemies:FlxGroup;
 		protected var _gibs:FlxEmitter;
 
 		override public function create():void {
@@ -31,11 +33,23 @@ package {
 				_bullets.add(s);
 			}
 
+			_enemyBullets = new FlxGroup();
+			for (i = 0; i < 32; i++){
+				s = new FlxSprite(-100, -100, ImgBullet);
+				//s.width = 10;
+				//s.height = 10;
+				//s.offset.x = -1;
+				s.offset.y = -1;
+				s.exists = false;
+				_enemyBullets.add(s);
+			}
+
 			_tank = new Tank(_battery, _bullets.members);
 
 			add(_tank);
 			add(_battery);
 			add(_bullets);
+			add(_enemyBullets);
 
 
 
@@ -49,18 +63,28 @@ package {
 			_gibs.createSprites(ImgGibs);
 			add(_gibs);
 
-			_enemy = new Enemy(_tank, _gibs);
-			add(_enemy);
+			_enemies = new FlxGroup();
+			var enemy:Enemy;
+			for (i = 0; i < 10; i++){
+				enemy = new Enemy(_tank, _gibs, _enemyBullets.members);
+				//s.exists = false;
+				_enemies.add(enemy);
+			}
+			add(_enemies);
 
 			FlxG.mouse.show(ImgCursor);
+			FlxG.follow(_tank);
+			FlxG.followBounds(0, 0, 400, 300);
 
 		}
 
 		override public function update():void {
 			super.update();
 
-			FlxU.overlap(_bullets, _enemy, overlapped);
-			FlxU.collide(_tank, _enemy);
+			FlxU.overlap(_bullets, _enemies, overlapped);
+			FlxU.overlap(_enemyBullets, _tank, overlapped);
+			FlxU.collide(_tank, _enemies);
+			FlxU.collide(_enemies, _enemies);
 		}
 
 		protected function overlapped(Object1:FlxObject, Object2:FlxObject):void {

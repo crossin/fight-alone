@@ -8,6 +8,8 @@ package {
 		private var ImgCursor:Class;
 		[Embed(source="bullet.png")]
 		private var ImgBullet:Class;
+		[Embed(source="heart.png")]
+		private var ImgHeart:Class;
 
 		protected var _tank:Tank;
 		protected var _battery:Battery;
@@ -16,8 +18,18 @@ package {
 		//protected var _enemy:Enemy;
 		protected var _enemies:FlxGroup;
 		protected var _gibs:FlxEmitter;
+		protected var _lifeBar:FlxSprite;
 
 		override public function create():void {
+			// hud
+			var ssf:FlxPoint = new FlxPoint(0, 0);
+			var heart:FlxSprite = new FlxSprite(10, 10, ImgHeart);
+			heart.scrollFactor = ssf;
+			_lifeBar = new FlxSprite(heart.x + 13, heart.y + 2);
+			_lifeBar.createGraphic(50, 4);
+			_lifeBar.fill(0xfff29a7d);
+			_lifeBar.scrollFactor = ssf;
+
 			_battery = new Battery();
 
 			var s:FlxSprite;
@@ -44,7 +56,8 @@ package {
 				_enemyBullets.add(s);
 			}
 
-			_tank = new Tank(_battery, _bullets.members);
+			
+			_tank = new Tank(_battery, _bullets.members, _lifeBar);
 
 			add(_tank);
 			add(_battery);
@@ -72,6 +85,10 @@ package {
 			}
 			add(_enemies);
 
+
+			add(heart);
+			add(_lifeBar);
+
 			FlxG.mouse.show(ImgCursor);
 			FlxG.follow(_tank);
 			FlxG.followBounds(0, 0, 400, 300);
@@ -85,6 +102,8 @@ package {
 			FlxU.overlap(_enemyBullets, _tank, overlapped);
 			FlxU.collide(_tank, _enemies);
 			FlxU.collide(_enemies, _enemies);
+
+
 		}
 
 		protected function overlapped(Object1:FlxObject, Object2:FlxObject):void {

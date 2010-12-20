@@ -10,7 +10,6 @@ package {
 		[Embed(source="enemy.png")]
 		private var ImgEnemy:Class;
 
-
 		private var _gibs:FlxEmitter;
 		private var _timer:Number;
 		private var _tank:Tank;
@@ -133,8 +132,8 @@ package {
 				shoot();
 			}
 
-			_lifeBar.update();
-			_lifeBarBack.update();
+			//_lifeBar.update();
+			//_lifeBarBack.update();
 			super.update();
 		}
 
@@ -150,6 +149,7 @@ package {
 
 		override public function hurt(Damage:Number):void {
 			//FlxG.play(SndHit);
+			super.hurt(Damage);
 			flicker(0.2);
 			var w:int = health / _maxHealth * width;
 			w = w > 1 ? w : 1;
@@ -162,7 +162,7 @@ package {
 			}
 			_lifeBar.fill(c);
 			//FlxG.score += 10;
-			super.hurt(Damage);
+			
 		}
 
 		override public function kill():void {

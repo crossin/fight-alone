@@ -13,17 +13,21 @@ package {
 		private var bullets:Array;
 		private var bullet_index:int;
 		private var shotClock:Number;
+		private var lifeBar:FlxSprite;
+		private var maxHealth:Number;
 
 		[Embed(source="tank.png")]
 		private var ImgTank:Class;
 
-		public function Tank(bty:Battery, blts:Array){
+		public function Tank(bty:Battery, blts:Array, lfb:FlxSprite){
 			super(FlxG.width / 2 - 8, FlxG.height / 2 - 8);
 			loadGraphic(ImgTank, true);
 
-			health = 50;
+			maxHealth = 10;
+			health = maxHealth;
 			battery = bty;
 			bullets = blts;
+			lifeBar = lfb;
 			bullet_index = 0;
 			maxVelocity.x = 50;
 			maxVelocity.y = 50;
@@ -37,7 +41,6 @@ package {
 		}
 
 		override public function update():void {
-			battery.reset(x, y);
 			acceleration.x = 0;
 			acceleration.y = 0;
 			angularVelocity = 0;
@@ -101,7 +104,7 @@ package {
 			} else {
 				play("stop");
 			}
-			
+
 			//trace(FlxU.quadTreeBounds.width);
 			x = (x < 0) ? 0 : x;
 			x = (x + width > 400) ? 400 - width : x;
@@ -129,7 +132,7 @@ package {
 				}
 			}
 			super.update();
-
+			battery.reset(x, y);
 			if (FlxG.mouse.pressed()){
 				if (shotClock < 0){
 					shoot();
@@ -139,10 +142,15 @@ package {
 
 		override public function hurt(Damage:Number):void {
 			//FlxG.play(SndHit);
+			super.hurt(Damage);
 			flicker(0.2);
 			battery.flicker(0.2);
+			var w:int = health / maxHealth * 50;
+			w = w > 1 ? w : 1;
+			lifeBar.createGraphic(w, 4)
+			lifeBar.fill(0xfff29a7d);
 			//FlxG.score += 10;
-			super.hurt(Damage);
+			
 		}
 
 		override public function kill():void {

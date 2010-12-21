@@ -146,11 +146,13 @@ package {
 			flicker(0.2);
 			battery.flicker(0.2);
 			var w:int = health / maxHealth * 50;
-			w = w > 1 ? w : 1;
-			lifeBar.createGraphic(w, 4)
-			lifeBar.fill(0xfff29a7d);
+			if (w > 0){
+				lifeBar.createGraphic(w, 4, 0xfff29a7d)
+			} else {
+				lifeBar.fill(0);
+			}
 			//FlxG.score += 10;
-			
+
 		}
 
 		override public function kill():void {

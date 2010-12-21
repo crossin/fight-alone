@@ -23,7 +23,7 @@ package {
 		private static var _bulletIndex:uint;
 
 
-		public function Enemy(tank:Tank, gibs:FlxEmitter, bullets:Array){
+		public function Enemy(tank:Tank, gibs:FlxEmitter, bullets:Array, lfb:FlxSprite, lfbb:FlxSprite){
 			super(FlxU.random() * 320, FlxU.random() * 240);
 			loadGraphic(ImgEnemy, true);
 			//height = height - 1; //draw the crate 1 pixel into the floor
@@ -49,8 +49,10 @@ package {
 			addAnimation("idle", [0]);
 			addAnimation("move", [0, 1], 12);
 
-			_lifeBar = new FlxSprite(x, y - 2);
-			_lifeBarBack = new FlxSprite(x - 1, y - 3);
+			_lifeBar = lfb;
+			_lifeBarBack = lfbb;
+			_lifeBar.reset(x, y - 2);
+			_lifeBarBack.reset(x - 1, y - 3);
 			_lifeBar.createGraphic(width, 1);
 			_lifeBarBack.createGraphic(width + 2, 3);
 			_lifeBar.fill(0xff00ff00);
@@ -116,10 +118,7 @@ package {
 			//_lifeBar.scale.x = health / _maxHealth;
 			//_lifeBar.width = 16 * scale.x;
 
-			_lifeBar.x = x;
-			_lifeBar.y = y - 2;
-			_lifeBarBack.x = x - 1;
-			_lifeBarBack.y = y - 3;
+
 
 			//var c:uint = 0xff00ff00 * (health / _maxHealth) + 0xffffff00 * (1 - health / _maxHealth)
 			//_lifeBar.fill(c);
@@ -135,23 +134,28 @@ package {
 			//_lifeBar.update();
 			//_lifeBarBack.update();
 			super.update();
+			var mouseX:Number = FlxG.mouse.x + 4.5;
+			var mouseY:Number = FlxG.mouse.y + 4.5;
+			if ((mouseX > x && mouseX < x + width) && (mouseY > y && mouseY < y + height)){
+				_lifeBar.x = x;
+				_lifeBar.y = y - 2;
+				_lifeBarBack.x = x - 1;
+				_lifeBarBack.y = y - 3;
+				_lifeBarBack.visible = true;
+				_lifeBar.visible = true;
+			}
 		}
 
 		override public function render():void {
 			super.render();
-			var mouseX:Number = FlxG.mouse.x + 4.5;
-			var mouseY:Number = FlxG.mouse.y + 4.5;
-			if ((mouseX > x && mouseX < x + width) && (mouseY > y && mouseY < y + height)){
-				_lifeBarBack.render();
-				_lifeBar.render();
-			}
+
 		}
 
 		override public function hurt(Damage:Number):void {
 			//FlxG.play(SndHit);
 			super.hurt(Damage);
 			flicker(0.2);
-			var w:int = health / _maxHealth * width;
+
 			w = w > 1 ? w : 1;
 			_lifeBar.createGraphic(w, 1)
 			var c:uint;
@@ -160,9 +164,14 @@ package {
 			} else {
 				c = 0xffff0000 | uint(255 * 4 / 3 * health / _maxHealth) << 8;
 			}
-			_lifeBar.fill(c);
+			var w:int = health / _maxHealth * width;
+			if (w > 0){
+				_lifeBar.createGraphic(w, 1, c)
+			} else {
+				_lifeBar.fill(0);
+			}
 			//FlxG.score += 10;
-			
+
 		}
 
 		override public function kill():void {

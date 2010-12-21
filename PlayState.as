@@ -19,6 +19,8 @@ package {
 		protected var _enemies:FlxGroup;
 		protected var _gibs:FlxEmitter;
 		protected var _lifeBar:FlxSprite;
+		protected var _enemyLifeBar:FlxSprite;
+		protected var _enemyLifeBarBack:FlxSprite;
 
 		override public function create():void {
 			// hud
@@ -29,6 +31,9 @@ package {
 			_lifeBar.createGraphic(50, 4);
 			_lifeBar.fill(0xfff29a7d);
 			_lifeBar.scrollFactor = ssf;
+
+			_enemyLifeBar = new FlxSprite();
+			_enemyLifeBarBack = new FlxSprite();
 
 			_battery = new Battery();
 
@@ -56,7 +61,7 @@ package {
 				_enemyBullets.add(s);
 			}
 
-			
+
 			_tank = new Tank(_battery, _bullets.members, _lifeBar);
 
 			add(_tank);
@@ -79,12 +84,14 @@ package {
 			_enemies = new FlxGroup();
 			var enemy:Enemy;
 			for (i = 0; i < 10; i++){
-				enemy = new Enemy(_tank, _gibs, _enemyBullets.members);
+				enemy = new Enemy(_tank, _gibs, _enemyBullets.members, _enemyLifeBar, _enemyLifeBarBack);
 				//s.exists = false;
 				_enemies.add(enemy);
 			}
 			add(_enemies);
 
+			add(_enemyLifeBarBack);
+			add(_enemyLifeBar);
 
 			add(heart);
 			add(_lifeBar);
@@ -96,6 +103,8 @@ package {
 		}
 
 		override public function update():void {
+			_enemyLifeBarBack.visible = false;
+			_enemyLifeBar.visible = false;
 			super.update();
 
 			FlxU.overlap(_bullets, _enemies, overlapped);

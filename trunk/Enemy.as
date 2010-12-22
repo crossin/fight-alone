@@ -143,6 +143,18 @@ package {
 				_lifeBarBack.y = y - 3;
 				_lifeBarBack.visible = true;
 				_lifeBar.visible = true;
+				var c:uint;
+				if (health > _maxHealth * 0.75){
+					c = 0xff00ff00 | uint(255 * 4 * (1 - health / _maxHealth)) << 16;
+				} else {
+					c = 0xffff0000 | uint(255 * 4 / 3 * health / _maxHealth) << 8;
+				}
+				var w:int = health / _maxHealth * width;
+				if (w > 0){
+					_lifeBar.createGraphic(w, 1, c)
+				} else {
+					_lifeBar.fill(0);
+				}
 			}
 		}
 
@@ -155,21 +167,6 @@ package {
 			//FlxG.play(SndHit);
 			super.hurt(Damage);
 			flicker(0.2);
-
-			w = w > 1 ? w : 1;
-			_lifeBar.createGraphic(w, 1)
-			var c:uint;
-			if (health > _maxHealth * 0.75){
-				c = 0xff00ff00 | uint(255 * 4 * (1 - health / _maxHealth)) << 16;
-			} else {
-				c = 0xffff0000 | uint(255 * 4 / 3 * health / _maxHealth) << 8;
-			}
-			var w:int = health / _maxHealth * width;
-			if (w > 0){
-				_lifeBar.createGraphic(w, 1, c)
-			} else {
-				_lifeBar.fill(0);
-			}
 			//FlxG.score += 10;
 
 		}
@@ -178,7 +175,7 @@ package {
 			if (dead)
 				return;
 			//FlxG.play(SndExplode);
-			_lifeBar.kill();
+			//_lifeBar.kill();
 			super.kill();
 			flicker(-1);
 			//FlxG.quake.start(0.005, 0.35);

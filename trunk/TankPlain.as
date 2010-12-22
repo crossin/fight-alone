@@ -5,33 +5,36 @@ package {
 	 * ...
 	 * @author Crossin
 	 */
-	public class Tank extends FlxSprite {
+	public class TankPlain extends FlxSprite {
 		private var speed:Number;
 		private var direct:FlxPoint;
 		private var angle_dest:Number;
 		private var battery:Battery;
-
-
+		private var bullets:Array;
+		private var bullet_index:int;
+		private var shotClock:Number;
 		private var lifeBar:FlxSprite;
 		private var maxHealth:Number;
 
 		[Embed(source="tank.png")]
 		private var ImgTank:Class;
 
-		public function Tank(bty:Battery, lfb:FlxSprite){
+		public function TankPlain(bty:Battery, blts:Array, lfb:FlxSprite){
 			super(FlxG.width / 2 - 8, FlxG.height / 2 - 8);
 			loadGraphic(ImgTank, true);
 
 			maxHealth = 10;
 			health = maxHealth;
 			battery = bty;
+			bullets = blts;
 			lifeBar = lfb;
+			bullet_index = 0;
 			maxVelocity.x = 50;
 			maxVelocity.y = 50;
 			drag.x = maxVelocity.x * 4;
 			drag.y = maxVelocity.y * 4;
 			antialiasing = true;
-			
+			restartClock();
 
 			addAnimation("stop", [0]);
 			addAnimation("move", [0, 1], 12);
@@ -44,7 +47,7 @@ package {
 			angle = (angle + 360) % 360;
 			direct = new FlxPoint();
 
-
+			shotClock -= FlxG.elapsed;
 
 			if (FlxG.keys.LEFT || FlxG.keys.A){
 				acceleration.x -= drag.x;
@@ -130,6 +133,11 @@ package {
 			}
 			super.update();
 			battery.reset(x, y);
+			if (FlxG.mouse.pressed()){
+				if (shotClock < 0){
+					shoot();
+				}
+			}
 		}
 
 		override public function hurt(Damage:Number):void {
@@ -155,5 +163,26 @@ package {
 			super.kill();
 			flicker(-1);
 		}
+
+		private function shoot():void {
+			restartClock();
+			battery.play("idle");
+			battery.play("shot");
+			var b:FlxSprite = bullets[bullet_index];
+			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+			b.angle = battery.angle; //FlxU.getAngle(FlxG.mouse.x - x, FlxG.mouse.x - y);
+			b.velocity = FlxU.rotatePoint(150, 0, 0, 0, b.angle);
+			//b.velocity.x += velocity.x;
+			//b.velocity.y += velocity.y;
+			bullet_index++;
+			if (bullet_index >= bullets.length)
+				bullet_index = 0;
+
+		}
+
+		private function restartClock():void {
+			shotClock = 0.3;
+		}
 	}
+
 }

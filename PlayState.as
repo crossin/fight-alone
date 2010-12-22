@@ -35,8 +35,6 @@ package {
 			_enemyLifeBar = new FlxSprite();
 			_enemyLifeBarBack = new FlxSprite();
 
-			_battery = new Battery();
-
 			var s:FlxSprite;
 			_bullets = new FlxGroup();
 			var i:int;
@@ -61,15 +59,13 @@ package {
 				_enemyBullets.add(s);
 			}
 
-
-			_tank = new Tank(_battery, _bullets.members, _lifeBar);
+			_battery = new BatteryPlain(_bullets.members);
+			_tank = new Tank(_battery, _lifeBar);
 
 			add(_tank);
 			add(_battery);
 			add(_bullets);
 			add(_enemyBullets);
-
-
 
 			_gibs = new FlxEmitter();
 			_gibs.setXSpeed(-50, 50);
@@ -83,7 +79,7 @@ package {
 
 			_enemies = new FlxGroup();
 			var enemy:Enemy;
-			for (i = 0; i < 10; i++){
+			for (i = 0; i < 1; i++){
 				enemy = new Enemy(_tank, _gibs, _enemyBullets.members, _enemyLifeBar, _enemyLifeBarBack);
 				//s.exists = false;
 				_enemies.add(enemy);

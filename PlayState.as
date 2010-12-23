@@ -62,11 +62,12 @@ package {
 			_battery = new BatteryPlain(_bullets.members);
 			_tank = new Tank(_battery, _lifeBar);
 
-			add(_tank);
-			add(_battery);
+
 			add(_bullets);
 			add(_enemyBullets);
-
+			add(_tank);
+			add(_battery);
+			
 			_gibs = new FlxEmitter();
 			_gibs.setXSpeed(-50, 50);
 			_gibs.setYSpeed(-50, 50);

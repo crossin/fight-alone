@@ -6,35 +6,44 @@ package {
 	 * @author Crossin
 	 */
 	public class Tank extends FlxSprite {
-		private var speed:Number;
-		private var direct:FlxPoint;
-		private var angle_dest:Number;
-		private var battery:Battery;
-
-
-		private var lifeBar:FlxSprite;
-		private var maxHealth:Number;
+		protected var type:int;
+		protected var speed:Number;
+		protected var direct:FlxPoint;
+		protected var angle_dest:Number;
+		protected var battery:Battery;
+		protected var bullets:Array;
+		protected var bullet_index:int;
+		protected var shotClock:Number;
+		protected var shoot:Function;
+		protected var lifeBar:FlxSprite;
+		protected var maxHealth:Number;
 
 		[Embed(source="tank.png")]
-		private var ImgTank:Class;
+		protected var ImgTankPlain:Class;
+		[Embed(source="enemy.png")]
+		protected var ImgTankDouble:Class;
 
-		public function Tank(bty:Battery, lfb:FlxSprite){
+		public function Tank(){
 			super(FlxG.width / 2 - 8, FlxG.height / 2 - 8);
-			loadGraphic(ImgTank, true);
-
+			loadGraphic(ImgTankPlain, true);
+			type = 0;
 			maxHealth = 10;
 			health = maxHealth;
-			battery = bty;
-			lifeBar = lfb;
+			battery = PlayState._battery;
+			bullets = PlayState._bullets.members;
+			bullet_index = 0;
+			lifeBar = PlayState._lifeBar;
 			maxVelocity.x = 50;
 			maxVelocity.y = 50;
 			drag.x = maxVelocity.x * 4;
 			drag.y = maxVelocity.y * 4;
 			antialiasing = true;
-			
+			restartClock();
+			shoot = shootPlain;
 
 			addAnimation("stop", [0]);
 			addAnimation("move", [0, 1], 12);
+
 		}
 
 		override public function update():void {
@@ -43,7 +52,7 @@ package {
 			angularVelocity = 0;
 			angle = (angle + 360) % 360;
 			direct = new FlxPoint();
-
+			shotClock -= FlxG.elapsed;
 
 
 			if (FlxG.keys.LEFT || FlxG.keys.A){
@@ -89,6 +98,13 @@ package {
 				//angle = 180;
 				//}
 				direct.y = 1;
+			}
+
+			if (FlxG.mouse.pressed() && shotClock < 0){
+				restartClock();
+				battery.play("idle");
+				battery.play("shot");
+				shoot();
 			}
 			speed = Math.sqrt(velocity.x * velocity.x + velocity.y * velocity.y)
 			if (speed > maxVelocity.x){
@@ -154,6 +170,66 @@ package {
 			battery.kill();
 			super.kill();
 			flicker(-1);
+		}
+
+		public function setType(t:int):void {
+			trace(type != t)
+			if (type != t){
+				switch (t){
+					case 1:
+						loadGraphic(ImgTankPlain, true);
+						shoot = shootPlain;
+						break;
+					case 2:
+						loadGraphic(ImgTankDouble, true);
+						shoot = shootDouble;
+						break;
+				}
+				type = t;
+			}
+		}
+
+		protected function restartClock():void {
+			shotClock = 0.3;
+		}
+
+		protected function shootPlain():void {
+
+			var b:FlxSprite = bullets[bullet_index];
+			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+			b.angle = battery.angle; //FlxU.getAngle(FlxG.mouse.x - x, FlxG.mouse.x - y);
+			b.velocity = FlxU.rotatePoint(150, 0, 0, 0, b.angle);
+			//b.velocity.x += velocity.x;
+			//b.velocity.y += velocity.y;
+			bullet_index++;
+			if (bullet_index >= bullets.length)
+				bullet_index = 0;
+
+		}
+
+		protected function shootDouble():void {
+			var b:FlxSprite = bullets[bullet_index];
+			var dist:FlxPoint = FlxU.rotatePoint(0, 5, 0, 0, b.angle);
+			b = bullets[bullet_index];
+			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+			b.angle = battery.angle;
+			dist = FlxU.rotatePoint(0, height / 4, 0, 0, b.angle);
+			b.x -= dist.x;
+			b.y -= dist.y;
+			b.velocity = FlxU.rotatePoint(150, 0, 0, 0, b.angle);
+			bullet_index++;
+			b = bullets[bullet_index];
+			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+			b.angle = battery.angle;
+			dist = FlxU.rotatePoint(0, -height / 4, 0, 0, b.angle);
+			b.x -= dist.x;
+			b.y -= dist.y;
+			b.velocity = FlxU.rotatePoint(150, 0, 0, 0, b.angle);
+			bullet_index++;
+
+			if (bullet_index >= bullets.length)
+				bullet_index = 0;
+
 		}
 	}
 }

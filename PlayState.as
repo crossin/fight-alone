@@ -12,13 +12,15 @@ package {
 		private var ImgHeart:Class;
 
 		protected var _tank:Tank;
-		protected var _battery:Battery;
-		protected var _bullets:FlxGroup;
+		public static var _battery:Battery;
+		public static var _bullets:FlxGroup;
+		public static var _lifeBar:FlxSprite;
+
 		protected var _enemyBullets:FlxGroup;
 		//protected var _enemy:Enemy;
 		protected var _enemies:FlxGroup;
 		protected var _gibs:FlxEmitter;
-		protected var _lifeBar:FlxSprite;
+
 		protected var _enemyLifeBar:FlxSprite;
 		protected var _enemyLifeBarBack:FlxSprite;
 
@@ -59,15 +61,16 @@ package {
 				_enemyBullets.add(s);
 			}
 
-			_battery = new BatteryPlain(_bullets.members);
-			_tank = new Tank(_battery, _lifeBar);
+			_battery = new Battery();
+			_tank = new Tank();
 
 
-			add(_bullets);
+
 			add(_enemyBullets);
 			add(_tank);
+			add(_bullets);
 			add(_battery);
-			
+
 			_gibs = new FlxEmitter();
 			_gibs.setXSpeed(-50, 50);
 			_gibs.setYSpeed(-50, 50);
@@ -109,7 +112,12 @@ package {
 			FlxU.collide(_tank, _enemies);
 			FlxU.collide(_enemies, _enemies);
 
-
+			if (FlxG.keys.Q){
+				_tank.setType(1)
+			}
+			if (FlxG.keys.W){
+				_tank.setType(2)
+			}
 		}
 
 		protected function overlapped(Object1:FlxObject, Object2:FlxObject):void {

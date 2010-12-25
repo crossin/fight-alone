@@ -35,17 +35,18 @@ package {
 			_yDest = FlxG.height / 2;
 			_maxHealth = 20;
 
-			drag.x = 200;
-			drag.y = 200;
+			//origin.x=0
+			drag.x = 10;
+			drag.y = 10;
 			health = _maxHealth;
 			//maxAngular = 5;
 			//angularDrag = 20;
-			maxVelocity.x = 10;
-			maxVelocity.y = 10;
+			//maxVelocity.x = 10;
+			//maxVelocity.y = 10;
 
 			_bullets = bullets;
 			restartClock();
-
+			antialiasing = true;
 			addAnimation("idle", [0]);
 			addAnimation("move", [0, 1], 12);
 
@@ -61,7 +62,7 @@ package {
 
 		override public function update():void {
 			_timer += FlxG.elapsed;
-			if (_timer > 4 * FlxU.random()){
+			if (_timer > 4 * FlxU.random() + 1){
 				_timer = 0;
 				_xDest = _tank.x + 100 - FlxU.random() * 200;
 				_yDest = _tank.y + 100 - FlxU.random() * 200;
@@ -99,7 +100,7 @@ package {
 				}
 			}
 
-			acceleration = FlxU.rotatePoint(200, 0, 0, 0, angle);
+			velocity = FlxU.rotatePoint(20, 0, 0, 0, angle);
 			//}
 
 			//if (da < angle)

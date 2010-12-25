@@ -18,9 +18,9 @@ package {
 		protected var lifeBar:FlxSprite;
 		protected var maxHealth:Number;
 
-		[Embed(source="tank.png")]
+		[Embed(source="tank_plain.png")]
 		protected var ImgTankPlain:Class;
-		[Embed(source="enemy.png")]
+		[Embed(source="tank_double.png")]
 		protected var ImgTankDouble:Class;
 
 		public function Tank(){
@@ -118,7 +118,6 @@ package {
 				play("stop");
 			}
 
-			//trace(FlxU.quadTreeBounds.width);
 			x = (x < 0) ? 0 : x;
 			x = (x + width > 400) ? 400 - width : x;
 			y = (y < 0) ? 0 : y;
@@ -173,7 +172,6 @@ package {
 		}
 
 		public function setType(t:int):void {
-			trace(type != t)
 			if (type != t){
 				switch (t){
 					case 1:
@@ -182,10 +180,12 @@ package {
 						break;
 					case 2:
 						loadGraphic(ImgTankDouble, true);
+
 						shoot = shootDouble;
 						break;
 				}
 				type = t;
+				battery.setType(type);
 			}
 		}
 
@@ -197,8 +197,8 @@ package {
 
 			var b:FlxSprite = bullets[bullet_index];
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
-			b.angle = battery.angle; //FlxU.getAngle(FlxG.mouse.x - x, FlxG.mouse.x - y);
-			b.velocity = FlxU.rotatePoint(150, 0, 0, 0, b.angle);
+			//b.angle = battery.angle; //FlxU.getAngle(FlxG.mouse.x - x, FlxG.mouse.x - y);
+			b.velocity = FlxU.rotatePoint(150, 0, 0, 0, battery.angle);
 			//b.velocity.x += velocity.x;
 			//b.velocity.y += velocity.y;
 			bullet_index++;
@@ -212,24 +212,24 @@ package {
 			var dist:FlxPoint = FlxU.rotatePoint(0, 5, 0, 0, b.angle);
 			b = bullets[bullet_index];
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
-			b.angle = battery.angle;
-			dist = FlxU.rotatePoint(0, height / 4, 0, 0, b.angle);
+			//b.angle = battery.angle;
+			dist = FlxU.rotatePoint(0, height / 4, 0, 0, battery.angle);
 			b.x -= dist.x;
 			b.y -= dist.y;
-			b.velocity = FlxU.rotatePoint(150, 0, 0, 0, b.angle);
+			b.velocity = FlxU.rotatePoint(150, 0, 0, 0, battery.angle);
 			bullet_index++;
-			b = bullets[bullet_index];
-			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
-			b.angle = battery.angle;
-			dist = FlxU.rotatePoint(0, -height / 4, 0, 0, b.angle);
-			b.x -= dist.x;
-			b.y -= dist.y;
-			b.velocity = FlxU.rotatePoint(150, 0, 0, 0, b.angle);
-			bullet_index++;
-
 			if (bullet_index >= bullets.length)
 				bullet_index = 0;
-
+			b = bullets[bullet_index];
+			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+			//b.angle = battery.angle;
+			dist = FlxU.rotatePoint(0, -height / 4, 0, 0, battery.angle);
+			b.x -= dist.x;
+			b.y -= dist.y;
+			b.velocity = FlxU.rotatePoint(150, 0, 0, 0, battery.angle);
+			bullet_index++;
+			if (bullet_index >= bullets.length)
+				bullet_index = 0;
 		}
 	}
 }

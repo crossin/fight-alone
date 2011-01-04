@@ -6,9 +6,9 @@ package {
 	 * @author Crossin
 	 */
 	public class Battery extends FlxSprite {
-		[Embed(source="battery_plain.png")]
+		[Embed(source="res/battery_plain.png")]
 		protected var ImgBatteryPlain:Class;
-		[Embed(source="battery_double.png")]
+		[Embed(source="res/battery_double.png")]
 		protected var ImgBatteryDouble:Class;
 
 		public function Battery(){

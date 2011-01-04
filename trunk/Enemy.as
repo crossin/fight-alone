@@ -7,7 +7,7 @@ package {
 	 */
 	public class Enemy extends FlxSprite {
 
-		[Embed(source="enemy.png")]
+		[Embed(source="res/enemy.png")]
 		private var ImgEnemy:Class;
 
 		private var _gibs:FlxEmitter;
@@ -23,8 +23,23 @@ package {
 		private static var _bulletIndex:uint;
 
 
-		public function Enemy(tank:Tank, gibs:FlxEmitter, bullets:Array, lfb:FlxSprite, lfbb:FlxSprite){
-			super(FlxU.random() * 320, FlxU.random() * 240);
+		public function Enemy(tank:Tank, gibs:FlxEmitter, from:int) {
+			super()
+			switch (from){
+				case 0:
+					reset(FlxU.random() * PlayState.maxWidth, -20);
+					break;
+				case 1:
+					reset(-20, FlxU.random() * PlayState.maxHeight);
+					break;
+				case 2:
+					reset(PlayState.maxWidth+20, FlxU.random() * PlayState.maxHeight);
+					break;
+				case 3:
+				default:
+					reset(FlxU.random() * PlayState.maxWidth, PlayState.maxHeight+20);
+					break;
+			}
 			loadGraphic(ImgEnemy, true);
 			//height = height - 1; //draw the crate 1 pixel into the floor
 			//acceleration.y = 400;
@@ -44,14 +59,14 @@ package {
 			//maxVelocity.x = 10;
 			//maxVelocity.y = 10;
 
-			_bullets = bullets;
+			_bullets = PlayState._enemyBullets.members;
 			restartClock();
 			antialiasing = true;
 			addAnimation("idle", [0]);
 			addAnimation("move", [0, 1], 12);
 
-			_lifeBar = lfb;
-			_lifeBarBack = lfbb;
+			_lifeBar = PlayState._enemyLifeBar;
+			_lifeBarBack = PlayState._enemyLifeBarBack;
 			_lifeBar.reset(x, y - 2);
 			_lifeBarBack.reset(x - 1, y - 3);
 			_lifeBar.createGraphic(width, 1);

@@ -2,34 +2,37 @@ package {
 	import org.flixel.*;
 
 	public class PlayState extends FlxState {
-		[Embed(source="gibs.png")]
+		[Embed(source="res/gibs.png")]
 		private var ImgGibs:Class;
-		[Embed(source="cursor.png")]
+		[Embed(source="res/crosshair.png")]
 		private var ImgCursor:Class;
-		[Embed(source="bullet.png")]
+		[Embed(source="res/bullet.png")]
 		private var ImgBullet:Class;
-		[Embed(source="heart.png")]
+		[Embed(source="res/heart.png")]
 		private var ImgHeart:Class;
-		[Embed(source="back.png")]
+		[Embed(source="res/back.png")]
 		private var ImgBack:Class;
-		[Embed(source="rock.png")]
+		[Embed(source="res/rock.png")]
 		private var ImgRock:Class;
 
 		protected var _tank:Tank;
 		public static var _battery:Battery;
 		public static var _bullets:FlxGroup;
 		public static var _lifeBar:FlxSprite;
-
-		protected var _enemyBullets:FlxGroup;
+		public static var _enemyLifeBar:FlxSprite;
+		public static var _enemyLifeBarBack:FlxSprite;
+		public static var _enemyBullets:FlxGroup;
+		public static var maxWidth:int;
+		public static var maxHeight:int;
+		
 		protected var _enemies:FlxGroup;
 		protected var _objects:FlxGroup;
 		protected var _gibs:FlxEmitter;
 		protected var _rock:FlxSprite;
-		protected var _enemyLifeBar:FlxSprite;
-		protected var _enemyLifeBarBack:FlxSprite;
 
-		protected var maxWidth:int;
-		protected var maxHeight:int;
+		private var _timer:Number;
+		private var _timerLast:Number;
+		private var _timerInterval:Number;
 
 		override public function create():void {
 			//back
@@ -102,12 +105,12 @@ package {
 			add(_battery);
 
 			_enemies = new FlxGroup();
-			var enemy:Enemy;
-			for (i = 0; i < 1; i++){
-				enemy = new Enemy(_tank, _gibs, _enemyBullets.members, _enemyLifeBar, _enemyLifeBarBack);
-				//s.exists = false;
-				_enemies.add(enemy);
-			}
+			//var enemy:Enemy;
+			//for (i = 0; i < 1; i++){
+			//enemy = new Enemy(_tank, _gibs, _enemyBullets.members, _enemyLifeBar, _enemyLifeBarBack);
+			//s.exists = false;
+			//_enemies.add(enemy);
+			//}
 			add(_enemies);
 
 			add(_enemyLifeBarBack);
@@ -125,6 +128,9 @@ package {
 			FlxG.follow(_tank);
 			FlxG.followBounds(0, 0, maxWidth, maxHeight);
 
+			_timer = 0;
+			_timerLast = 0;
+			_timerInterval = 5;
 		}
 
 		override public function update():void {
@@ -144,6 +150,13 @@ package {
 			if (FlxG.keys.TWO){
 				_tank.setType(2)
 			}
+
+			// add enemies
+			_timer += FlxG.elapsed;
+			if (_timer % _timerInterval < _timerLast % _timerInterval){
+				_enemies.add(new Enemy(_tank, _gibs, int(FlxU.random() * 4)));
+			}
+			_timerLast = _timer;
 		}
 
 		protected function overlapped(Object1:FlxObject, Object2:FlxObject):void {

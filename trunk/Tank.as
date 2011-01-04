@@ -14,13 +14,14 @@ package {
 		protected var bullets:Array;
 		protected var bullet_index:int;
 		protected var shotClock:Number;
+		protected var shotSpeed:Number;
 		protected var shoot:Function;
 		protected var lifeBar:FlxSprite;
 		protected var maxHealth:Number;
 
-		[Embed(source="tank_plain.png")]
+		[Embed(source="res/tank_plain.png")]
 		protected var ImgTankPlain:Class;
-		[Embed(source="tank_double.png")]
+		[Embed(source="res/tank_double.png")]
 		protected var ImgTankDouble:Class;
 
 		public function Tank(){
@@ -40,6 +41,7 @@ package {
 			antialiasing = true;
 			restartClock();
 			shoot = shootPlain;
+			shotSpeed = 250;
 
 			addAnimation("stop", [0]);
 			addAnimation("move", [0, 1], 12);
@@ -198,7 +200,7 @@ package {
 			var b:FlxSprite = bullets[bullet_index];
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			//b.angle = battery.angle; //FlxU.getAngle(FlxG.mouse.x - x, FlxG.mouse.x - y);
-			b.velocity = FlxU.rotatePoint(150, 0, 0, 0, battery.angle);
+			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle);
 			//b.velocity.x += velocity.x;
 			//b.velocity.y += velocity.y;
 			bullet_index++;
@@ -216,7 +218,7 @@ package {
 			dist = FlxU.rotatePoint(0, height / 4, 0, 0, battery.angle);
 			b.x -= dist.x;
 			b.y -= dist.y;
-			b.velocity = FlxU.rotatePoint(150, 0, 0, 0, battery.angle);
+			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle);
 			bullet_index++;
 			if (bullet_index >= bullets.length)
 				bullet_index = 0;
@@ -226,7 +228,7 @@ package {
 			dist = FlxU.rotatePoint(0, -height / 4, 0, 0, battery.angle);
 			b.x -= dist.x;
 			b.y -= dist.y;
-			b.velocity = FlxU.rotatePoint(150, 0, 0, 0, battery.angle);
+			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle);
 			bullet_index++;
 			if (bullet_index >= bullets.length)
 				bullet_index = 0;

@@ -24,10 +24,11 @@ package {
 		public static var _enemyBullets:FlxGroup;
 		public static var maxWidth:int;
 		public static var maxHeight:int;
-		
+		public static var _explosions:FlxGroup;
+
 		protected var _enemies:FlxGroup;
 		protected var _objects:FlxGroup;
-		protected var _gibs:FlxEmitter;
+		//protected var _gibs:FlxEmitter;
 		protected var _rock:FlxSprite;
 
 		private var _timer:Number;
@@ -87,15 +88,15 @@ package {
 
 
 
-			_gibs = new FlxEmitter();
-			_gibs.setXSpeed(-50, 50);
-			_gibs.setYSpeed(-50, 50);
+			//_gibs = new FlxEmitter();
+			//_gibs.setXSpeed(-50, 50);
+			//_gibs.setYSpeed(-50, 50);
 			//_gibs.setRotation();
-			_gibs.gravity = 0;
-			_gibs.particleDrag.x = 100;
-			_gibs.particleDrag.y = 100;
-			_gibs.createSprites(ImgGibs);
-			add(_gibs);
+			//_gibs.gravity = 0;
+			//_gibs.particleDrag.x = 100;
+			//_gibs.particleDrag.y = 100;
+			//_gibs.createSprites(ImgGibs);
+			//add(_gibs);
 
 
 
@@ -113,6 +114,18 @@ package {
 			//}
 			add(_enemies);
 
+			_explosions = new FlxGroup();
+			for (i = 0; i < 10; i++){
+				s = new Explosion();
+				//s.width = 50;
+				//s.height = 10;
+				//s.offset.x = -31;
+				//s.offset.y = -31;
+				s.exists = false;
+				_explosions.add(s);
+			}
+			add(_explosions);
+			
 			add(_enemyLifeBarBack);
 			add(_enemyLifeBar);
 
@@ -154,7 +167,7 @@ package {
 			// add enemies
 			_timer += FlxG.elapsed;
 			if (_timer % _timerInterval < _timerLast % _timerInterval){
-				_enemies.add(new Enemy(_tank, _gibs, int(FlxU.random() * 4)));
+				_enemies.add(new Enemy(_tank, int(FlxU.random() * 4)));
 			}
 			_timerLast = _timer;
 		}

@@ -10,7 +10,7 @@ package {
 		[Embed(source="res/enemy.png")]
 		private var ImgEnemy:Class;
 
-		private var _gibs:FlxEmitter;
+		//private var _gibs:FlxEmitter;
 		private var _timer:Number;
 		private var _tank:Tank;
 		private var _xDest:Number;
@@ -20,11 +20,14 @@ package {
 		private var _lifeBarBack:FlxSprite;
 		private var shotClock:Number;
 		private var _bullets:Array;
+		private var _explosions:Array;
+
 		private static var _bulletIndex:uint;
+		private static var _explosionIndex:uint;
 
 
-		public function Enemy(tank:Tank, gibs:FlxEmitter, from:int) {
-			super()
+		public function Enemy(tank:Tank, from:int){
+			super();
 			switch (from){
 				case 0:
 					reset(FlxU.random() * PlayState.maxWidth, -20);
@@ -33,18 +36,18 @@ package {
 					reset(-20, FlxU.random() * PlayState.maxHeight);
 					break;
 				case 2:
-					reset(PlayState.maxWidth+20, FlxU.random() * PlayState.maxHeight);
+					reset(PlayState.maxWidth + 20, FlxU.random() * PlayState.maxHeight);
 					break;
 				case 3:
 				default:
-					reset(FlxU.random() * PlayState.maxWidth, PlayState.maxHeight+20);
+					reset(FlxU.random() * PlayState.maxWidth, PlayState.maxHeight + 20);
 					break;
 			}
 			loadGraphic(ImgEnemy, true);
 			//height = height - 1; //draw the crate 1 pixel into the floor
 			//acceleration.y = 400;
 			_tank = tank;
-			_gibs = gibs;
+			//_gibs = gibs;
 			_timer = 0;
 			_xDest = FlxG.width / 2;
 			_yDest = FlxG.height / 2;
@@ -60,6 +63,7 @@ package {
 			//maxVelocity.y = 10;
 
 			_bullets = PlayState._enemyBullets.members;
+			_explosions = PlayState._explosions.members;
 			restartClock();
 			antialiasing = true;
 			addAnimation("idle", [0]);
@@ -197,8 +201,9 @@ package {
 			//FlxG.quake.start(0.005, 0.35);
 			//FlxG.flash.start(0xffd8eba2, 0.35);
 			//_jets.kill();
-			_gibs.at(this);
-			_gibs.start(true, 1, 8);
+			explode();
+			//_gibs.at(this);
+			//_gibs.start(true, 1, 8);
 			//FlxG.score += 200;
 		}
 
@@ -212,6 +217,17 @@ package {
 			_bulletIndex++;
 			if (_bulletIndex >= _bullets.length)
 				_bulletIndex = 0;
+
+		}
+
+
+		private function explode():void {
+			var e:Explosion = _explosions[_explosionIndex];
+			e.reset(x, y);
+			e.play("explode");
+			_explosionIndex++;
+			if (_explosionIndex >= _explosions.length)
+				_explosionIndex = 0;
 
 		}
 

@@ -212,7 +212,7 @@ package {
 		protected function shootDouble():void {
 			var b:FlxSprite = bullets[bullet_index];
 			var dist:FlxPoint = FlxU.rotatePoint(0, 5, 0, 0, b.angle);
-			b = bullets[bullet_index];
+			//b = bullets[bullet_index];
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			//b.angle = battery.angle;
 			dist = FlxU.rotatePoint(0, height / 4, 0, 0, battery.angle);

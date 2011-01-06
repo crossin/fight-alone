@@ -15,7 +15,7 @@ package {
 		[Embed(source="res/rock.png")]
 		private var ImgRock:Class;
 
-		protected var _tank:Tank;
+		public static var _tank:Tank;
 		public static var _battery:Battery;
 		public static var _bullets:FlxGroup;
 		public static var _lifeBar:FlxSprite;
@@ -30,6 +30,7 @@ package {
 		protected var _objects:FlxGroup;
 		//protected var _gibs:FlxEmitter;
 		protected var _rock:FlxSprite;
+		protected var _boss:FlxSprite;
 
 		private var _timer:Number;
 		private var _timerLast:Number;
@@ -124,8 +125,11 @@ package {
 				s.exists = false;
 				_explosions.add(s);
 			}
+
+			_boss = new Boss();
+			_boss.exists = false;
+			add(_boss);
 			add(_explosions);
-			
 			add(_enemyLifeBarBack);
 			add(_enemyLifeBar);
 
@@ -136,6 +140,7 @@ package {
 			_objects.add(_tank);
 			_objects.add(_enemies);
 			_objects.add(_rock);
+			_objects.add(_boss);
 
 			FlxG.mouse.show(ImgCursor);
 			FlxG.follow(_tank);
@@ -152,6 +157,7 @@ package {
 			super.update();
 
 			FlxU.overlap(_bullets, _enemies, overlapped);
+			FlxU.overlap(_bullets, _boss, overlapped);
 			FlxU.overlap(_enemyBullets, _tank, overlapped);
 			FlxU.overlap(_bullets, _rock, overlapped);
 			FlxU.overlap(_enemyBullets, _rock, overlapped);
@@ -167,7 +173,11 @@ package {
 			// add enemies
 			_timer += FlxG.elapsed;
 			if (_timer % _timerInterval < _timerLast % _timerInterval){
-				_enemies.add(new Enemy(_tank, int(FlxU.random() * 4)));
+				_enemies.add(new Enemy(int(FlxU.random() * 4)));
+			}
+			// add boss
+			if (_timerLast < 1 && _timer > 1){
+				_boss.reset(FlxG.width / 2, -40);
 			}
 			_timerLast = _timer;
 		}
@@ -175,7 +185,7 @@ package {
 		protected function overlapped(Object1:FlxObject, Object2:FlxObject):void {
 			//if ((Object1 is BotBullet) || (Object1 is Bullet))
 			Object1.kill();
-			if ((Object2 is Tank) || (Object2 is Enemy)){
+			if ((Object2 is Tank) || (Object2 is Enemy) ||  (Object2 is Boss)){
 				Object2.hurt(1);
 			}
 		}

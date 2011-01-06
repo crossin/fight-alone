@@ -5,10 +5,10 @@ package {
 	 * ...
 	 * @author Crossin
 	 */
-	public class Enemy extends FlxSprite {
+	public class Boss extends FlxSprite {
 
-		[Embed(source="res/enemy.png")]
-		private var ImgEnemy:Class;
+		[Embed(source="res/boss.png")]
+		private var ImgBoss:Class;
 
 		//private var _gibs:FlxEmitter;
 		private var _timer:Number;
@@ -25,24 +25,9 @@ package {
 		private static var _explosionIndex:uint;
 
 
-		public function Enemy(from:int){
+		public function Boss(){
 			//super();
-			switch (from){
-				case 0:
-					reset(FlxU.random() * PlayState.maxWidth, -20);
-					break;
-				case 1:
-					reset(-20, FlxU.random() * PlayState.maxHeight);
-					break;
-				case 2:
-					reset(PlayState.maxWidth + 20, FlxU.random() * PlayState.maxHeight);
-					break;
-				case 3:
-				default:
-					reset(FlxU.random() * PlayState.maxWidth, PlayState.maxHeight + 20);
-					break;
-			}
-			loadGraphic(ImgEnemy, true);
+			loadGraphic(ImgBoss, true);
 			//height = height - 1; //draw the crate 1 pixel into the floor
 			//acceleration.y = 400;
 			_tank = PlayState._tank;
@@ -69,12 +54,7 @@ package {
 
 			_lifeBar = PlayState._enemyLifeBar;
 			_lifeBarBack = PlayState._enemyLifeBarBack;
-			//_lifeBar.reset(x, y - 2);
-			//_lifeBarBack.reset(x - 1, y - 3);
-			//_lifeBar.createGraphic(width, 1);
-			//_lifeBarBack.createGraphic(width + 2, 3);
-			//_lifeBar.fill(0xff00ff00);
-			//_lifeBarBack.fill(0xff000000);
+
 		}
 
 		override public function update():void {
@@ -84,6 +64,8 @@ package {
 				_angleDest = FlxU.getAngle(_tank.x - x, _tank.y - y) + 90 - FlxU.random() * 180;
 				_angleDest = (_angleDest + 360) % 360;
 			}
+
+			angle = (angle + 360) % 360;
 
 
 			//thrust = 0;
@@ -154,11 +136,10 @@ package {
 				_lifeBar.y = y - 2;
 				_lifeBarBack.x = x - 1;
 				_lifeBarBack.y = y - 3;
-				_lifeBar.visible = true;
 				_lifeBarBack.visible = true;
+				_lifeBar.visible = true;
 				_lifeBarBack.createGraphic(width + 2, 3);
 				_lifeBarBack.fill(0xff000000);
-
 				var c:uint;
 				if (health > _maxHealth * 0.75){
 					c = 0xff00ff00 | uint(255 * 4 * (1 - health / _maxHealth)) << 16;
@@ -193,6 +174,7 @@ package {
 			//FlxG.play(SndExplode);
 			//_lifeBar.kill();
 			super.kill();
+			//dead = true;
 			flicker(-1);
 			//FlxG.quake.start(0.005, 0.35);
 			//FlxG.flash.start(0xffd8eba2, 0.35);
@@ -207,13 +189,36 @@ package {
 			var b:FlxSprite = _bullets[_bulletIndex];
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			b.angle = angle; //FlxU.getAngle(FlxG.mouse.x - x, FlxG.mouse.x - y);
-			b.velocity = FlxU.rotatePoint(150, 0, 0, 0, b.angle);
+			b.velocity = FlxU.rotatePoint(250, 0, 0, 0, b.angle);
 			//b.velocity.x += velocity.x;
 			//b.velocity.y += velocity.y;
 			_bulletIndex++;
 			if (_bulletIndex >= _bullets.length)
 				_bulletIndex = 0;
 
+			b = _bullets[_bulletIndex];
+			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+			b.angle = angle + 90;
+			b.velocity = FlxU.rotatePoint(250, 0, 0, 0, b.angle);
+			_bulletIndex++;
+			if (_bulletIndex >= _bullets.length)
+				_bulletIndex = 0;
+
+			b = _bullets[_bulletIndex];
+			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+			b.angle = angle + 180;
+			b.velocity = FlxU.rotatePoint(250, 0, 0, 0, b.angle);
+			_bulletIndex++;
+			if (_bulletIndex >= _bullets.length)
+				_bulletIndex = 0;
+
+			b = _bullets[_bulletIndex];
+			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+			b.angle = angle + 270;
+			b.velocity = FlxU.rotatePoint(250, 0, 0, 0, b.angle);
+			_bulletIndex++;
+			if (_bulletIndex >= _bullets.length)
+				_bulletIndex = 0;
 		}
 
 

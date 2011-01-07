@@ -18,11 +18,14 @@ package {
 		protected var shoot:Function;
 		protected var lifeBar:FlxSprite;
 		protected var maxHealth:Number;
+		protected var _shadow:FlxSprite;
 
 		[Embed(source="res/tank_plain.png")]
 		protected var ImgTankPlain:Class;
 		[Embed(source="res/tank_double.png")]
 		protected var ImgTankDouble:Class;
+		[Embed(source="res/tank_shadow.png")]
+		protected var ImgTankShadow:Class;
 
 		public function Tank(){
 			super(FlxG.width / 2 - 8, FlxG.height / 2 - 8);
@@ -46,6 +49,7 @@ package {
 			addAnimation("stop", [0]);
 			addAnimation("move", [0, 1], 12);
 
+			_shadow = new FlxSprite(x, y, ImgTankShadow);
 		}
 
 		override public function update():void {
@@ -121,9 +125,9 @@ package {
 			}
 
 			x = (x < 0) ? 0 : x;
-			x = (x + width > 400) ? 400 - width : x;
+			x = (x + width > PlayState.maxWidth) ? PlayState.maxWidth - width : x;
 			y = (y < 0) ? 0 : y;
-			y = (y + height > 300) ? 300 - height : y;
+			y = (y + height > PlayState.maxHeight) ? PlayState.maxHeight - height : y;
 
 			if (direct.x != 0 || direct.y != 0){
 				angle_dest = (FlxU.getAngle(direct.x, direct.y) + 450) % 360;
@@ -147,6 +151,13 @@ package {
 			}
 			super.update();
 			battery.reset(x, y);
+			_shadow.reset(x + 1, y + 1);
+			_shadow.angle = angle;
+		}
+
+		override public function render():void {
+			_shadow.render();
+			super.render();
 		}
 
 		override public function hurt(Damage:Number):void {
@@ -169,6 +180,7 @@ package {
 				return;
 
 			battery.kill();
+			_shadow.kill();
 			super.kill();
 			flicker(-1);
 		}

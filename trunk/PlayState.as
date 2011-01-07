@@ -101,10 +101,7 @@ package {
 
 
 
-			add(_enemyBullets);
-			add(_tank);
-			add(_bullets);
-			add(_battery);
+
 
 			_enemies = new FlxGroup();
 			//var enemy:Enemy;
@@ -113,7 +110,7 @@ package {
 			//s.exists = false;
 			//_enemies.add(enemy);
 			//}
-			add(_enemies);
+
 
 			_explosions = new FlxGroup();
 			for (i = 0; i < 10; i++){
@@ -129,6 +126,11 @@ package {
 			_boss = new Boss();
 			_boss.exists = false;
 			add(_boss);
+			add(_tank);
+			add(_bullets);
+			add(_battery);
+			add(_enemies);
+			add(_enemyBullets);
 			add(_explosions);
 			add(_enemyLifeBarBack);
 			add(_enemyLifeBar);
@@ -185,7 +187,7 @@ package {
 		protected function overlapped(Object1:FlxObject, Object2:FlxObject):void {
 			//if ((Object1 is BotBullet) || (Object1 is Bullet))
 			Object1.kill();
-			if ((Object2 is Tank) || (Object2 is Enemy) ||  (Object2 is Boss)){
+			if ((Object2 is Tank) || (Object2 is Enemy) || (Object2 is Boss)){
 				Object2.hurt(1);
 			}
 		}

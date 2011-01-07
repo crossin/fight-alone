@@ -174,6 +174,9 @@ package {
 			//FlxG.play(SndExplode);
 			//_lifeBar.kill();
 			super.kill();
+			active = false;
+			exists = true;
+			solid = false;
 			//dead = true;
 			flicker(-1);
 			//FlxG.quake.start(0.005, 0.35);
@@ -186,6 +189,9 @@ package {
 		}
 
 		private function shoot():void {
+			if (x < 0 || x > PlayState.maxWidth || y < 0 || y > PlayState.maxHeight){
+				return;
+			}
 			var b:FlxSprite = _bullets[_bulletIndex];
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			b.angle = angle; //FlxU.getAngle(FlxG.mouse.x - x, FlxG.mouse.x - y);

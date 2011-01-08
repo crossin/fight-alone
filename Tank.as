@@ -209,7 +209,8 @@ package {
 
 		protected function shootPlain():void {
 
-			var b:FlxSprite = bullets[bullet_index];
+			var b:Bullet = bullets[bullet_index];
+			b.owner = this;
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			//b.angle = battery.angle; //FlxU.getAngle(FlxG.mouse.x - x, FlxG.mouse.x - y);
 			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle);
@@ -222,9 +223,9 @@ package {
 		}
 
 		protected function shootDouble():void {
-			var b:FlxSprite = bullets[bullet_index];
+			var b:Bullet = bullets[bullet_index];
 			var dist:FlxPoint = FlxU.rotatePoint(0, 5, 0, 0, b.angle);
-			//b = bullets[bullet_index];
+			b.owner = this;
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			//b.angle = battery.angle;
 			dist = FlxU.rotatePoint(0, height / 4, 0, 0, battery.angle);
@@ -236,7 +237,7 @@ package {
 				bullet_index = 0;
 			b = bullets[bullet_index];
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
-			//b.angle = battery.angle;
+			b.owner = this;
 			dist = FlxU.rotatePoint(0, -height / 4, 0, 0, battery.angle);
 			b.x -= dist.x;
 			b.y -= dist.y;

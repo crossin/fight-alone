@@ -20,6 +20,8 @@ package {
 		private var shotClock:Number;
 		private var _bullets:Array;
 		private var _explosions:Array;
+		private var timeDead:Number;
+		private var timeExplode:Number;
 
 		private static var _bulletIndex:uint;
 		private static var _explosionIndex:uint;
@@ -55,9 +57,23 @@ package {
 			_lifeBar = PlayState._enemyLifeBar;
 			_lifeBarBack = PlayState._enemyLifeBarBack;
 
+			timeDead = 3;
+			timeExplode = 0;
 		}
 
 		override public function update():void {
+			if (dead){
+				timeDead -= FlxG.elapsed;
+				timeExplode -= FlxG.elapsed;
+				if (timeExplode < 0){
+					explode();
+					timeExplode = 0.3 + 0.2 * FlxU.random();
+				}
+				if (timeDead < 0){
+					exists = false;
+				}
+				return;
+			}
 			_timer += FlxG.elapsed;
 			if (_timer > 4 * FlxU.random() + 1){
 				_timer = 0;
@@ -173,16 +189,17 @@ package {
 				return;
 			//FlxG.play(SndExplode);
 			//_lifeBar.kill();
-			super.kill();
-			active = false;
-			exists = true;
-			solid = false;
-			//dead = true;
+			//super.kill();
+			//active = false;
+			//exists = true;
+			//solid = false;
+			dead = true;
+			_fixed = true;
 			flicker(-1);
 			//FlxG.quake.start(0.005, 0.35);
 			//FlxG.flash.start(0xffd8eba2, 0.35);
 			//_jets.kill();
-			explode();
+			//explode();
 			//_gibs.at(this);
 			//_gibs.start(true, 1, 8);
 			//FlxG.score += 200;
@@ -192,7 +209,8 @@ package {
 			if (x < 0 || x > PlayState.maxWidth || y < 0 || y > PlayState.maxHeight){
 				return;
 			}
-			var b:FlxSprite = _bullets[_bulletIndex];
+			var b:Bullet = _bullets[_bulletIndex];
+			b.owner = this;
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			b.angle = angle; //FlxU.getAngle(FlxG.mouse.x - x, FlxG.mouse.x - y);
 			b.velocity = FlxU.rotatePoint(250, 0, 0, 0, b.angle);
@@ -203,6 +221,7 @@ package {
 				_bulletIndex = 0;
 
 			b = _bullets[_bulletIndex];
+			b.owner = this;
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			b.angle = angle + 90;
 			b.velocity = FlxU.rotatePoint(250, 0, 0, 0, b.angle);
@@ -211,6 +230,7 @@ package {
 				_bulletIndex = 0;
 
 			b = _bullets[_bulletIndex];
+			b.owner = this;
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			b.angle = angle + 180;
 			b.velocity = FlxU.rotatePoint(250, 0, 0, 0, b.angle);
@@ -219,6 +239,7 @@ package {
 				_bulletIndex = 0;
 
 			b = _bullets[_bulletIndex];
+			b.owner = this;
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			b.angle = angle + 270;
 			b.velocity = FlxU.rotatePoint(250, 0, 0, 0, b.angle);
@@ -230,7 +251,7 @@ package {
 
 		private function explode():void {
 			var e:Explosion = _explosions[_explosionIndex];
-			e.reset(x, y);
+			e.reset(x - e.width / 2 + width * FlxU.random(), y - e.height / 2 + height * FlxU.random());
 			e.play("explode");
 			_explosionIndex++;
 			if (_explosionIndex >= _explosions.length)

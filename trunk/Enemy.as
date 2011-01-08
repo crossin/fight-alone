@@ -207,7 +207,8 @@ package {
 			if (x < 0 || x > PlayState.maxWidth || y < 0 || y > PlayState.maxHeight){
 				return;
 			}
-			var b:FlxSprite = _bullets[_bulletIndex];
+			var b:Bullet = _bullets[_bulletIndex];
+			b.owner = this;
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			b.angle = angle; //FlxU.getAngle(FlxG.mouse.x - x, FlxG.mouse.x - y);
 			b.velocity = FlxU.rotatePoint(150, 0, 0, 0, b.angle);

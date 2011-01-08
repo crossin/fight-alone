@@ -6,8 +6,6 @@ package {
 		private var ImgGibs:Class;
 		[Embed(source="res/crosshair.png")]
 		private var ImgCursor:Class;
-		[Embed(source="res/bullet.png")]
-		private var ImgBullet:Class;
 		[Embed(source="res/heart.png")]
 		private var ImgHeart:Class;
 		[Embed(source="res/back.png")]
@@ -63,24 +61,18 @@ package {
 			_bullets = new FlxGroup();
 			var i:int;
 			for (i = 0; i < 32; i++){
-				s = new FlxSprite(-100, -100, ImgBullet);
+				s = new Bullet();
 				//s.width = 50;
 				//s.height = 10;
 				//s.offset.x = -31;
 				//s.offset.y = -31;
-				s.exists = false;
+
 				_bullets.add(s);
 			}
 
 			_enemyBullets = new FlxGroup();
 			for (i = 0; i < 32; i++){
-				s = new FlxSprite(-100, -100, ImgBullet);
-				//s.width = 10;
-				//s.height = 10;
-				//s.offset.x = -1;
-				//s.offset.y = -1;
-
-				s.exists = false;
+				s = new EnemyBullet();
 				_enemyBullets.add(s);
 			}
 
@@ -125,12 +117,12 @@ package {
 
 			_boss = new Boss();
 			_boss.exists = false;
+			add(_enemyBullets);
 			add(_boss);
 			add(_tank);
 			add(_bullets);
 			add(_battery);
 			add(_enemies);
-			add(_enemyBullets);
 			add(_explosions);
 			add(_enemyLifeBarBack);
 			add(_enemyLifeBar);
@@ -161,6 +153,8 @@ package {
 			FlxU.overlap(_bullets, _enemies, overlapped);
 			FlxU.overlap(_bullets, _boss, overlapped);
 			FlxU.overlap(_enemyBullets, _tank, overlapped);
+			FlxU.overlap(_enemyBullets, _enemies, overlapped);
+			FlxU.overlap(_enemyBullets, _boss, overlapped);
 			FlxU.overlap(_bullets, _rock, overlapped);
 			FlxU.overlap(_enemyBullets, _rock, overlapped);
 			FlxU.collide(_objects, _objects);
@@ -182,14 +176,28 @@ package {
 				_boss.reset(FlxG.width / 2, -40);
 			}
 			_timerLast = _timer;
+
+			// check end
+			if (!_boss.exists && _boss.dead){
+				FlxG.fade.start(0xff131c1b, 2, onFade);
+			}
 		}
 
 		protected function overlapped(Object1:FlxObject, Object2:FlxObject):void {
-			//if ((Object1 is BotBullet) || (Object1 is Bullet))
+			if ((Object1 as Bullet).owner == Object2){
+				return;
+			}
 			Object1.kill();
-			if ((Object2 is Tank) || (Object2 is Enemy) || (Object2 is Boss)){
+			if ((Object2 is Tank)){
 				Object2.hurt(1);
 			}
+			if (!(Object1 is EnemyBullet) && ((Object2 is Enemy) || (Object2 is Boss))){
+				Object2.hurt(1);
+			}
+		}
+
+		private function onFade():void {
+			FlxG.state = new EndState();
 		}
 	}
 }

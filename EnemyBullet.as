@@ -12,6 +12,7 @@ package {
 		
 		public function EnemyBullet(){
 			super();
+			loadGraphic(ImgBullet, true);
 		}
 
 	}

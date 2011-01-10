@@ -169,7 +169,7 @@ package {
 			// add enemies
 			_timer += FlxG.elapsed;
 			if (_timer % _timerInterval < _timerLast % _timerInterval){
-				_enemies.add(new Enemy(int(FlxU.random() * 4)));
+				_enemies.add(new EnemyFast(int(FlxU.random() * 4)));
 			}
 			// add boss
 			if (_timerLast < 1 && _timer > 1){

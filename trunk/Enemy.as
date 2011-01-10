@@ -14,7 +14,9 @@ package {
 		private var _timer:Number;
 		private var _tank:Tank;
 		private var _angleDest:Number;
-		private var _maxHealth:Number;
+		protected var _maxHealth:Number;
+		protected var unitVelocity:Number;
+		protected var angleRange:Number;
 		private var _lifeBar:FlxSprite;
 		private var _lifeBarBack:FlxSprite;
 		private var shotClock:Number;
@@ -50,7 +52,8 @@ package {
 			_timer = 0;
 			_angleDest = 0;
 			_maxHealth = 20;
-
+			unitVelocity = 20;
+			angleRange = 90;
 			//origin.x=0
 			drag.x = 10;
 			drag.y = 10;
@@ -81,7 +84,7 @@ package {
 			_timer += FlxG.elapsed;
 			if (_timer > 4 * FlxU.random() + 1){
 				_timer = 0;
-				_angleDest = FlxU.getAngle(_tank.x - x, _tank.y - y) + 90 - FlxU.random() * 180;
+				_angleDest = FlxU.getAngle(_tank.x - x, _tank.y - y) + angleRange - FlxU.random() * angleRange * 2;
 				_angleDest = (_angleDest + 360) % 360;
 			}
 
@@ -112,7 +115,7 @@ package {
 				}
 			}
 
-			velocity = FlxU.rotatePoint(20, 0, 0, 0, angle);
+			velocity = FlxU.rotatePoint(unitVelocity, 0, 0, 0, angle);
 			//}
 
 			//if (da < angle)

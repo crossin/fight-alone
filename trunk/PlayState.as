@@ -27,7 +27,7 @@ package {
 		protected var _enemies:FlxGroup;
 		protected var _objects:FlxGroup;
 		//protected var _gibs:FlxEmitter;
-		protected var _rock:FlxSprite;
+		protected var _rock:Box;
 		protected var _boss:FlxSprite;
 
 		private var _timer:Number;
@@ -41,9 +41,6 @@ package {
 			var back:FlxTileblock = new FlxTileblock(0, 0, maxWidth, maxHeight);
 			back.loadGraphic(ImgBack);
 			add(back);
-			_rock = new FlxSprite(100, 100, ImgRock);
-			_rock.fixed = true;
-			add(_rock);
 
 			// hud
 			var ssf:FlxPoint = new FlxPoint(0, 0);
@@ -53,10 +50,15 @@ package {
 			_lifeBar.createGraphic(50, 4);
 			_lifeBar.fill(0xfff29a7d);
 			_lifeBar.scrollFactor = ssf;
-
+				
 			_enemyLifeBar = new FlxSprite();
 			_enemyLifeBarBack = new FlxSprite();
 
+			_objects = new FlxGroup();
+			_rock = new Box(100, 100);
+			add(_rock);
+			_objects.add(_rock);
+			
 			var s:FlxSprite;
 			_bullets = new FlxGroup();
 			var i:int;
@@ -130,11 +132,12 @@ package {
 			add(heart);
 			add(_lifeBar);
 
-			_objects = new FlxGroup();
+
 			_objects.add(_tank);
 			_objects.add(_enemies);
 			_objects.add(_rock);
 			_objects.add(_boss);
+
 
 			FlxG.mouse.show(ImgCursor);
 			FlxG.follow(_tank);
@@ -188,10 +191,13 @@ package {
 				return;
 			}
 			Object1.kill();
-			if ((Object2 is Tank)){
+			if (Object2 is Tank){
 				Object2.hurt(1);
 			}
 			if (!(Object1 is EnemyBullet) && ((Object2 is Enemy) || (Object2 is Boss))){
+				Object2.hurt(1);
+			}
+			if (Object2 is Box){
 				Object2.hurt(1);
 			}
 		}

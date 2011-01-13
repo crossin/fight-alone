@@ -4,7 +4,7 @@ package {
 
 	/**
 	 * ...
-	 * @author ...
+	 * @author Crossin
 	 */
 	public class Bullet extends FlxSprite {
 		[Embed(source="res/bullet.png")]

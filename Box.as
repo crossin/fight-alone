@@ -31,7 +31,7 @@ package {
 			super.kill();
 			flicker(-1);
 			gibs.at(this);
-			gibs.start(true, 1, 16);
+			gibs.start(true, 1, 25);
 		}
 	}
 }

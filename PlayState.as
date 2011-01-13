@@ -26,6 +26,7 @@ package {
 		protected var _enemies:FlxGroup;
 		protected var _objects:FlxGroup;
 		protected var _rock:Box;
+		protected var boxes:FlxGroup;
 		protected var _boss:FlxSprite;
 		private var _timer:Number;
 		private var _timerLast:Number;
@@ -47,25 +48,37 @@ package {
 			_lifeBar.createGraphic(50, 4);
 			_lifeBar.fill(0xfff29a7d);
 			_lifeBar.scrollFactor = ssf;
-				
+
 			_enemyLifeBar = new FlxSprite();
 			_enemyLifeBarBack = new FlxSprite();
 
+			_objects = new FlxGroup();
+			
 			_gibs = new FlxEmitter();
 			_gibs.setXSpeed(-100, 100);
 			_gibs.setYSpeed(-100, 100);
 			//_gibs.setRotation(0,50);
+			//_gibs.setSize(10, 10);
 			_gibs.gravity = 0;
 			_gibs.particleDrag.x = 200;
 			_gibs.particleDrag.y = 200;
-			_gibs.createSprites(ImgGibs);
+			_gibs.createSprites(ImgGibs, 50, 16, true, 0.2);
 			add(_gibs);
-			
-			_objects = new FlxGroup();
-			_rock = new Box(100, 100);
-			add(_rock);
-			_objects.add(_rock);
-			
+			_objects.add(_gibs);
+
+			boxes = new FlxGroup();
+			var box:Box;
+			box = new Box(100, 100);
+			boxes.add(box);
+			box = new Box(100, 110);
+			boxes.add(box);
+			box = new Box(110, 100);
+			boxes.add(box);
+			box = new Box(110, 110);
+			boxes.add(box);
+			add(boxes);
+			_objects.add(boxes);
+
 			var s:FlxSprite;
 			_bullets = new FlxGroup();
 			var i:int;
@@ -149,8 +162,8 @@ package {
 			FlxU.overlap(_enemyBullets, _tank, overlapped);
 			FlxU.overlap(_enemyBullets, _enemies, overlapped);
 			FlxU.overlap(_enemyBullets, _boss, overlapped);
-			FlxU.overlap(_bullets, _rock, overlapped);
-			FlxU.overlap(_enemyBullets, _rock, overlapped);
+			FlxU.overlap(_bullets, boxes, overlapped);
+			FlxU.overlap(_enemyBullets, boxes, overlapped);
 			FlxU.collide(_objects, _objects);
 
 			if (FlxG.keys.ONE){

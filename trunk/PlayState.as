@@ -10,8 +10,6 @@ package {
 		private var ImgHeart:Class;
 		[Embed(source="res/back.png")]
 		private var ImgBack:Class;
-		[Embed(source="res/rock.png")]
-		private var ImgRock:Class;
 
 		public static var _tank:Tank;
 		public static var _battery:Battery;
@@ -23,13 +21,12 @@ package {
 		public static var maxWidth:int;
 		public static var maxHeight:int;
 		public static var _explosions:FlxGroup;
+		public static var _gibs:FlxEmitter;
 
 		protected var _enemies:FlxGroup;
 		protected var _objects:FlxGroup;
-		//protected var _gibs:FlxEmitter;
 		protected var _rock:Box;
 		protected var _boss:FlxSprite;
-
 		private var _timer:Number;
 		private var _timerLast:Number;
 		private var _timerInterval:Number;
@@ -54,6 +51,16 @@ package {
 			_enemyLifeBar = new FlxSprite();
 			_enemyLifeBarBack = new FlxSprite();
 
+			_gibs = new FlxEmitter();
+			_gibs.setXSpeed(-100, 100);
+			_gibs.setYSpeed(-100, 100);
+			//_gibs.setRotation(0,50);
+			_gibs.gravity = 0;
+			_gibs.particleDrag.x = 200;
+			_gibs.particleDrag.y = 200;
+			_gibs.createSprites(ImgGibs);
+			add(_gibs);
+			
 			_objects = new FlxGroup();
 			_rock = new Box(100, 100);
 			add(_rock);
@@ -80,22 +87,6 @@ package {
 
 			_battery = new Battery();
 			_tank = new Tank();
-
-
-
-			//_gibs = new FlxEmitter();
-			//_gibs.setXSpeed(-50, 50);
-			//_gibs.setYSpeed(-50, 50);
-			//_gibs.setRotation();
-			//_gibs.gravity = 0;
-			//_gibs.particleDrag.x = 100;
-			//_gibs.particleDrag.y = 100;
-			//_gibs.createSprites(ImgGibs);
-			//add(_gibs);
-
-
-
-
 
 			_enemies = new FlxGroup();
 			//var enemy:Enemy;

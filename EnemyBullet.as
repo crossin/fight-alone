@@ -4,7 +4,7 @@ package {
 
 	/**
 	 * ...
-	 * @author ...
+	 * @author Crossin
 	 */
 	public class EnemyBullet extends Bullet {
 		[Embed(source="res/bullet.png")]

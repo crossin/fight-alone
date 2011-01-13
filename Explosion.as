@@ -3,7 +3,7 @@ package {
 
 	/**
 	 * ...
-	 * @author ...
+	 * @author Crossin
 	 */
 	public class Explosion extends FlxSprite {
 		[Embed(source="res/explosion.png")]
@@ -18,7 +18,7 @@ package {
 		override public function update():void {
 			super.update();
 			if (finished){
-				this.exists = false;
+				exists = false;
 			}
 		}
 	}

@@ -3,7 +3,7 @@ package {
 
 	/**
 	 * ...
-	 * @author ...
+	 * @author Crossin
 	 */
 	public class EndState extends FlxState {
 		[Embed(source="res/cursor.png")]

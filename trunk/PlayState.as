@@ -10,6 +10,8 @@ package {
 		private var ImgHeart:Class;
 		[Embed(source="res/back.png")]
 		private var ImgBack:Class;
+		[Embed(source="res/shield.png")]
+		private var ImgShield:Class;
 
 		public static var _tank:Tank;
 		public static var _battery:Battery;
@@ -27,7 +29,9 @@ package {
 		protected var _objects:FlxGroup;
 		protected var _rock:Box;
 		protected var boxes:FlxGroup;
+		protected var bonuses:FlxGroup;
 		protected var _boss:FlxSprite;
+		protected var shield:FlxSprite;
 		private var _timer:Number;
 		private var _timerLast:Number;
 		private var _timerInterval:Number;
@@ -52,6 +56,10 @@ package {
 			_enemyLifeBar = new FlxSprite();
 			_enemyLifeBarBack = new FlxSprite();
 
+			
+			bonuses = new FlxGroup();
+			add(bonuses);
+			
 			_objects = new FlxGroup();
 			
 			_gibs = new FlxEmitter();
@@ -78,7 +86,7 @@ package {
 			boxes.add(box);
 			add(boxes);
 			_objects.add(boxes);
-
+			
 			var s:FlxSprite;
 			_bullets = new FlxGroup();
 			var i:int;
@@ -109,7 +117,11 @@ package {
 			//_enemies.add(enemy);
 			//}
 
-
+			shield = new FlxSprite();
+			shield.loadGraphic(ImgShield, true);
+			shield.addAnimation("active", [0, 1, 2, 3], 18);
+			shield.play("active");
+			
 			_explosions = new FlxGroup();
 			for (i = 0; i < 10; i++){
 				s = new Explosion();
@@ -126,6 +138,7 @@ package {
 			add(_enemyBullets);
 			add(_boss);
 			add(_tank);
+			add(shield);
 			add(_bullets);
 			add(_battery);
 			add(_enemies);
@@ -188,6 +201,16 @@ package {
 			if (!_boss.exists && _boss.dead){
 				FlxG.fade.start(0xff131c1b, 2, onFade);
 			}
+			/*
+			for each (var eny:Enemy in _enemies.members) {
+				if (!eny.exists) {
+					_enemies.remove(eny, true);
+				}
+			}
+			*/
+
+			shield.x = _tank.x;
+			shield.y = _tank.y;
 		}
 
 		protected function overlapped(Object1:FlxObject, Object2:FlxObject):void {
@@ -208,6 +231,13 @@ package {
 
 		private function onFade():void {
 			FlxG.state = new EndState();
+		}
+		
+		public function dropBonus(iX:int,iY:int):void {
+			bonuses.add(new BonusLife(iX - 4, iY - 4));
+			trace(bonuses.members[0])
+			trace(bonuses.members[0].x)
+			//trace(bonuses.members[0].exist)
 		}
 	}
 }

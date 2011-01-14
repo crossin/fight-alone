@@ -32,6 +32,7 @@ package {
 			flicker(-1);
 			gibs.at(this);
 			gibs.start(true, 1, 25);
+			(FlxG.state as PlayState).dropBonus(x + origin.x, y + origin.y);
 		}
 	}
 }

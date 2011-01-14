@@ -138,10 +138,10 @@ package {
 			add(_enemyBullets);
 			add(_boss);
 			add(_tank);
-			add(shield);
 			add(_bullets);
 			add(_battery);
 			add(_enemies);
+			add(shield);
 			add(_explosions);
 			add(_enemyLifeBarBack);
 			add(_enemyLifeBar);

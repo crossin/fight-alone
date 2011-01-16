@@ -23,8 +23,8 @@ package {
 		private var timeDead:Number;
 		private var timeExplode:Number;
 
-		private static var _bulletIndex:uint;
-		private static var _explosionIndex:uint;
+		//private var _bulletIndex:uint;
+		//private var _explosionIndex:uint;
 
 
 		public function Boss(){
@@ -49,6 +49,8 @@ package {
 
 			_bullets = PlayState._enemyBullets.members;
 			_explosions = PlayState._explosions.members;
+			//_bulletIndex = (FlxG.state as PlayState)._bulletIndex;
+			//_explosionIndex = (FlxG.state as PlayState)._explosionIndex;
 			restartClock();
 			antialiasing = true;
 			addAnimation("idle", [0]);
@@ -209,54 +211,53 @@ package {
 			if (x < 0 || x > PlayState.maxWidth || y < 0 || y > PlayState.maxHeight){
 				return;
 			}
-			var b:Bullet = _bullets[_bulletIndex];
+			var b:EnemyBullet = _bullets[EnemyBullet.bulletIndex];
 			b.owner = this;
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			b.angle = angle; //FlxU.getAngle(FlxG.mouse.x - x, FlxG.mouse.x - y);
 			b.velocity = FlxU.rotatePoint(250, 0, 0, 0, b.angle);
 			//b.velocity.x += velocity.x;
 			//b.velocity.y += velocity.y;
-			_bulletIndex++;
-			if (_bulletIndex >= _bullets.length)
-				_bulletIndex = 0;
+			EnemyBullet.bulletIndex++;
+			if (EnemyBullet.bulletIndex >= _bullets.length)
+				EnemyBullet.bulletIndex = 0;
 
-			b = _bullets[_bulletIndex];
+			b = _bullets[EnemyBullet.bulletIndex];
 			b.owner = this;
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			b.angle = angle + 90;
 			b.velocity = FlxU.rotatePoint(250, 0, 0, 0, b.angle);
-			_bulletIndex++;
-			if (_bulletIndex >= _bullets.length)
-				_bulletIndex = 0;
+			EnemyBullet.bulletIndex++;
+			if (EnemyBullet.bulletIndex >= _bullets.length)
+				EnemyBullet.bulletIndex = 0;
 
-			b = _bullets[_bulletIndex];
+			b = _bullets[EnemyBullet.bulletIndex];
 			b.owner = this;
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			b.angle = angle + 180;
 			b.velocity = FlxU.rotatePoint(250, 0, 0, 0, b.angle);
-			_bulletIndex++;
-			if (_bulletIndex >= _bullets.length)
-				_bulletIndex = 0;
+			EnemyBullet.bulletIndex++;
+			if (EnemyBullet.bulletIndex >= _bullets.length)
+				EnemyBullet.bulletIndex = 0;
 
-			b = _bullets[_bulletIndex];
+			b = _bullets[EnemyBullet.bulletIndex];
 			b.owner = this;
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			b.angle = angle + 270;
 			b.velocity = FlxU.rotatePoint(250, 0, 0, 0, b.angle);
-			_bulletIndex++;
-			if (_bulletIndex >= _bullets.length)
-				_bulletIndex = 0;
+			EnemyBullet.bulletIndex++;
+			if (EnemyBullet.bulletIndex >= _bullets.length)
+				EnemyBullet.bulletIndex = 0;
 		}
 
 
 		private function explode():void {
-			var e:Explosion = _explosions[_explosionIndex];
+			var e:Explosion = _explosions[Explosion.explosionIndex];
 			e.reset(x - e.width / 2 + width * FlxU.random(), y - e.height / 2 + height * FlxU.random());
 			e.play("explode");
-			_explosionIndex++;
-			if (_explosionIndex >= _explosions.length)
-				_explosionIndex = 0;
-
+			Explosion.explosionIndex++;
+			if (Explosion.explosionIndex >= _explosions.length)
+				Explosion.explosionIndex = 0;
 		}
 
 		private function restartClock():void {

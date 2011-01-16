@@ -9,6 +9,8 @@ package {
 		[Embed(source="res/explosion.png")]
 		private var ImgExplosion:Class;
 
+		public static var explosionIndex:uint;
+		
 		public function Explosion(){
 			loadGraphic(ImgExplosion, true);
 			//antialiasing = true;

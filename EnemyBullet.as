@@ -10,6 +10,8 @@ package {
 		[Embed(source="res/bullet.png")]
 		private var ImgBullet:Class;
 		
+		public static var bulletIndex:uint;
+		
 		public function EnemyBullet(){
 			super();
 			loadGraphic(ImgBullet, true);

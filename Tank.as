@@ -12,7 +12,7 @@ package {
 		protected var angle_dest:Number;
 		protected var battery:Battery;
 		protected var bullets:Array;
-		protected var bullet_index:int;
+		//protected var bullet_index:int;
 		protected var shotClock:Number;
 		protected var shotSpeed:Number;
 		protected var shoot:Function;
@@ -35,7 +35,8 @@ package {
 			health = maxHealth;
 			battery = PlayState._battery;
 			bullets = PlayState._bullets.members;
-			bullet_index = 0;
+			//bulletIndex = (FlxG.state as PlayState)._bulletIndex;
+			//_explosionIndex = (FlxG.state as PlayState)._explosionIndex; = 0;
 			lifeBar = PlayState._lifeBar;
 			maxVelocity.x = 50;
 			maxVelocity.y = 50;
@@ -209,21 +210,20 @@ package {
 
 		protected function shootPlain():void {
 
-			var b:Bullet = bullets[bullet_index];
+			var b:Bullet = bullets[Bullet.bulletIndex];
 			b.owner = this;
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			//b.angle = battery.angle; //FlxU.getAngle(FlxG.mouse.x - x, FlxG.mouse.x - y);
 			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle);
 			//b.velocity.x += velocity.x;
 			//b.velocity.y += velocity.y;
-			bullet_index++;
-			if (bullet_index >= bullets.length)
-				bullet_index = 0;
-
+			Bullet.bulletIndex++;
+			if (Bullet.bulletIndex >= bullets.length)
+				Bullet.bulletIndex = 0;
 		}
 
 		protected function shootDouble():void {
-			var b:Bullet = bullets[bullet_index];
+			var b:Bullet = bullets[Bullet.bulletIndex];
 			var dist:FlxPoint = FlxU.rotatePoint(0, 5, 0, 0, b.angle);
 			b.owner = this;
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
@@ -232,19 +232,20 @@ package {
 			b.x -= dist.x;
 			b.y -= dist.y;
 			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle);
-			bullet_index++;
-			if (bullet_index >= bullets.length)
-				bullet_index = 0;
-			b = bullets[bullet_index];
+			Bullet.bulletIndex++;
+			if (Bullet.bulletIndex >= bullets.length)
+				Bullet.bulletIndex = 0;
+			b = bullets[Bullet.bulletIndex];
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			b.owner = this;
 			dist = FlxU.rotatePoint(0, -height / 4, 0, 0, battery.angle);
 			b.x -= dist.x;
 			b.y -= dist.y;
 			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle);
-			bullet_index++;
-			if (bullet_index >= bullets.length)
-				bullet_index = 0;
+			Bullet.bulletIndex++;
+			if (Bullet.bulletIndex >= bullets.length)
+				Bullet.bulletIndex = 0;
+			
 		}
 	}
 }

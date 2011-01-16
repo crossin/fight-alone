@@ -24,17 +24,21 @@ package {
 		public static var maxHeight:int;
 		public static var _explosions:FlxGroup;
 		public static var _gibs:FlxEmitter;
+		
+		//public var _explosionIndex:uint;
 
 		protected var _enemies:FlxGroup;
 		protected var _objects:FlxGroup;
 		protected var _rock:Box;
 		protected var boxes:FlxGroup;
 		protected var bonuses:FlxGroup;
+		protected var base:FlxSprite;
 		protected var _boss:FlxSprite;
 		protected var shield:FlxSprite;
 		private var _timer:Number;
 		private var _timerLast:Number;
 		private var _timerInterval:Number;
+
 
 		override public function create():void {
 			//back
@@ -56,11 +60,22 @@ package {
 			_enemyLifeBar = new FlxSprite();
 			_enemyLifeBarBack = new FlxSprite();
 
-			
+
 			bonuses = new FlxGroup();
 			add(bonuses);
-			
+
 			_objects = new FlxGroup();
+
+			_explosions = new FlxGroup();
+			for (i = 0; i < 10; i++){
+				s = new Explosion();
+				//s.width = 50;
+				//s.height = 10;
+				//s.offset.x = -31;
+				//s.offset.y = -31;
+				s.exists = false;
+				_explosions.add(s);
+			}
 			
 			_gibs = new FlxEmitter();
 			_gibs.setXSpeed(-100, 100);
@@ -86,7 +101,11 @@ package {
 			boxes.add(box);
 			add(boxes);
 			_objects.add(boxes);
-			
+
+			base = new Base();
+			add(base);
+			_objects.add(base);
+
 			var s:FlxSprite;
 			_bullets = new FlxGroup();
 			var i:int;
@@ -121,17 +140,6 @@ package {
 			shield.loadGraphic(ImgShield, true);
 			shield.addAnimation("active", [0, 1, 2, 3], 18);
 			shield.play("active");
-			
-			_explosions = new FlxGroup();
-			for (i = 0; i < 10; i++){
-				s = new Explosion();
-				//s.width = 50;
-				//s.height = 10;
-				//s.offset.x = -31;
-				//s.offset.y = -31;
-				s.exists = false;
-				_explosions.add(s);
-			}
 
 			_boss = new Boss();
 			_boss.exists = false;
@@ -163,6 +171,8 @@ package {
 			_timer = 0;
 			_timerLast = 0;
 			_timerInterval = 5;
+			//_bulletIndex = 0;
+			//_explosionIndex = 0;
 		}
 
 		override public function update():void {
@@ -177,6 +187,8 @@ package {
 			FlxU.overlap(_enemyBullets, _boss, overlapped);
 			FlxU.overlap(_bullets, boxes, overlapped);
 			FlxU.overlap(_enemyBullets, boxes, overlapped);
+			FlxU.overlap(_bullets, base, overlapped);
+			FlxU.overlap(_enemyBullets, base, overlapped);
 			FlxU.collide(_objects, _objects);
 
 			if (FlxG.keys.ONE){
@@ -202,12 +214,12 @@ package {
 				FlxG.fade.start(0xff131c1b, 2, onFade);
 			}
 			/*
-			for each (var eny:Enemy in _enemies.members) {
-				if (!eny.exists) {
-					_enemies.remove(eny, true);
-				}
-			}
-			*/
+			   for each (var eny:Enemy in _enemies.members) {
+			   if (!eny.exists) {
+			   _enemies.remove(eny, true);
+			   }
+			   }
+			 */
 
 			shield.x = _tank.x;
 			shield.y = _tank.y;
@@ -227,17 +239,17 @@ package {
 			if (Object2 is Box){
 				Object2.hurt(1);
 			}
+			if ((Object1 is EnemyBullet) && (Object2 is Base)){
+				Object2.hurt(1);
+			}
 		}
 
 		private function onFade():void {
 			FlxG.state = new EndState();
 		}
-		
-		public function dropBonus(iX:int,iY:int):void {
+
+		public function dropBonus(iX:int, iY:int):void {
 			bonuses.add(new BonusLife(iX - 4, iY - 4));
-			trace(bonuses.members[0])
-			trace(bonuses.members[0].x)
-			//trace(bonuses.members[0].exist)
 		}
 	}
 }

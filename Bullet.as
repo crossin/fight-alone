@@ -12,6 +12,8 @@ package {
 		
 		public var owner:FlxObject;
 		
+		public static var bulletIndex:uint;
+		
 		public function Bullet(){
 			super(0, 0, ImgBullet);
 			exists = false;

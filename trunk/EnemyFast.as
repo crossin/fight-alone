@@ -11,13 +11,13 @@ package {
 
 		private var _bullets:Array;
 
-		public function EnemyFast(from:int){
-			super(from);
+		public function EnemyFast(from:int, pgs:Number){
+			super(from, pgs);
 			loadGraphic(ImgEnemy, true);
-			_maxHealth = 20;
+			_maxHealth = 2;
 			unitVelocity = 70;
 			angleRange = 3;
-			
+
 			health = _maxHealth;
 
 			_bullets = PlayState._enemyBullets.members;

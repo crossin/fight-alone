@@ -11,8 +11,11 @@ package {
 
 		private var _title:FlxText;
 
-		public function EndState(){
-			_title = new FlxText(0, FlxG.height / 3, 320, "replay");
+		public function EndState(hasWin:Boolean){
+			_title = new FlxText(0, FlxG.height / 3, 320, "you lose");
+			if (hasWin){
+				_title.text = "you win";
+			}
 			_title.size = 12;
 			_title.alignment = "center";
 			_title.color = 0xffffff;

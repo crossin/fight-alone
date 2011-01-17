@@ -21,7 +21,7 @@ package {
 			loadGraphic(ImgBase, true);
 			explosions = PlayState._explosions.members;
 			_fixed = true;
-			maxHealth = 4;
+			maxHealth = 40;
 			health = maxHealth;
 			addAnimation("safe", [0, 1], 2);
 			addAnimation("minor", [2, 3], 2);

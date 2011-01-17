@@ -22,12 +22,13 @@ package {
 		private var _explosions:Array;
 		private var timeDead:Number;
 		private var timeExplode:Number;
+		private var progress:Number;
 
 		//private var _bulletIndex:uint;
 		//private var _explosionIndex:uint;
 
 
-		public function Boss(){
+		public function Boss(pgs:Number){
 			//super();
 			loadGraphic(ImgBoss, true);
 			//height = height - 1; //draw the crate 1 pixel into the floor
@@ -37,7 +38,7 @@ package {
 			_timer = 0;
 			_angleDest = 0;
 			_maxHealth = 20;
-
+			progress = pgs;
 			//origin.x=0
 			drag.x = 10;
 			drag.y = 10;
@@ -73,6 +74,7 @@ package {
 				}
 				if (timeDead < 0){
 					exists = false;
+					(FlxG.state as PlayState).updateProgress(progress);
 				}
 				return;
 			}

@@ -8,6 +8,8 @@ package {
 		private var ImgCursor:Class;
 		[Embed(source="res/heart.png")]
 		private var ImgHeart:Class;
+		[Embed(source="res/flag.png")]
+		private var ImgFlag:Class;
 		[Embed(source="res/back.png")]
 		private var ImgBack:Class;
 		[Embed(source="res/shield.png")]
@@ -17,6 +19,7 @@ package {
 		public static var _battery:Battery;
 		public static var _bullets:FlxGroup;
 		public static var _lifeBar:FlxSprite;
+		public static var progressBar:FlxSprite;
 		public static var _enemyLifeBar:FlxSprite;
 		public static var _enemyLifeBarBack:FlxSprite;
 		public static var _enemyBullets:FlxGroup;
@@ -24,7 +27,7 @@ package {
 		public static var maxHeight:int;
 		public static var _explosions:FlxGroup;
 		public static var _gibs:FlxEmitter;
-		
+
 		//public var _explosionIndex:uint;
 
 		protected var _enemies:FlxGroup;
@@ -39,6 +42,8 @@ package {
 		private var _timerLast:Number;
 		private var _timerInterval:Number;
 		private var enemyCount:uint;
+		private var progress:Number;
+		private var hasWin:Boolean;
 
 		override public function create():void {
 			//back
@@ -50,19 +55,22 @@ package {
 
 			// hud
 			var ssf:FlxPoint = new FlxPoint(0, 0);
-			var heart:FlxSprite = new FlxSprite(10, 10, ImgHeart);
+			var heart:FlxSprite = new FlxSprite(20, 10, ImgHeart);
 			heart.scrollFactor = ssf;
 			_lifeBar = new FlxSprite(heart.x + 13, heart.y + 2);
 			_lifeBar.createGraphic(50, 4);
 			_lifeBar.fill(0xfff29a7d);
 			_lifeBar.scrollFactor = ssf;
-
+			var flag:FlxSprite = new FlxSprite(240, 230, ImgFlag);
+			flag.scrollFactor = ssf;
+			progressBar = new FlxSprite(flag.x + 1, flag.y + 2);
+			progressBar.fill(0);
+			progressBar.scrollFactor = ssf;
 			_enemyLifeBar = new FlxSprite();
 			_enemyLifeBarBack = new FlxSprite();
 
 
-			bonuses = new FlxGroup();
-			add(bonuses);
+
 
 			_objects = new FlxGroup();
 
@@ -76,7 +84,7 @@ package {
 				s.exists = false;
 				_explosions.add(s);
 			}
-			
+
 			_gibs = new FlxEmitter();
 			_gibs.setXSpeed(-100, 100);
 			_gibs.setYSpeed(-100, 100);
@@ -88,6 +96,9 @@ package {
 			_gibs.createSprites(ImgGibs, 50, 16, true, 0.2);
 			add(_gibs);
 			_objects.add(_gibs);
+
+			bonuses = new FlxGroup();
+			add(bonuses);
 
 			boxes = new FlxGroup();
 			var box:Box;
@@ -136,12 +147,12 @@ package {
 			//_enemies.add(enemy);
 			//}
 
-			shield = new FlxSprite();
-			shield.loadGraphic(ImgShield, true);
-			shield.addAnimation("active", [0, 1, 2, 3], 18);
-			shield.play("active");
+			//shield = new FlxSprite();
+			//shield.loadGraphic(ImgShield, true);
+			//shield.addAnimation("active", [0, 1, 2, 3], 18);
+			//shield.play("active");
 
-			_boss = new Boss();
+			_boss = new Boss(20);
 			_boss.exists = false;
 			add(_enemyBullets);
 			add(_boss);
@@ -149,14 +160,15 @@ package {
 			add(_bullets);
 			add(_battery);
 			add(_enemies);
-			add(shield);
+			//add(shield);
 			add(_explosions);
 			add(_enemyLifeBarBack);
 			add(_enemyLifeBar);
 
 			add(heart);
 			add(_lifeBar);
-
+			add(flag);
+			add(progressBar);
 
 			_objects.add(_tank);
 			_objects.add(_enemies);
@@ -174,6 +186,8 @@ package {
 			//_bulletIndex = 0;
 			//_explosionIndex = 0;
 			enemyCount = 0;
+			progress = 0;
+			hasWin = false;
 		}
 
 		override public function update():void {
@@ -201,9 +215,9 @@ package {
 
 			// add enemies
 			_timer += FlxG.elapsed;
-			if ((enemyCount < 10) && (_timer % _timerInterval < _timerLast % _timerInterval)) {
-				_enemies.add(new EnemyFast(int(FlxU.random() * 4)));
-				enemyCount ++;
+			if ((enemyCount < 10) && (_timer % _timerInterval < _timerLast % _timerInterval)){
+				_enemies.add(new EnemyFast(int(FlxU.random() * 4), 8));
+				enemyCount++;
 			}
 			// add boss
 			if (_timerLast < 1 && _timer > 1){
@@ -211,20 +225,20 @@ package {
 			}
 			_timerLast = _timer;
 
-			// check end
+			// check lose
 			if (!_tank.exists || !base.active){
 				FlxG.fade.start(0xff131c1b, 2, onFade);
 			}
-			/*
-			   for each (var eny:Enemy in _enemies.members) {
-			   if (!eny.exists) {
-			   _enemies.remove(eny, true);
-			   }
-			   }
-			 */
+		/*
+		   for each (var eny:Enemy in _enemies.members) {
+		   if (!eny.exists) {
+		   _enemies.remove(eny, true);
+		   }
+		   }
+		 */
 
-			shield.x = _tank.x;
-			shield.y = _tank.y;
+			 //shield.x = _tank.x;
+			 //shield.y = _tank.y;
 		}
 
 		protected function overlapped(Object1:FlxObject, Object2:FlxObject):void {
@@ -247,11 +261,26 @@ package {
 		}
 
 		private function onFade():void {
-			FlxG.state = new EndState();
+			FlxG.state = new EndState(hasWin);
 		}
 
 		public function dropBonus(iX:int, iY:int):void {
 			bonuses.add(new BonusLife(iX - 4, iY - 4));
+		}
+
+		public function updateProgress(p:uint):void {
+			progress += p;
+			var w:int = progress / 100 * 50;
+			if (w > 0){
+				progressBar.createGraphic(w, 2, 0xff00ff00)
+			} else {
+				progressBar.fill(0);
+			}
+			// check win
+			if (progress == 100){
+				hasWin = true;
+				FlxG.fade.start(0xff131c1b, 2, onFade);
+			}
 		}
 	}
 }

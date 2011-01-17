@@ -22,11 +22,12 @@ package {
 		private var shotClock:Number;
 		private var _bullets:Array;
 		private var _explosions:Array;
+		private var progress:Number;
 		//private var _bulletIndex:uint;
 		//private var _explosionIndex:uint;
 
 
-		public function Enemy(from:int){
+		public function Enemy(from:int, pgs:Number){
 			//super();
 			switch (from){
 				case 0:
@@ -47,6 +48,7 @@ package {
 			//height = height - 1; //draw the crate 1 pixel into the floor
 			//acceleration.y = 400;
 			_tank = PlayState._tank;
+			progress = pgs;
 			//_gibs = gibs;
 			_timer = 0;
 			_angleDest = 0;
@@ -202,6 +204,7 @@ package {
 			//FlxG.flash.start(0xffd8eba2, 0.35);
 			//_jets.kill();
 			explode();
+			(FlxG.state as PlayState).updateProgress(progress);
 			//_gibs.at(this);
 			//_gibs.start(true, 1, 8);
 			//FlxG.score += 200;

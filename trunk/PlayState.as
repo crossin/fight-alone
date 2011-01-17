@@ -38,7 +38,7 @@ package {
 		private var _timer:Number;
 		private var _timerLast:Number;
 		private var _timerInterval:Number;
-
+		private var enemyCount:uint;
 
 		override public function create():void {
 			//back
@@ -173,6 +173,7 @@ package {
 			_timerInterval = 5;
 			//_bulletIndex = 0;
 			//_explosionIndex = 0;
+			enemyCount = 0;
 		}
 
 		override public function update():void {
@@ -200,8 +201,9 @@ package {
 
 			// add enemies
 			_timer += FlxG.elapsed;
-			if (_timer % _timerInterval < _timerLast % _timerInterval){
+			if ((enemyCount < 10) && (_timer % _timerInterval < _timerLast % _timerInterval)) {
 				_enemies.add(new EnemyFast(int(FlxU.random() * 4)));
+				enemyCount ++;
 			}
 			// add boss
 			if (_timerLast < 1 && _timer > 1){
@@ -210,7 +212,7 @@ package {
 			_timerLast = _timer;
 
 			// check end
-			if (!_boss.exists && _boss.dead){
+			if (!_tank.exists || !base.active){
 				FlxG.fade.start(0xff131c1b, 2, onFade);
 			}
 			/*

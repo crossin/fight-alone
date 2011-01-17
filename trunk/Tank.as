@@ -12,6 +12,7 @@ package {
 		protected var angle_dest:Number;
 		protected var battery:Battery;
 		protected var bullets:Array;
+		private var explosions:Array;
 		//protected var bullet_index:int;
 		protected var shotClock:Number;
 		protected var shotSpeed:Number;
@@ -35,6 +36,7 @@ package {
 			health = maxHealth;
 			battery = PlayState._battery;
 			bullets = PlayState._bullets.members;
+			explosions = PlayState._explosions.members;
 			//bulletIndex = (FlxG.state as PlayState)._bulletIndex;
 			//_explosionIndex = (FlxG.state as PlayState)._explosionIndex; = 0;
 			lifeBar = PlayState._lifeBar;
@@ -183,7 +185,8 @@ package {
 			battery.kill();
 			_shadow.kill();
 			super.kill();
-			flicker(-1);
+			flicker( -1);
+			explode();
 		}
 
 		public function setType(t:int):void {
@@ -246,6 +249,15 @@ package {
 			if (Bullet.bulletIndex >= bullets.length)
 				Bullet.bulletIndex = 0;
 			
+		}
+		
+		private function explode():void {
+			var e:Explosion = explosions[Explosion.explosionIndex];
+			e.reset(x, y);
+			e.play("explode");
+			Explosion.explosionIndex++;
+			if (Explosion.explosionIndex >= explosions.length)
+				Explosion.explosionIndex = 0;
 		}
 	}
 }

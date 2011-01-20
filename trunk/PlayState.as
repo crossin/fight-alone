@@ -265,7 +265,7 @@ package {
 		}
 
 		public function dropBonus(iX:int, iY:int):void {
-			bonuses.add(new BonusLife(iX - 4, iY - 4));
+			bonuses.add(new Bonus(iX - 4, iY - 4));
 		}
 
 		public function updateProgress(p:uint):void {

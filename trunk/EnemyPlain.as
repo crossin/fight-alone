@@ -16,6 +16,7 @@ package {
 			loadGraphic(ImgEnemy, true);
 			_maxHealth = 20;
 			health = _maxHealth;
+			score = 50;
 
 			_bullets = PlayState._enemyBullets.members;
 		}

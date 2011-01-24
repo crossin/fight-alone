@@ -101,7 +101,7 @@ package {
 		private function explode():void {
 			var e:Explosion = explosions[Explosion.explosionIndex];
 			e.reset(x - e.width / 2 + width * FlxU.random(), y - e.height / 2 + height * FlxU.random());
-			e.play("explode");
+			e.play("explode", true);
 			Explosion.explosionIndex++;
 			if (Explosion.explosionIndex >= explosions.length)
 				Explosion.explosionIndex = 0;

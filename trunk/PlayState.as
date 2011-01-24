@@ -44,6 +44,9 @@ package {
 		private var enemyCount:uint;
 		private var progress:Number;
 		private var hasWin:Boolean;
+		private var score:int;
+		private var txtScore:FlxText;
+		private var txtGold:FlxText;
 
 		override public function create():void {
 			//back
@@ -68,10 +71,20 @@ package {
 			progressBar.scrollFactor = ssf;
 			_enemyLifeBar = new FlxSprite();
 			_enemyLifeBarBack = new FlxSprite();
-
-
-
-
+			txtScore = new FlxText(200, 10, 100, "0");
+			txtScore.size = 8;
+			//txtScore.alignment = "center";
+			txtScore.color = 0x336699;
+			txtScore.antialiasing = false;
+			txtScore.scrollFactor = ssf;
+			//txtScore.alpha = 0.5;
+			txtGold = new FlxText(20, 220, 100, "0");
+			txtGold.size = 8;
+			//txtGold.alignment = "center";
+			txtGold.color = 0x999933;
+			txtGold.antialiasing = false;
+			txtGold.scrollFactor = ssf;
+			
 			_objects = new FlxGroup();
 
 			_explosions = new FlxGroup();
@@ -93,7 +106,7 @@ package {
 			_gibs.gravity = 0;
 			_gibs.particleDrag.x = 200;
 			_gibs.particleDrag.y = 200;
-			_gibs.createSprites(ImgGibs, 50, 16, true, 0.2);
+			_gibs.createSprites(ImgGibs);
 			add(_gibs);
 			_objects.add(_gibs);
 
@@ -169,6 +182,8 @@ package {
 			add(_lifeBar);
 			add(flag);
 			add(progressBar);
+			add(txtScore);
+			add(txtGold);
 
 			_objects.add(_tank);
 			_objects.add(_enemies);
@@ -204,6 +219,7 @@ package {
 			FlxU.overlap(_enemyBullets, boxes, overlapped);
 			FlxU.overlap(_bullets, base, overlapped);
 			FlxU.overlap(_enemyBullets, base, overlapped);
+			FlxU.overlap(bonuses, _tank, overlapped);
 			FlxU.collide(_objects, _objects);
 
 			if (FlxG.keys.ONE){
@@ -242,21 +258,23 @@ package {
 		}
 
 		protected function overlapped(Object1:FlxObject, Object2:FlxObject):void {
-			if ((Object1 as Bullet).owner == Object2){
+			if ((Object1 is Bullet) && ((Object1 as Bullet).owner == Object2)){
 				return;
 			}
 			Object1.kill();
-			if (Object2 is Tank){
-				Object2.hurt(1);
-			}
 			if (!(Object1 is EnemyBullet) && ((Object2 is Enemy) || (Object2 is Boss))){
 				Object2.hurt(1);
 			}
 			if (Object2 is Box){
 				Object2.hurt(1);
 			}
-			if ((Object1 is EnemyBullet) && (Object2 is Base)){
+			if ((Object1 is EnemyBullet) && ((Object2 is Base) || (Object2 is Tank))){
 				Object2.hurt(1);
+			}
+			if ((Object1 is Bonus) && (Object2 is Tank)) {
+				// add gold
+				FlxG.score += 1;
+				txtGold.text = FlxG.score.toString();
 			}
 		}
 
@@ -268,7 +286,11 @@ package {
 			bonuses.add(new Bonus(iX - 4, iY - 4));
 		}
 
-		public function updateProgress(p:uint):void {
+		public function updateProgress(p:uint, s:int):void {
+			// update score
+			score += s;
+			txtScore.text = score.toString();
+			
 			progress += p;
 			var w:int = progress / 100 * 50;
 			if (w > 0){

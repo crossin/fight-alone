@@ -17,7 +17,7 @@ package {
 			_maxHealth = 2;
 			unitVelocity = 70;
 			angleRange = 3;
-
+			score = 150;
 			health = _maxHealth;
 
 			_bullets = PlayState._enemyBullets.members;

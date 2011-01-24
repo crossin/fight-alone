@@ -19,7 +19,7 @@ package {
 
 		override public function update():void {
 			super.update();
-			if (finished){
+			if (finished) {
 				exists = false;
 			}
 		}

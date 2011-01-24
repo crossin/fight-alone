@@ -74,7 +74,7 @@ package {
 				}
 				if (timeDead < 0){
 					exists = false;
-					(FlxG.state as PlayState).updateProgress(progress);
+					(FlxG.state as PlayState).updateProgress(progress, 0);
 				}
 				return;
 			}
@@ -256,7 +256,7 @@ package {
 		private function explode():void {
 			var e:Explosion = _explosions[Explosion.explosionIndex];
 			e.reset(x - e.width / 2 + width * FlxU.random(), y - e.height / 2 + height * FlxU.random());
-			e.play("explode");
+			e.play("explode", true);
 			Explosion.explosionIndex++;
 			if (Explosion.explosionIndex >= _explosions.length)
 				Explosion.explosionIndex = 0;

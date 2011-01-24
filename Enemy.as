@@ -17,12 +17,14 @@ package {
 		protected var _maxHealth:Number;
 		protected var unitVelocity:Number;
 		protected var angleRange:Number;
+		protected var score:uint;
 		private var _lifeBar:FlxSprite;
 		private var _lifeBarBack:FlxSprite;
 		private var shotClock:Number;
 		private var _bullets:Array;
 		private var _explosions:Array;
 		private var progress:Number;
+
 		//private var _bulletIndex:uint;
 		//private var _explosionIndex:uint;
 
@@ -59,6 +61,7 @@ package {
 			drag.x = 10;
 			drag.y = 10;
 			health = _maxHealth;
+			score = 100;
 			//maxAngular = 5;
 			//angularDrag = 20;
 			//maxVelocity.x = 10;
@@ -204,7 +207,7 @@ package {
 			//FlxG.flash.start(0xffd8eba2, 0.35);
 			//_jets.kill();
 			explode();
-			(FlxG.state as PlayState).updateProgress(progress);
+			(FlxG.state as PlayState).updateProgress(progress, score);
 			//_gibs.at(this);
 			//_gibs.start(true, 1, 8);
 			//FlxG.score += 200;
@@ -230,7 +233,7 @@ package {
 		private function explode():void {
 			var e:Explosion = _explosions[Explosion.explosionIndex];
 			e.reset(x, y);
-			e.play("explode");
+			e.play("explode", true);
 			Explosion.explosionIndex++;
 			if (Explosion.explosionIndex >= _explosions.length)
 				Explosion.explosionIndex = 0;

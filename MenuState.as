@@ -10,6 +10,7 @@ package {
 		private var ImgCursor:Class;
 
 		private var _title:FlxText;
+		private var levels:Array;
 
 		public function MenuState(){
 			_title = new FlxText(0, FlxG.height / 3, 320, "Tankie");
@@ -18,7 +19,7 @@ package {
 			_title.color = 0xffffff;
 			_title.antialiasing = true;
 			add(_title);
-
+			
 			FlxG.mouse.show(ImgCursor);
 		}
 
@@ -30,7 +31,7 @@ package {
 		}
 
 		private function onFade():void {
-			FlxG.state = new PlayState();
+			FlxG.state = new LevelState();
 		}
 	}
 

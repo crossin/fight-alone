@@ -86,6 +86,18 @@ package {
 			FlxG.flash.start(0xffd8eba2, 0.5);
 			FlxG.fade.start(0xff131c1b, 1, onFade);
 		}
+		
+				private function onReplay():void {
+			action = LevelState;
+			FlxG.flash.start(0xffd8eba2, 0.5);
+			FlxG.fade.start(0xff131c1b, 1, onFade);
+		}
+		
+				private function onNext():void {
+			action = LevelState;
+			FlxG.flash.start(0xffd8eba2, 0.5);
+			FlxG.fade.start(0xff131c1b, 1, onFade);
+		}
 	}
 
 }

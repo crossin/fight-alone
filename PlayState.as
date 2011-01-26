@@ -84,7 +84,7 @@ package {
 			txtGold.color = 0x999933;
 			txtGold.antialiasing = false;
 			txtGold.scrollFactor = ssf;
-			
+
 			_objects = new FlxGroup();
 
 			_explosions = new FlxGroup();
@@ -119,7 +119,7 @@ package {
 
 			// to be overrided by every level
 			makeScene();
-			
+
 			base = new Base();
 			add(base);
 			_objects.add(base);
@@ -258,19 +258,19 @@ package {
 			if ((Object1 is EnemyBullet) && ((Object2 is Base) || (Object2 is Tank))){
 				Object2.hurt(1);
 			}
-			if ((Object1 is Bonus) && (Object2 is Tank)) {
+			if ((Object1 is Bonus) && (Object2 is Tank)){
 				// add gold
 				FlxG.score += 1;
 				txtGold.text = FlxG.score.toString();
 			}
 		}
-		
+
 		protected function addEnemy():void {
 		}
 
 		protected function makeScene():void {
 		}
-		
+
 		private function onFade():void {
 			FlxG.state = new EndState(hasWin);
 		}
@@ -283,11 +283,12 @@ package {
 			// update score
 			score += s;
 			txtScore.text = score.toString();
-			
+
 			progress += p;
+			progress = progress > 100 ? 100 : progress;
 			var w:int = progress / 100 * 50;
 			if (w > 0){
-				progressBar.createGraphic(w, 2, 0xff00ff00)
+				progressBar.createGraphic(w, 2, 0xff00ff00);
 			} else {
 				progressBar.fill(0);
 			}

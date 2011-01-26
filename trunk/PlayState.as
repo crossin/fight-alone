@@ -10,8 +10,8 @@ package {
 		private var ImgHeart:Class;
 		[Embed(source="res/flag.png")]
 		private var ImgFlag:Class;
-		[Embed(source="res/back.png")]
-		private var ImgBack:Class;
+		//[Embed(source="res/back.png")]
+		//private var ImgBack:Class;
 		[Embed(source="res/shield.png")]
 		private var ImgShield:Class;
 
@@ -32,28 +32,28 @@ package {
 
 		protected var _enemies:FlxGroup;
 		protected var _objects:FlxGroup;
-		protected var _rock:Box;
+		//protected var _rock:Box;
+		protected var back:FlxTileblock;
 		protected var boxes:FlxGroup;
 		protected var bonuses:FlxGroup;
 		protected var base:FlxSprite;
 		protected var _boss:FlxSprite;
 		protected var shield:FlxSprite;
-		private var _timer:Number;
-		private var _timerLast:Number;
-		private var _timerInterval:Number;
-		private var enemyCount:uint;
-		private var progress:Number;
-		private var hasWin:Boolean;
-		private var score:int;
-		private var txtScore:FlxText;
-		private var txtGold:FlxText;
+		protected var _timer:Number;
+		protected var _timerLast:Number;
+		protected var _timerInterval:Number;
+		protected var enemyCount:uint;
+		protected var progress:Number;
+		protected var hasWin:Boolean;
+		protected var score:int;
+		protected var txtScore:FlxText;
+		protected var txtGold:FlxText;
 
 		override public function create():void {
 			//back
 			maxWidth = 400;
 			maxHeight = 300;
-			var back:FlxTileblock = new FlxTileblock(0, 0, maxWidth, maxHeight);
-			back.loadGraphic(ImgBack);
+			back = new FlxTileblock(0, 0, maxWidth, maxHeight);
 			add(back);
 
 			// hud
@@ -114,18 +114,12 @@ package {
 			add(bonuses);
 
 			boxes = new FlxGroup();
-			var box:Box;
-			box = new Box(100, 100);
-			boxes.add(box);
-			box = new Box(100, 110);
-			boxes.add(box);
-			box = new Box(110, 100);
-			boxes.add(box);
-			box = new Box(110, 110);
-			boxes.add(box);
 			add(boxes);
 			_objects.add(boxes);
 
+			// to be overrided by every level
+			makeScene();
+			
 			base = new Base();
 			add(base);
 			_objects.add(base);
@@ -187,7 +181,7 @@ package {
 
 			_objects.add(_tank);
 			_objects.add(_enemies);
-			_objects.add(_rock);
+			//_objects.add(_rock);
 			_objects.add(_boss);
 
 
@@ -231,14 +225,7 @@ package {
 
 			// add enemies
 			_timer += FlxG.elapsed;
-			if ((enemyCount < 10) && (_timer % _timerInterval < _timerLast % _timerInterval)){
-				_enemies.add(new EnemyFast(int(FlxU.random() * 4), 8));
-				enemyCount++;
-			}
-			// add boss
-			if (_timerLast < 1 && _timer > 1){
-				_boss.reset(FlxG.width / 2, -40);
-			}
+			addEnemy();
 			_timerLast = _timer;
 
 			// check lose
@@ -277,7 +264,13 @@ package {
 				txtGold.text = FlxG.score.toString();
 			}
 		}
+		
+		protected function addEnemy():void {
+		}
 
+		protected function makeScene():void {
+		}
+		
 		private function onFade():void {
 			FlxG.state = new EndState(hasWin);
 		}

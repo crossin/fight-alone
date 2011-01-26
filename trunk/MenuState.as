@@ -8,9 +8,8 @@ package {
 	public class MenuState extends FlxState {
 		[Embed(source="res/cursor.png")]
 		private var ImgCursor:Class;
-
+		
 		private var _title:FlxText;
-		private var levels:Array;
 
 		public function MenuState(){
 			_title = new FlxText(0, FlxG.height / 3, 320, "Tankie");

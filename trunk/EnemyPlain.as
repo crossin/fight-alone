@@ -11,8 +11,8 @@ package {
 
 		private var _bullets:Array;
 
-		public function EnemyPlain(from:int){
-			super(from);
+		public function EnemyPlain(from:int, pgs:Number){
+			super(from, pgs);
 			loadGraphic(ImgEnemy, true);
 			_maxHealth = 20;
 			health = _maxHealth;

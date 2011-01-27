@@ -170,7 +170,8 @@ package {
 			battery.flicker(0.2);
 			var w:int = health / maxHealth * 50;
 			if (w > 0){
-				lifeBar.createGraphic(w, 4, 0xfff29a7d)
+				lifeBar.createGraphic(w, 4, 0xfff29a7d);
+				lifeBar.fill(0xfff29a7d);
 			} else {
 				lifeBar.fill(0);
 			}

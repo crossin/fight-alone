@@ -11,10 +11,12 @@ package {
 
 		private var _title:FlxText;
 		private var action:Class;
+		private var index:uint;
 
-		public function EndState(hasWin:Boolean){
+		public function EndState(hasWin:Boolean, id:uint){
 			_title = new FlxText(0, FlxG.height / 3, 320, "you lose");
 			action = MenuState;
+			index = id;
 			if (hasWin){
 				_title.text = "you win";
 			}
@@ -41,7 +43,7 @@ package {
 			b.loadText(t1, t2);
 			add(b);
 			// replay
-			b = new FlxButton(135, 150, onLevels);
+			b = new FlxButton(135, 150, onReplay);
 			b.loadGraphic((new FlxSprite()).createGraphic(50, 30, 0xff3a5c39), (new FlxSprite()).createGraphic(50, 30, 0xff729954));
 			t1 = new FlxText(0, 8, 48, "Replay");
 			t1.color = 0x729954;
@@ -54,7 +56,7 @@ package {
 			b.loadText(t1, t2);
 			add(b);
 			// next level
-			b = new FlxButton(195, 150, onLevels);
+			b = new FlxButton(195, 150, onNext);
 			b.loadGraphic((new FlxSprite()).createGraphic(50, 30, 0xff3a5c39), (new FlxSprite()).createGraphic(50, 30, 0xff729954));
 			t1 = new FlxText(0, 8, 48, "Next");
 			t1.color = 0x729954;
@@ -87,14 +89,14 @@ package {
 			FlxG.fade.start(0xff131c1b, 1, onFade);
 		}
 		
-				private function onReplay():void {
-			action = LevelState;
+		private function onReplay():void {
+			action = LevelState.levels[index-1];
 			FlxG.flash.start(0xffd8eba2, 0.5);
 			FlxG.fade.start(0xff131c1b, 1, onFade);
 		}
 		
-				private function onNext():void {
-			action = LevelState;
+		private function onNext():void {
+			action = LevelState.levels[index];
 			FlxG.flash.start(0xffd8eba2, 0.5);
 			FlxG.fade.start(0xff131c1b, 1, onFade);
 		}

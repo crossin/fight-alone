@@ -48,6 +48,7 @@ package {
 		protected var score:int;
 		protected var txtScore:FlxText;
 		protected var txtGold:FlxText;
+		protected var index:uint;
 
 		override public function create():void {
 			//back
@@ -197,6 +198,7 @@ package {
 			enemyCount = 0;
 			progress = 0;
 			hasWin = false;
+			index = 0;
 		}
 
 		override public function update():void {
@@ -272,7 +274,7 @@ package {
 		}
 
 		private function onFade():void {
-			FlxG.state = new EndState(hasWin);
+			FlxG.state = new EndState(hasWin, index);
 		}
 
 		public function dropBonus(iX:int, iY:int):void {

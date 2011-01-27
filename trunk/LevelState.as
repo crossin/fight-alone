@@ -13,7 +13,7 @@ package {
 		private var _title:FlxText;
 		private var btnLevels:FlxGroup;
 		
-		private var levels:Array = [PlayState1, PlayState2];
+		public static var levels:Array = [PlayState1, PlayState2];
 
 		public function LevelState(){
 			_title = new FlxText(0, 0, 320, "Choose Level");

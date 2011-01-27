@@ -9,7 +9,7 @@ package {
 
 		override public function create():void {
 			super.create();
-			
+			index = 1;
 		}
 
 		override protected function addEnemy():void {

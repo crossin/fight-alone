@@ -91,7 +91,7 @@ package {
 				}
 				var w:int = health / maxHealth * width;
 				if (w > 0){
-					lifeBar.createGraphic(w, 1, c)
+					lifeBar.createGraphic(w, 1, c);
 					lifeBar.fill(c);
 				} else {
 					lifeBar.fill(0);

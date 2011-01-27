@@ -168,7 +168,8 @@ package {
 				}
 				var w:int = health / _maxHealth * width;
 				if (w > 0){
-					_lifeBar.createGraphic(w, 1, c)
+					_lifeBar.createGraphic(w, 1, c);
+					_lifeBar.fill(c);
 				} else {
 					_lifeBar.fill(0);
 				}

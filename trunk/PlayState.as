@@ -291,6 +291,7 @@ package {
 			var w:int = progress / 100 * 50;
 			if (w > 0){
 				progressBar.createGraphic(w, 2, 0xff00ff00);
+				progressBar.fill(0xff00ff00);
 			} else {
 				progressBar.fill(0);
 			}

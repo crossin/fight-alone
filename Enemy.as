@@ -164,7 +164,7 @@ package {
 				_lifeBarBack.x = x - 1;
 				_lifeBarBack.y = y - 3;
 				_lifeBar.visible = true;
-				//_lifeBarBack.visible = true;
+				_lifeBarBack.visible = true;
 				_lifeBarBack.createGraphic(width + 2, 3);
 				_lifeBarBack.fill(0xff000000);
 
@@ -180,16 +180,17 @@ package {
 				
 				if (w > 0) {
 					_lifeBar.createGraphic(w, 1, c);
+					_lifeBar.fill(c);
 				} else {
 					_lifeBar.fill(0);
 				}
 			}
 		}
 
-		override public function render():void {
-			super.render();
-
-		}
+		//override public function render():void {
+			//super.render();
+//
+		//}
 
 		override public function hurt(Damage:Number):void {
 			//FlxG.play(SndHit);

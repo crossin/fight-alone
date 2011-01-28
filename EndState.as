@@ -19,6 +19,9 @@ package {
 			index = id;
 			if (hasWin){
 				_title.text = "you win";
+				if ((index == LevelState.levelUnlock) && (index < LevelState.levelMax)) {
+					LevelState.levelUnlock ++;
+				}
 			}
 			_title.size = 12;
 			_title.alignment = "center";

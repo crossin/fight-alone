@@ -11,16 +11,28 @@ package {
 		public function LevelButton(iX:int, iY:int, index:uint){
 			super(iX, iY, onButton);
 			level = index;
-			loadGraphic((new FlxSprite()).createGraphic(30, 30, 0xff3a5c39), (new FlxSprite()).createGraphic(30, 30, 0xff729954));
-			var t1:FlxText = new FlxText(0, 4, 28, level.toString());
-			t1.color = 0x729954;
-			t1.size = 16;
-			t1.alignment = "center";
-			var t2:FlxText = new FlxText(0, 4, 28, level.toString());
-			t2.color = 0xd8eba2;
-			t2.size = 16;
-			t2.alignment = "center";
-			loadText(t1, t2);
+			var t1:FlxText;
+			var t2:FlxText;
+			if (level <= LevelState.levelUnlock) {
+				loadGraphic((new FlxSprite()).createGraphic(30, 30, 0xff3a5c39), (new FlxSprite()).createGraphic(30, 30, 0xff729954));
+				t1 = new FlxText(0, 4, 28, level.toString());
+				t1.color = 0x729954;
+				t1.size = 16;
+				t1.alignment = "center";
+				t2 = new FlxText(0, 4, 28, level.toString());
+				t2.color = 0xd8eba2;
+				t2.size = 16;
+				t2.alignment = "center";
+				loadText(t1, t2);
+			} else {
+				_callback = null;
+				loadGraphic((new FlxSprite()).createGraphic(30, 30, 0xff818181));
+				t1 = new FlxText(0, 4, 28, level.toString());
+				t1.color = 0xc1c1c1;
+				t1.size = 16;
+				t1.alignment = "center";
+				loadText(t1);
+			}
 		}
 
 		private function onButton():void {

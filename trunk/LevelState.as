@@ -12,10 +12,10 @@ package {
 
 		private var _title:FlxText;
 		private var btnLevels:FlxGroup;
-		
+
 		public static var levels:Array = [PlayState1, PlayState2];
 		public static var levelMax:uint = 2;
-		public static var levelUnlock:uint = 1;
+		public static var levelUnlock:uint = 2;
 
 		public function LevelState(){
 			_title = new FlxText(0, 0, 320, "Choose Level");
@@ -33,29 +33,51 @@ package {
 			for (i = 0; i < levelMax; i++){
 				b = new LevelButton(60 + i % 5 * 40, 50 + int(i / 5) * 40, i + 1);
 				//if (i < levelUnlock) {
-					//b.loadGraphic((new FlxSprite()).createGraphic(30, 30, 0xff3a5c39), (new FlxSprite()).createGraphic(30, 30, 0xff729954));
-					//t1 = new FlxText(0, 4, 28, (i + 1).toString());
-					//t1.color = 0x729954;
-					//t1.size = 16;
-					//t1.alignment = "center";
-					//t2 = new FlxText(0, 4, 28, (i + 1).toString());
-					//t2.color = 0xd8eba2;
-					//t2.size = 16;
-					//t2.alignment = "center";
-					//b.loadText(t1, t2);
+				//b.loadGraphic((new FlxSprite()).createGraphic(30, 30, 0xff3a5c39), (new FlxSprite()).createGraphic(30, 30, 0xff729954));
+				//t1 = new FlxText(0, 4, 28, (i + 1).toString());
+				//t1.color = 0x729954;
+				//t1.size = 16;
+				//t1.alignment = "center";
+				//t2 = new FlxText(0, 4, 28, (i + 1).toString());
+				//t2.color = 0xd8eba2;
+				//t2.size = 16;
+				//t2.alignment = "center";
+				//b.loadText(t1, t2);
 				//}
 
 				btnLevels.add(b);
 			}
 			add(btnLevels);
 
-			//levels = new Array(PlayState1);
+			// shop
+			b = new FlxButton(135, 190, onShop);
+			b.loadGraphic((new FlxSprite()).createGraphic(50, 30, 0xff3a5c39), (new FlxSprite()).createGraphic(50, 30, 0xff729954));
+			t1 = new FlxText(0, 8, 48, "Shop");
+			t1.color = 0x729954;
+			t1.size = 8;
+			t1.alignment = "center";
+			t2 = new FlxText(0, 8, 48, "Shop");
+			t2.color = 0xd8eba2;
+			t2.size = 8;
+			t2.alignment = "center";
+			b.loadText(t1, t2);
+			add(b);
 
+			//levels = new Array(PlayState1);
 			FlxG.mouse.show(ImgCursor);
 		}
 
 		public function playLevel(index:uint):void {
-			FlxG.state = new levels[index-1];
+			FlxG.state = new levels[index - 1];
+		}
+
+		private function onShop():void {
+			FlxG.flash.start(0xffd8eba2, 1);
+			FlxG.fade.start(0xff131c1b, 1, onShopFade);
+		}
+
+		private function onShopFade():void {
+			FlxG.state = new ShopState();
 		}
 	}
 }

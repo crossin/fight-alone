@@ -19,8 +19,8 @@ package {
 			index = id;
 			if (hasWin){
 				_title.text = "you win";
-				if ((index == LevelState.levelUnlock) && (index < LevelState.levelMax)) {
-					LevelState.levelUnlock ++;
+				if ((index == LevelState.levelUnlock) && (index < LevelState.levelMax)){
+					LevelState.levelUnlock++;
 				}
 			}
 			_title.size = 12;
@@ -71,38 +71,61 @@ package {
 			t2.alignment = "center";
 			b.loadText(t1, t2);
 			add(b);
+			// shop
+			b = new FlxButton(135, 190, onShop);
+			b.loadGraphic((new FlxSprite()).createGraphic(50, 30, 0xff3a5c39), (new FlxSprite()).createGraphic(50, 30, 0xff729954));
+			t1 = new FlxText(0, 8, 48, "Shop");
+			t1.color = 0x729954;
+			t1.size = 8;
+			t1.alignment = "center";
+			t2 = new FlxText(0, 8, 48, "Shop");
+			t2.color = 0xd8eba2;
+			t2.size = 8;
+			t2.alignment = "center";
+			b.loadText(t1, t2);
+			add(b);
 
 			FlxG.mouse.show(ImgCursor);
 		}
 
-		//override public function update():void {
-		//if (FlxG.mouse.justPressed()){
-		//FlxG.flash.start(0xffd8eba2, 0.5);
-		//FlxG.fade.start(0xff131c1b, 1, onFade);
-		//}
-		//}
-
-		private function onFade():void {
-			FlxG.state = new action;
-		}
-
 		private function onLevels():void {
-			action = LevelState;
-			FlxG.flash.start(0xffd8eba2, 0.5);
-			FlxG.fade.start(0xff131c1b, 1, onFade);
+			FlxG.flash.start(0xffd8eba2, 1);
+			FlxG.fade.start(0xff131c1b, 1, onLevelsFade);
 		}
-		
+
+		private function onLevelsFade():void {
+			FlxG.state = new LevelState();
+		}
+
 		private function onReplay():void {
-			action = LevelState.levels[index-1];
-			FlxG.flash.start(0xffd8eba2, 0.5);
-			FlxG.fade.start(0xff131c1b, 1, onFade);
+			FlxG.flash.start(0xffd8eba2, 1);
+			FlxG.fade.start(0xff131c1b, 1, onReplayFade);
 		}
-		
+
+		private function onReplayFade():void {
+			FlxG.state = new LevelState.levels[index - 1];
+		}
+
 		private function onNext():void {
-			action = LevelState.levels[index];
-			FlxG.flash.start(0xffd8eba2, 0.5);
-			FlxG.fade.start(0xff131c1b, 1, onFade);
+			FlxG.flash.start(0xffd8eba2, 1);
+			FlxG.fade.start(0xff131c1b, 1, onNextFade);
+		}
+
+		private function onNextFade():void {
+			if (index < LevelState.levelMax){
+				FlxG.state = new LevelState.levels[index];
+			} else {
+				FlxG.state = new ClearState();
+			}
+		}
+
+		private function onShop():void {
+			FlxG.flash.start(0xffd8eba2, 1);
+			FlxG.fade.start(0xff131c1b, 1, onShopFade);
+		}
+
+		private function onShopFade():void {
+			FlxG.state = new ShopState();
 		}
 	}
-
 }

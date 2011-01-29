@@ -13,7 +13,7 @@ package {
 			level = index;
 			var t1:FlxText;
 			var t2:FlxText;
-			if (level <= LevelState.levelUnlock) {
+			if (level <= LevelState.levelUnlock){
 				loadGraphic((new FlxSprite()).createGraphic(30, 30, 0xff3a5c39), (new FlxSprite()).createGraphic(30, 30, 0xff729954));
 				t1 = new FlxText(0, 4, 28, level.toString());
 				t1.color = 0x729954;
@@ -36,10 +36,10 @@ package {
 		}
 
 		private function onButton():void {
-			FlxG.flash.start(0xffd8eba2, 0.5);
+			FlxG.flash.start(0xffd8eba2, 1);
 			FlxG.fade.start(0xff131c1b, 1, onFade);
 		}
-		
+
 		private function onFade():void {
 			(FlxG.state as LevelState).playLevel(level);
 		}

@@ -5,20 +5,20 @@ package {
 	 * ...
 	 * @author Crossin
 	 */
-	public class MenuState extends FlxState {
+	public class ClearState extends FlxState {
 		[Embed(source="res/cursor.png")]
 		private var ImgCursor:Class;
-
+		
 		private var _title:FlxText;
 
-		public function MenuState(){
-			_title = new FlxText(0, FlxG.height / 3, 320, "Tankie");
-			_title.size = 32;
+		public function ClearState(){
+			_title = new FlxText(0, FlxG.height / 3, 320, "you clear all levels");
+			_title.size = 12;
 			_title.alignment = "center";
 			_title.color = 0xffffff;
-			_title.antialiasing = true;
+			//_title.antialiasing = true;
 			add(_title);
-
+			
 			FlxG.mouse.show(ImgCursor);
 		}
 
@@ -30,7 +30,7 @@ package {
 		}
 
 		private function onFade():void {
-			FlxG.state = new LevelState();
+			FlxG.state = new MenuState();
 		}
 	}
 

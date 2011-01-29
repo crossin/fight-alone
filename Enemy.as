@@ -175,9 +175,6 @@ package {
 					c = 0xffff0000 | uint(255 * 4 / 3 * health / _maxHealth) << 8;
 				}
 				var w:uint = uint(health / _maxHealth * width);
-
-				trace(w)
-				
 				if (w > 0) {
 					_lifeBar.createGraphic(w, 1, c);
 					_lifeBar.fill(c);

@@ -79,7 +79,7 @@ package {
 			txtScore.antialiasing = false;
 			txtScore.scrollFactor = ssf;
 			//txtScore.alpha = 0.5;
-			txtGold = new FlxText(20, 220, 100, "0");
+			txtGold = new FlxText(20, 220, 100, FlxG.score.toString());
 			txtGold.size = 8;
 			//txtGold.alignment = "center";
 			txtGold.color = 0x999933;
@@ -199,6 +199,7 @@ package {
 			progress = 0;
 			hasWin = false;
 			index = 0;
+			score = 0;
 		}
 
 		override public function update():void {

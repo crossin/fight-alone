@@ -66,7 +66,6 @@ package {
 				}
 				if (timeDead < 0){
 					active = false;
-					trace(timeDead)
 				}
 				return;
 			}

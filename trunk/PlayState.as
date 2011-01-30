@@ -10,6 +10,8 @@ package {
 		private var ImgHeart:Class;
 		[Embed(source="res/flag.png")]
 		private var ImgFlag:Class;
+		[Embed(source="res/upgrade.png")]
+		private var ImgUpgrade:Class;
 		//[Embed(source="res/back.png")]
 		//private var ImgBack:Class;
 		[Embed(source="res/shield.png")]
@@ -72,19 +74,24 @@ package {
 			progressBar.scrollFactor = ssf;
 			_enemyLifeBar = new FlxSprite();
 			_enemyLifeBarBack = new FlxSprite();
-			txtScore = new FlxText(200, 10, 100, "0");
+			// upgrade panel
+			var upPanel:FlxSprite = new FlxSprite(5, 215, ImgUpgrade);
+			upPanel.scrollFactor = ssf;
+			//score
+			txtScore = new FlxText(0, 218, 50, "0");
 			txtScore.size = 8;
-			//txtScore.alignment = "center";
-			txtScore.color = 0x336699;
+			txtScore.alignment = "center";
+			txtScore.color = 0xf0f0f0;
 			txtScore.antialiasing = false;
 			txtScore.scrollFactor = ssf;
 			//txtScore.alpha = 0.5;
-			txtGold = new FlxText(20, 220, 100, FlxG.score.toString());
+			txtGold = new FlxText(120, 20, 100, FlxG.score.toString());
 			txtGold.size = 8;
 			//txtGold.alignment = "center";
 			txtGold.color = 0x999933;
 			txtGold.antialiasing = false;
 			txtGold.scrollFactor = ssf;
+
 
 			_objects = new FlxGroup();
 
@@ -177,6 +184,7 @@ package {
 			add(_lifeBar);
 			add(flag);
 			add(progressBar);
+			add(upPanel);
 			add(txtScore);
 			add(txtGold);
 
@@ -200,6 +208,18 @@ package {
 			hasWin = false;
 			index = 0;
 			score = 0;
+			
+			// upgrades
+			var u:FlxGroup;
+			for (i = 0; i < 5; i++) {
+				if (ShopState.upgrades[i]) {
+					u = new ShopState.upgrades[i];
+					u.reset(49, 217);
+					//u.scrollFactor = ssf;
+					add(u);
+				}
+			}
+
 		}
 
 		override public function update():void {
@@ -219,12 +239,12 @@ package {
 			FlxU.overlap(bonuses, _tank, overlapped);
 			FlxU.collide(_objects, _objects);
 
-			if (FlxG.keys.ONE){
-				_tank.setType(1)
-			}
-			if (FlxG.keys.TWO){
-				_tank.setType(2)
-			}
+			//if (FlxG.keys.justPressed("ONE")) {
+				//_tank.setType(1)
+			//}
+			//if (FlxG.keys.TWO){
+				//_tank.setType(2)
+			//}
 
 			// add enemies
 			_timer += FlxG.elapsed;

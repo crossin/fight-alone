@@ -10,6 +10,8 @@ package {
 		private var ImgCursor:Class;
 
 		private var _title:FlxText;
+		
+		public static var upgrades:Array = [Upgrade];
 
 		public function ShopState(){
 			_title = new FlxText(0, FlxG.height / 3, 320, "here is SHOP");
@@ -37,6 +39,8 @@ package {
 			add(b);
 
 			FlxG.mouse.show(ImgCursor);
+			
+			
 		}
 
 		private function onOK():void {

@@ -214,7 +214,7 @@ package {
 			for (i = 0; i < 5; i++) {
 				if (ShopState.upgrades[i]) {
 					u = new ShopState.upgrades[i];
-					u.reset(49, 217);
+					u.reset(49 + i * 25, 217);
 					//u.scrollFactor = ssf;
 					add(u);
 				}

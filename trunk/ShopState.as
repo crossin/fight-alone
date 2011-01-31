@@ -11,7 +11,7 @@ package {
 
 		private var _title:FlxText;
 		
-		public static var upgrades:Array = [Upgrade];
+		public static var upgrades:Array = [UpgradeMS, UpgradeAS];
 
 		public function ShopState(){
 			_title = new FlxText(0, FlxG.height / 3, 320, "here is SHOP");

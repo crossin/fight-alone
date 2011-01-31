@@ -47,10 +47,11 @@ package {
 		protected var enemyCount:uint;
 		protected var progress:Number;
 		protected var hasWin:Boolean;
-		protected var score:int;
 		protected var txtScore:FlxText;
 		protected var txtGold:FlxText;
 		protected var index:uint;
+		
+		public var score:int;
 
 		override public function create():void {
 			//back

@@ -12,8 +12,10 @@ package {
 			super();
 			price = 100;
 			increment = 50;
-			bgName.fill(0xffcc0000);
-			bgPrice.fill(0xffffcccc);
+			colorName = 0xffcc0000;
+			colorPrice = 0xffffcccc;
+			bgName.fill(colorName);
+			bgPrice.fill(colorPrice);	
 			txtName.text = "MS";
 			txtName.color = 0xffcccc;
 			txtPrice.text = price.toString();

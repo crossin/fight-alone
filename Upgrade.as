@@ -11,13 +11,15 @@ package {
 		protected var txtPrice:FlxText;
 		protected var bgName:FlxSprite;
 		protected var bgPrice:FlxSprite;
+		protected var fore:FlxSprite;
 		protected var price:int;
 		protected var increment:int;
 		protected var available:Boolean;
 		protected var colorName:uint;
 		protected var colorPrice:uint;
+		protected var key:String;
 
-		public function Upgrade(){
+		public function Upgrade(k:uint){
 			super();
 			price = 0;
 			increment = 0;
@@ -51,13 +53,39 @@ package {
 			txtPrice.scrollFactor = ssf;
 			add(txtPrice);
 
+			fore = new FlxSprite(0, 0);
+			fore.createGraphic(24, 18, 0xffcccccc);
+			fore.scrollFactor = ssf;
+			fore.visible = false;
+			//fore.alpha = 0.5;
+			add(fore);
+			
 			bgName.alpha = 0.3;
 			bgPrice.alpha = 0.3;
 			txtName.alpha = 0.3;
 			txtPrice.alpha = 0.3;
+
+			switch (k){
+				case 1:
+					key = "ONE";
+					break;
+				case 2:
+					key = "TWO";
+					break;
+				case 3:
+					key = "THREE";
+					break;
+				case 4:
+					key = "FOUR";
+					break;
+				case 5:
+					key = "FIVE";
+					break;
+			}
 		}
 
 		override public function update():void {
+			txtPrice.text = price.toString();
 			super.update();
 			if (!available && (FlxG.state as PlayState).score >= price){
 				available = true;
@@ -75,6 +103,21 @@ package {
 				bgPrice.alpha = 0.3;
 				txtName.alpha = 0.3;
 				txtPrice.alpha = 0.3;
+			}
+
+			if (available && FlxG.keys.justPressed(key)){
+				//bgName.flicker();
+				//bgPrice.flicker();
+				//txtName.flicker();
+				//txtPrice.flicker();
+				fore.visible = true;
+				fore.flicker();
+				(FlxG.state as PlayState).score -= price;
+				price += increment;
+			}
+			
+			if (fore.visible && !fore.flickering()) {
+				fore.visible = false;
 			}
 		}
 	}

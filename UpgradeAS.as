@@ -8,8 +8,8 @@ package {
 	 */
 	public class UpgradeAS extends Upgrade {
 
-		public function UpgradeAS(){
-			super();
+		public function UpgradeAS(k:uint){
+			super(k);
 			price = 200;
 			increment = 75;
 			colorName = 0xff00cc00;

@@ -13,8 +13,8 @@ package {
 		}
 
 		override protected function addEnemy():void {
-			if ((enemyCount < 10) && (_timer % _timerInterval < _timerLast % _timerInterval)){
-				_enemies.add(new EnemyFast(int(FlxU.random() * 4), 80));
+			if ((enemyCount < 20) && (_timer % _timerInterval < _timerLast % _timerInterval)){
+				_enemies.add(new EnemyFast(int(FlxU.random() * 4), 5));
 				enemyCount++;
 			}
 			// add boss

@@ -50,7 +50,7 @@ package {
 		protected var txtScore:FlxText;
 		protected var txtGold:FlxText;
 		protected var index:uint;
-		
+
 		public var score:int;
 
 		override public function create():void {
@@ -209,12 +209,12 @@ package {
 			hasWin = false;
 			index = 0;
 			score = 0;
-			
+
 			// upgrades
 			var u:FlxGroup;
-			for (i = 0; i < 5; i++) {
-				if (ShopState.upgrades[i]) {
-					u = new ShopState.upgrades[i];
+			for (i = 0; i < 5; i++){
+				if (ShopState.upgrades[i]){
+					u = new ShopState.upgrades[i](i + 1);
 					u.reset(49 + i * 25, 217);
 					//u.scrollFactor = ssf;
 					add(u);
@@ -226,6 +226,9 @@ package {
 		override public function update():void {
 			_enemyLifeBarBack.visible = false;
 			_enemyLifeBar.visible = false;
+
+			txtScore.text = score.toString();
+
 			super.update();
 
 			FlxU.overlap(_bullets, _enemies, overlapped);
@@ -241,10 +244,10 @@ package {
 			FlxU.collide(_objects, _objects);
 
 			//if (FlxG.keys.justPressed("ONE")) {
-				//_tank.setType(1)
+			//_tank.setType(1)
 			//}
 			//if (FlxG.keys.TWO){
-				//_tank.setType(2)
+			//_tank.setType(2)
 			//}
 
 			// add enemies
@@ -306,7 +309,6 @@ package {
 		public function updateProgress(p:uint, s:int):void {
 			// update score
 			score += s;
-			txtScore.text = score.toString();
 
 			progress += p;
 			progress = progress > 100 ? 100 : progress;

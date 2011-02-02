@@ -17,7 +17,7 @@ package {
 		[Embed(source="res/shield.png")]
 		private var ImgShield:Class;
 
-		public static var _tank:Tank;
+		public var _tank:Tank;
 		public static var _battery:Battery;
 		public static var _bullets:FlxGroup;
 		public static var _lifeBar:FlxSprite;

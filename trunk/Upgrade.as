@@ -18,11 +18,13 @@ package {
 		protected var colorName:uint;
 		protected var colorPrice:uint;
 		protected var key:String;
+		protected var level:uint;
 
 		public function Upgrade(k:uint){
 			super();
 			price = 0;
 			increment = 0;
+			level = 0;
 			available = false;
 			colorName = 0xff000000;
 			colorPrice = 0xffffffff;
@@ -59,7 +61,7 @@ package {
 			fore.visible = false;
 			//fore.alpha = 0.5;
 			add(fore);
-			
+
 			bgName.alpha = 0.3;
 			bgPrice.alpha = 0.3;
 			txtName.alpha = 0.3;
@@ -86,7 +88,7 @@ package {
 
 		override public function update():void {
 			super.update();
-			if (fore.flickering()) {
+			if (fore.flickering()){
 				return;
 			}
 			txtPrice.text = price.toString();
@@ -116,12 +118,19 @@ package {
 				fore.visible = true;
 				fore.flicker(0.5);
 				(FlxG.state as PlayState).score -= price;
+				level++;
 				price += increment;
+				price = (price > 9999) ? 9999 : price;
+				doEffect();
 			}
-			
-			if (fore.visible) {
+
+			if (fore.visible){
 				fore.visible = false;
 			}
+		}
+
+		protected function doEffect():void {
+			// to be overrided
 		}
 	}
 }

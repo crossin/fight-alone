@@ -1,6 +1,7 @@
 package {
 	import flash.geom.Point;
 	import org.flixel.*;
+	import org.flixel.data.FlxPanel;
 
 	/**
 	 * ...
@@ -22,5 +23,10 @@ package {
 			txtPrice.color = 0xcc0000;
 		}
 
+		override protected function doEffect():void {
+			var speed:FlxPoint = (FlxG.state as PlayState)._tank.maxVelocity;
+			speed.x += 10;
+			speed.y += 10;
+		}
 	}
 }

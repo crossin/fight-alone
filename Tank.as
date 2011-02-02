@@ -42,8 +42,8 @@ package {
 			lifeBar = PlayState._lifeBar;
 			maxVelocity.x = 50;
 			maxVelocity.y = 50;
-			drag.x = maxVelocity.x * 4;
-			drag.y = maxVelocity.y * 4;
+			drag.x = 200;
+			drag.y = 200;
 			antialiasing = true;
 			restartClock();
 			shoot = shootPlain;

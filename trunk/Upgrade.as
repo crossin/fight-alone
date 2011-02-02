@@ -85,8 +85,11 @@ package {
 		}
 
 		override public function update():void {
-			txtPrice.text = price.toString();
 			super.update();
+			if (fore.flickering()) {
+				return;
+			}
+			txtPrice.text = price.toString();
 			if (!available && (FlxG.state as PlayState).score >= price){
 				available = true;
 				bgName.fill(colorName);
@@ -111,12 +114,12 @@ package {
 				//txtName.flicker();
 				//txtPrice.flicker();
 				fore.visible = true;
-				fore.flicker();
+				fore.flicker(0.5);
 				(FlxG.state as PlayState).score -= price;
 				price += increment;
 			}
 			
-			if (fore.visible && !fore.flickering()) {
+			if (fore.visible) {
 				fore.visible = false;
 			}
 		}

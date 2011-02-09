@@ -1,19 +1,29 @@
-package {
-	import flash.geom.Point;
-	import org.flixel.*;
-
+package  
+{
+	import org.flixel.FlxGroup;
+	
 	/**
 	 * ...
-	 * @author Crossin
+	 * @author crossin
 	 */
-	public class Upgrade extends FlxGroup {
-		public static var name:String;
-		public static var price:int;
-		public static var increment:int;
-		public static var colorName:uint;
-		public static var colorPrice:uint;
-
-		public function Upgrade(k:uint){
+	public class UpgradeItem extends FlxGroup 
+	{
+		protected var txtName:FlxText;
+		protected var txtPrice:FlxText;
+		protected var bgName:FlxSprite;
+		protected var bgPrice:FlxSprite;
+		protected var fore:FlxSprite;
+		protected var available:Boolean;
+		protected var up:Upgrade;
+		protected var key:String;
+		protected var level:uint;
+		protected var name:String;
+		protected var price:int;
+		protected var increment:int;
+		protected var colorName:uint;
+		protected var colorPrice:uint;
+		public function UpgradeItem(u:Upgrade, k:uint) 
+		{
 			super();
 			price = 0;
 			increment = 0;
@@ -78,7 +88,7 @@ package {
 					break;
 			}
 		}
-
+		
 		override public function update():void {
 			super.update();
 			if (fore.flickering()){
@@ -121,9 +131,6 @@ package {
 				fore.visible = false;
 			}
 		}
-
-		protected function doEffect():void {
-			// to be overrided
-		}
 	}
+
 }

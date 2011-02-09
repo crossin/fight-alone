@@ -1,13 +1,11 @@
-package  
-{
-	import org.flixel.FlxGroup;
-	
+package {
+	import org.flixel.*;
+
 	/**
 	 * ...
 	 * @author crossin
 	 */
-	public class UpgradeItem extends FlxGroup 
-	{
+	public class UpgradeItem extends FlxGroup {
 		protected var txtName:FlxText;
 		protected var txtPrice:FlxText;
 		protected var bgName:FlxSprite;
@@ -22,15 +20,16 @@ package
 		protected var increment:int;
 		protected var colorName:uint;
 		protected var colorPrice:uint;
-		public function UpgradeItem(u:Upgrade, k:uint) 
-		{
+
+		public function UpgradeItem(u:Upgrade, k:uint){
 			super();
-			price = 0;
-			increment = 0;
+			up = u;
+			price = up.price;
+			increment = up.increment;
 			level = 0;
 			available = false;
-			colorName = 0xff000000;
-			colorPrice = 0xffffffff;
+			colorName = up.colorName;
+			colorPrice = up.colorPrice;
 			var ssf:FlxPoint = new FlxPoint(0, 0);
 			var bg:FlxSprite = new FlxSprite(0, 0);
 			bg.createGraphic(24, 18, 0xff333333);
@@ -45,14 +44,14 @@ package
 			bgPrice.createGraphic(24, 9, colorPrice);
 			bgPrice.scrollFactor = ssf;
 			add(bgPrice);
-			txtName = new FlxText(-4, -2, 30, "UP");
-			txtName.color = 0xffffff;
+			txtName = new FlxText(-4, -2, 30, up.name);
+			txtName.color = colorPrice;
 			txtName.size = 8;
 			txtName.alignment = "center";
 			txtName.scrollFactor = ssf;
 			add(txtName);
 			txtPrice = new FlxText(-4, 7, 30, "0");
-			txtPrice.color = 0x000000;
+			txtPrice.color = colorName;
 			txtPrice.size = 8;
 			txtPrice.alignment = "center";
 			txtPrice.scrollFactor = ssf;
@@ -88,7 +87,7 @@ package
 					break;
 			}
 		}
-		
+
 		override public function update():void {
 			super.update();
 			if (fore.flickering()){
@@ -97,16 +96,20 @@ package
 			txtPrice.text = price.toString();
 			if (!available && (FlxG.state as PlayState).score >= price){
 				available = true;
-				bgName.fill(colorName);
-				bgPrice.fill(colorPrice);
+				//bgName.fill(colorName);
+				//bgPrice.fill(colorPrice);
+				//txtName.color = colorPrice;
+				//txtPrice.color = colorName;
 				bgName.alpha = 1;
 				bgPrice.alpha = 1;
 				txtName.alpha = 1;
 				txtPrice.alpha = 1;
 			} else if (available && (FlxG.state as PlayState).score < price){
 				available = false;
-				bgName.fill(colorName);
-				bgPrice.fill(colorPrice);
+				//bgName.fill(colorName);
+				//bgPrice.fill(colorPrice);
+				//txtName.color = colorPrice;
+				//txtPrice.color = colorName;
 				bgName.alpha = 0.3;
 				bgPrice.alpha = 0.3;
 				txtName.alpha = 0.3;
@@ -124,7 +127,7 @@ package
 				level++;
 				price += increment;
 				price = (price > 9999) ? 9999 : price;
-				doEffect();
+				up.doEffect();
 			}
 
 			if (fore.visible){

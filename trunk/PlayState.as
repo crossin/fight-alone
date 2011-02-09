@@ -211,10 +211,10 @@ package {
 			score = 0;
 
 			// upgrades
-			var u:FlxGroup;
+			var u:UpgradeItem;
 			for (i = 0; i < 5; i++){
 				if (ShopState.upgrades[i]){
-					u = new ShopState.upgrades[i](i + 1);
+					u = new UpgradeItem(new ShopState.upgrades[i], i + 1);
 					u.reset(49 + i * 25, 217);
 					//u.scrollFactor = ssf;
 					add(u);

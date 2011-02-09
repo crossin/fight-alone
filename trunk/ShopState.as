@@ -38,9 +38,11 @@ package {
 			b.loadText(t1, t2);
 			add(b);
 
+			var ui:ShopItem = new ShopItem(new ShopState.upgrades[0]);
+			ui.reset(135, 200);
+			add(ui);
+			
 			FlxG.mouse.show(ImgCursor);
-			
-			
 		}
 
 		private function onOK():void {

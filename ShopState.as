@@ -12,9 +12,10 @@ package {
 		private var _title:FlxText;
 		
 		public static var upgrades:Array = [UpgradeMS, UpgradeAS];
+		public static var upgradesAll:Array = [UpgradeMS, UpgradeAS, UpgradeMS];
 
 		public function ShopState(){
-			_title = new FlxText(0, FlxG.height / 3, 320, "here is SHOP");
+			_title = new FlxText(0, 20, 320, "here is SHOP");
 			_title.size = 12;
 			_title.alignment = "center";
 			_title.color = 0xffffff;
@@ -25,7 +26,7 @@ package {
 			var t1:FlxText;
 			var t2:FlxText;
 			// choose levels
-			b = new FlxButton(135, 150, onOK);
+			b = new FlxButton(135, 200, onOK);
 			b.loadGraphic((new FlxSprite()).createGraphic(50, 30, 0xff3a5c39), (new FlxSprite()).createGraphic(50, 30, 0xff729954));
 			t1 = new FlxText(0, 8, 48, "OK");
 			t1.color = 0x729954;
@@ -37,10 +38,17 @@ package {
 			t2.alignment = "center";
 			b.loadText(t1, t2);
 			add(b);
-
-			var ui:ShopItem = new ShopItem(new ShopState.upgrades[0]);
-			ui.reset(135, 200);
-			add(ui);
+			
+			// items
+			var si:ShopItem;
+			for (var i:uint = 0; i < upgradesAll.length; i++){
+				//if (ShopState.upgrades[i]){
+					si = new ShopItem(new upgradesAll[i]);
+					si.reset(30 + i % 2 * 140, 50 + int(i / 2) * 30);
+					//u.scrollFactor = ssf;
+					add(si);
+				//}
+			}
 			
 			FlxG.mouse.show(ImgCursor);
 		}

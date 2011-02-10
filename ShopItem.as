@@ -23,23 +23,34 @@ package
 		{
 			var ssf:FlxPoint = new FlxPoint(0, 0);
 			var bgName:FlxSprite = new FlxSprite(0, 0);
-			bgName.createGraphic(48, 18, u.colorName);
+			bgName.createGraphic(32, 18, u.colorName);
 			bgName.scrollFactor = ssf;
 			add(bgName);
-			var txtName:FlxText = new FlxText(-5, -2, 56, u.name);
+			var bgPrice:FlxSprite = new FlxSprite(32, 0);
+			bgPrice.createGraphic(88, 18, u.colorPrice);
+			bgPrice.scrollFactor = ssf;
+			add(bgPrice);
+			var txtName:FlxText = new FlxText(-5, -2, 40, u.name);
 			txtName.color = u.colorPrice;
 			txtName.size = 16;
 			txtName.alignment = "center";
 			txtName.scrollFactor = ssf;
 			add(txtName);
-			var txtPrice:FlxText = new FlxText(60, -2, 100, u.price.toString().concat("(+",u.increment,")"));
-			txtPrice.color = 0xffffff;
-			txtPrice.size = 16;
+			var txtPrice:FlxText = new FlxText(32, -2, 100, u.price.toString().concat("(+",u.increment,")"));
+			txtPrice.color = u.colorName;
+			txtPrice.size = 8;
 			//txtPrice.alignment = "center";
 			txtPrice.scrollFactor = ssf;
 			add(txtPrice);
+			
+			var button:FlxButton = new FlxButton(0, 0, onSelect);
+			button.loadGraphic((new FlxSprite()).createGraphic(120, 18, 0x00ffffff), (new FlxSprite()).createGraphic(120, 18, 0x66ffffff));
+			add(button);
 		}
 		
+		protected function onSelect():void {
+			
+		}
 	}
 
 }

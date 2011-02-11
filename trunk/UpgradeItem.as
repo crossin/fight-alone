@@ -50,7 +50,7 @@ package {
 			txtName.alignment = "center";
 			txtName.scrollFactor = ssf;
 			add(txtName);
-			txtPrice = new FlxText(-4, 7, 30, "0");
+			txtPrice = new FlxText(-4, 7, 30, "");
 			txtPrice.color = colorName;
 			txtPrice.size = 8;
 			txtPrice.alignment = "center";

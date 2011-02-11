@@ -6,7 +6,7 @@ package
 	 * ...
 	 * @author crossin
 	 */
-	public class ShopItem extends FlxGroup 
+	public class ShopSelect extends FlxGroup 
 	{
 		//protected var txtName:FlxText;
 		//protected var bgName:FlxSprite;
@@ -21,27 +21,27 @@ package
 		protected var button:FlxButton;
 		protected var cover:FlxSprite;
 		
-		public function ShopItem(u:Upgrade) 
+		public function ShopSelect(u:Upgrade) 
 		{
 			var ssf:FlxPoint = new FlxPoint(0, 0);
 			var bgName:FlxSprite = new FlxSprite(0, 0);
-			bgName.createGraphic(32, 18, u.colorName);
+			bgName.createGraphic(24, 9, colorName);
 			bgName.scrollFactor = ssf;
 			add(bgName);
-			var bgPrice:FlxSprite = new FlxSprite(32, 0);
-			bgPrice.createGraphic(88, 18, u.colorPrice);
+			var bgPrice:FlxSprite = new FlxSprite(0, 9);
+			bgPrice.createGraphic(24, 9, colorPrice);
 			bgPrice.scrollFactor = ssf;
 			add(bgPrice);
-			var txtName:FlxText = new FlxText(-5, -2, 40, u.name);
-			txtName.color = u.colorPrice;
-			txtName.size = 16;
+			var txtName:FlxText = new FlxText(-4, -2, 30, up.name);
+			txtName.color = colorPrice;
+			txtName.size = 8;
 			txtName.alignment = "center";
 			txtName.scrollFactor = ssf;
 			add(txtName);
-			var txtPrice:FlxText = new FlxText(32, -2, 100, u.price.toString().concat("(+",u.increment,")"));
-			txtPrice.color = u.colorName;
+			var txtPrice:FlxText = new FlxText(-4, 7, 30, "0");
+			txtPrice.color = colorName;
 			txtPrice.size = 8;
-			//txtPrice.alignment = "center";
+			txtPrice.alignment = "center";
 			txtPrice.scrollFactor = ssf;
 			add(txtPrice);
 			

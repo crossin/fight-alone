@@ -21,9 +21,9 @@ package {
 		protected var colorName:uint;
 		protected var colorPrice:uint;
 
-		public function UpgradeItem(u:Upgrade, k:uint){
+		public function UpgradeItem(i:uint, k:uint){
 			super();
-			up = u;
+			up = ShopState.upgradesAll[i];
 			price = up.price;
 			increment = up.increment;
 			level = 0;

@@ -83,14 +83,14 @@ package {
 			txtScore.size = 8;
 			txtScore.alignment = "center";
 			txtScore.color = 0xf0f0f0;
-			txtScore.antialiasing = false;
+			//txtScore.antialiasing = false;
 			txtScore.scrollFactor = ssf;
 			//txtScore.alpha = 0.5;
 			txtGold = new FlxText(120, 20, 100, FlxG.score.toString());
 			txtGold.size = 8;
 			//txtGold.alignment = "center";
 			txtGold.color = 0x999933;
-			txtGold.antialiasing = false;
+			//txtGold.antialiasing = false;
 			txtGold.scrollFactor = ssf;
 
 
@@ -212,9 +212,11 @@ package {
 
 			// upgrades
 			var u:UpgradeItem;
+			var index:int;
 			for (i = 0; i < 5; i++){
-				if (ShopState.upgrades[i]){
-					u = new UpgradeItem(new ShopState.upgrades[i], i + 1);
+				index = ShopState.upgrades[i];
+				if (index >= 0){
+					u = new UpgradeItem(index, i + 1);
 					u.reset(49 + i * 25, 217);
 					//u.scrollFactor = ssf;
 					add(u);

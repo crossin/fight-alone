@@ -1,65 +1,77 @@
-package  
-{
+package {
 	import org.flixel.*;
-	
+
 	/**
 	 * ...
 	 * @author crossin
 	 */
-	public class ShopItem extends FlxGroup 
-	{
-		//protected var txtName:FlxText;
-		//protected var bgName:FlxSprite;
-		//protected var fore:FlxSprite;
-		//protected var available:Boolean;
-		//protected var up:Upgrade;
-		//protected var name:String;
-		//protected var price:int;
-		//protected var increment:int;
-		//protected var colorName:uint;
-		//protected var colorPrice:uint;
+	public class ShopItem extends FlxGroup {
+		protected var up:Upgrade;
+		protected var index:uint;
+		protected var available:Boolean;
+		protected var txtName:FlxText;
+		protected var txtPrice:FlxText;
+		protected var bgName:FlxSprite;
+		protected var bgPrice:FlxSprite;
 		protected var button:FlxButton;
 		protected var cover:FlxSprite;
-		
-		public function ShopItem(u:Upgrade) 
-		{
-			var ssf:FlxPoint = new FlxPoint(0, 0);
-			var bgName:FlxSprite = new FlxSprite(0, 0);
-			bgName.createGraphic(32, 18, u.colorName);
-			bgName.scrollFactor = ssf;
+
+		public function ShopItem(i:uint){
+			index = i;
+			up = ShopState.upgradesAll[i];
+			//var ssf:FlxPoint = new FlxPoint(0, 0);
+			available = ShopState.upgradesBought[i];
+			
+			var colorName:uint;
+			var colorPrice:uint;
+			if (available) {
+				 colorName = up.colorName;
+				 colorPrice = up.colorPrice;
+			}else {
+				colorName = ;
+				 colorPrice = 
+			}
+			bgName = new FlxSprite(0, 0);
+			bgName.createGraphic(32, 18, up.colorName);
+			//bgName.scrollFactor = ssf;
 			add(bgName);
-			var bgPrice:FlxSprite = new FlxSprite(32, 0);
-			bgPrice.createGraphic(88, 18, u.colorPrice);
-			bgPrice.scrollFactor = ssf;
+			bgPrice = new FlxSprite(32, 0);
+			bgPrice.createGraphic(88, 18, up.colorPrice);
+			//bgPrice.scrollFactor = ssf;
 			add(bgPrice);
-			var txtName:FlxText = new FlxText(-5, -2, 40, u.name);
-			txtName.color = u.colorPrice;
+			txtName = new FlxText(-5, -2, 40, up.name);
+			txtName.color = up.colorPrice;
 			txtName.size = 16;
 			txtName.alignment = "center";
-			txtName.scrollFactor = ssf;
+			//txtName.scrollFactor = ssf;
 			add(txtName);
-			var txtPrice:FlxText = new FlxText(32, -2, 100, u.price.toString().concat("(+",u.increment,")"));
-			txtPrice.color = u.colorName;
+			txtPrice = new FlxText(32, -2, 100, up.price.toString().concat("(+", up.increment, ")"));
+			txtPrice.color = up.colorName;
 			txtPrice.size = 8;
 			//txtPrice.alignment = "center";
-			txtPrice.scrollFactor = ssf;
+			//txtPrice.scrollFactor = ssf;
 			add(txtPrice);
-			
+
 			button = new FlxButton(0, 0, onSelect);
 			button.loadGraphic((new FlxSprite()).createGraphic(120, 18, 0x00ffffff), (new FlxSprite()).createGraphic(120, 18, 0x66ffffff));
 			add(button);
-			
+
 			cover = new FlxSprite(0, 0);
 			cover.createGraphic(120, 18, 0x66000000);
-			cover.scrollFactor = ssf;
+			//cover.scrollFactor = ssf;
 			cover.visible = false;
 			add(cover);
 		}
-		
+
 		protected function onSelect():void {
-			button.visible = false;
-			cover.visible = true;
+			(FlxG.state as ShopState).selectUpgrade(index);
 		}
+
+		public function setValue(b:Boolean):void {
+			button.visible = b;
+			cover.visible = !b;
+		}
+
 	}
 
 }

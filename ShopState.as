@@ -10,12 +10,18 @@ package {
 		private var ImgCursor:Class;
 
 		private var _title:FlxText;
-		
-		public static var upgrades:Array = [UpgradeMS, UpgradeAS];
-		public static var upgradesAll:Array = [UpgradeMS, UpgradeAS, UpgradeMS];
+		private var txtGold:FlxText;
+
+		public var selects:Array;
+		public var items:Array;
+
+		//public static var upgrades:Array = [UpgradeMS, UpgradeAS];
+		public static var upgrades:Array = [-1, -1, -1, -1, -1];
+		public static var upgradesBought:Array = [false, false, false];
+		public static var upgradesAll:Array = [new UpgradeMS, new UpgradeAS, new UpgradeMS];
 
 		public function ShopState(){
-			_title = new FlxText(0, 20, 320, "here is SHOP");
+			_title = new FlxText(0, 0, 320, "here is SHOP");
 			_title.size = 12;
 			_title.alignment = "center";
 			_title.color = 0xffffff;
@@ -38,18 +44,41 @@ package {
 			t2.alignment = "center";
 			b.loadText(t1, t2);
 			add(b);
-			
+
+			txtGold = new FlxText(120, 20, 100, FlxG.score.toString());
+			txtGold.size = 8;
+			//txtGold.alignment = "center";
+			txtGold.color = 0x999933;
+			//txtGold.scrollFactor = ssf;
+			add(txtGold);
+
 			// items
-			var si:ShopItem;
-			for (var i:uint = 0; i < upgradesAll.length; i++){
+			items = new Array();
+			//var si:ShopItem;
+			var i:uint;
+			for (i = 0; i < upgradesAll.length; i++){
 				//if (ShopState.upgrades[i]){
-					si = new ShopItem(new upgradesAll[i]);
-					si.reset(30 + i % 2 * 140, 50 + int(i / 2) * 30);
-					//u.scrollFactor = ssf;
-					add(si);
-				//}
+				items.push(new ShopItem(i));
+				items[i].reset(30 + i % 2 * 140, 100 + int(i / 2) * 30);
+				//u.scrollFactor = ssf;
+				add(items[i]);
+					//}
 			}
-			
+
+			// select
+			selects = new Array();
+			//var ss:ShopSelect;
+			var index:int;
+			for (i = 0; i < 5; i++){
+				index = upgrades[i];
+				selects.push(new ShopSelect(i));
+				selects[i].reset(30 + i * 30, 50);
+				add(selects[i]);
+				if (index >= 0){
+					selectUpgrade2(index, i);
+				}
+			}
+
 			FlxG.mouse.show(ImgCursor);
 		}
 
@@ -60,6 +89,30 @@ package {
 
 		private function onFade():void {
 			FlxG.state = new LevelState();
+		}
+
+		public function selectUpgrade2(i:uint, s:uint):void {
+			upgrades[s] = i;
+			selects[s].setValue(i);
+			items[i].setValue(false);
+		}
+
+		public function selectUpgrade(i:uint):void {
+			var s:uint;
+			for (s = 0; s < 5; s++){
+				if (upgrades[s] < 0){
+					break;
+				}
+			}
+			if (s == 5){
+				return;
+			}
+			selectUpgrade2(i, s);
+		}
+
+		public function cancelUpgrade(i:uint, s:uint):void {
+			upgrades[s] = -1;
+			items[i].setValue(true);
 		}
 	}
 

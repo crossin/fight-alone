@@ -10,8 +10,8 @@ package {
 		private var ImgCursor:Class;
 
 		private var _title:FlxText;
-		private var txtGold:FlxText;
-
+		
+		public var txtGold:FlxText;
 		public var selects:Array;
 		public var items:Array;
 
@@ -45,6 +45,7 @@ package {
 			b.loadText(t1, t2);
 			add(b);
 
+			FlxG.score = 1000;
 			txtGold = new FlxText(120, 20, 100, FlxG.score.toString());
 			txtGold.size = 8;
 			//txtGold.alignment = "center";

@@ -222,7 +222,6 @@ package {
 					add(u);
 				}
 			}
-
 		}
 
 		override public function update():void {

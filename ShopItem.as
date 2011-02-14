@@ -8,7 +8,7 @@ package {
 	public class ShopItem extends FlxGroup {
 		[Embed(source="res/gold.png")]
 		private var ImgBonus:Class;
-		
+
 		protected var up:Upgrade;
 		protected var index:uint;
 		protected var available:Boolean;
@@ -19,17 +19,18 @@ package {
 		protected var tagGold:FlxSprite;
 		protected var button:FlxButton;
 		protected var cover:FlxSprite;
-		protected var price:String;
+		
 
 		public function ShopItem(i:uint){
 			index = i;
 			up = ShopState.upgradesAll[i];
 			//var ssf:FlxPoint = new FlxPoint(0, 0);
 			available = ShopState.upgradesBought[i];
-			
+
 			var colorName:uint;
 			var colorPrice:uint;
-			if (available) {
+			var price:String;
+			if (available){
 				colorName = up.colorName;
 				colorPrice = up.colorPrice;
 				price = up.price.toString().concat("(+", up.increment, ")");
@@ -58,7 +59,7 @@ package {
 			//txtPrice.alignment = "center";
 			//txtPrice.scrollFactor = ssf;
 			add(txtPrice);
-			
+
 			tagGold = new FlxSprite(34, 2, ImgBonus);
 			add(tagGold);
 
@@ -74,13 +75,20 @@ package {
 		}
 
 		protected function onSelect():void {
-			if (available) {
+			if (available){
 				(FlxG.state as ShopState).selectUpgrade(index);
 			} else {
-				if (up.gold) {
-					
+				if (FlxG.score >= up.gold){
+					bgName.fill(up.colorName);
+					bgPrice.fill(up.colorPrice);
+					txtName.color = up.colorPrice;
+					txtPrice.color = up.colorName;
+					txtPrice.text = up.price.toString().concat("(+", up.increment, ")");
+					tagGold.visible = false;
+					FlxG.score -= up.gold;
+					(FlxG.state as ShopState).txtGold.text = FlxG.score.toString();
 				} else {
-					
+					(FlxG.state as ShopState).txtGold.flicker(0.5);
 				}
 			}
 

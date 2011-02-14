@@ -11,6 +11,7 @@ package {
 			increment = 75;
 			colorName = 0xff00cc00;
 			colorPrice = 0xffccffcc;
+			gold = 910;
 		}
 
 	}

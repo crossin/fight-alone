@@ -14,6 +14,7 @@ package {
 			increment = 50;
 			colorName = 0xffcc0000;
 			colorPrice = 0xffffcccc;
+			gold = 5;
 		}
 
 		override public function doEffect():void {

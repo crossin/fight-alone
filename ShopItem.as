@@ -77,7 +77,7 @@ package {
 			if (available) {
 				(FlxG.state as ShopState).selectUpgrade(index);
 			} else {
-				if () {
+				if (up.gold) {
 					
 				} else {
 					

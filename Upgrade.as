@@ -9,6 +9,7 @@ package {
 		public var increment:int;
 		public var colorName:uint;
 		public var colorPrice:uint;
+		public var gold:uint;
 
 		public function Upgrade() {
 			name = "UP";

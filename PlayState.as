@@ -36,7 +36,7 @@ package {
 		protected var _objects:FlxGroup;
 		//protected var _rock:Box;
 		protected var back:FlxTileblock;
-		protected var boxes:FlxGroup;
+		protected var blocks:FlxGroup;
 		protected var bonuses:FlxGroup;
 		protected var base:FlxSprite;
 		protected var _boss:FlxSprite;
@@ -122,9 +122,9 @@ package {
 			bonuses = new FlxGroup();
 			add(bonuses);
 
-			boxes = new FlxGroup();
-			add(boxes);
-			_objects.add(boxes);
+			blocks = new FlxGroup();
+			add(blocks);
+			_objects.add(blocks);
 
 			// to be overrided by every level
 			makeScene();
@@ -237,8 +237,8 @@ package {
 			FlxU.overlap(_enemyBullets, _tank, overlapped);
 			FlxU.overlap(_enemyBullets, _enemies, overlapped);
 			FlxU.overlap(_enemyBullets, _boss, overlapped);
-			FlxU.overlap(_bullets, boxes, overlapped);
-			FlxU.overlap(_enemyBullets, boxes, overlapped);
+			FlxU.overlap(_bullets, blocks, overlapped);
+			FlxU.overlap(_enemyBullets, blocks, overlapped);
 			FlxU.overlap(_bullets, base, overlapped);
 			FlxU.overlap(_enemyBullets, base, overlapped);
 			FlxU.overlap(bonuses, _tank, overlapped);
@@ -280,7 +280,7 @@ package {
 			if (!(Object1 is EnemyBullet) && ((Object2 is Enemy) || (Object2 is Boss))){
 				Object2.hurt(1);
 			}
-			if (Object2 is Box){
+			if (Object2 is Block){
 				Object2.hurt(1);
 			}
 			if ((Object1 is EnemyBullet) && ((Object2 is Base) || (Object2 is Tank))){

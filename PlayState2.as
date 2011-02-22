@@ -22,15 +22,15 @@ package {
 		override protected function makeScene():void {
 			back.loadGraphic(ImgBack);
 			
-			var box:Box;
-			box = new Box(100, 100);
-			boxes.add(box);
-			box = new Box(100, 110);
-			boxes.add(box);
-			box = new Box(110, 100);
-			boxes.add(box);
-			box = new Box(110, 110);
-			boxes.add(box);
+			var block:Block;
+			block = new BlockBox(100, 100);
+			blocks.add(block);
+			block = new BlockBox(100, 110);
+			blocks.add(block);
+			block = new BlockBox(110, 100);
+			blocks.add(block);
+			block = new BlockBox(110, 110);
+			blocks.add(block);
 		}
 	}
 }

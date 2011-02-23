@@ -41,10 +41,12 @@ package {
 			}
 			bgName = new FlxSprite(0, 0);
 			bgName.createGraphic(32, 18, colorName);
+			bgName.fill(colorName);
 			//bgName.scrollFactor = ssf;
 			add(bgName);
 			bgPrice = new FlxSprite(32, 0);
 			bgPrice.createGraphic(88, 18, colorPrice);
+			bgPrice.fill(colorPrice);
 			//bgPrice.scrollFactor = ssf;
 			add(bgPrice);
 			txtName = new FlxText(-5, -2, 40, up.name);
@@ -61,6 +63,7 @@ package {
 			add(txtPrice);
 
 			tagGold = new FlxSprite(34, 2, ImgBonus);
+			tagGold.visible = !available;
 			add(tagGold);
 
 			button = new FlxButton(0, 0, onSelect);
@@ -78,7 +81,9 @@ package {
 			if (available){
 				(FlxG.state as ShopState).selectUpgrade(index);
 			} else {
-				if (FlxG.score >= up.gold){
+				if (FlxG.score >= up.gold) {
+					ShopState.upgradesBought[index] = true;
+					available = true;
 					bgName.fill(up.colorName);
 					bgPrice.fill(up.colorPrice);
 					txtName.color = up.colorPrice;

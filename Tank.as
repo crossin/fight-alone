@@ -20,6 +20,7 @@ package {
 		protected var lifeBar:FlxSprite;
 		protected var maxHealth:Number;
 		protected var _shadow:FlxSprite;
+		protected var cover:FlxSprite;
 
 		[Embed(source="res/tank_plain.png")]
 		protected var ImgTankPlain:Class;
@@ -27,6 +28,8 @@ package {
 		protected var ImgTankDouble:Class;
 		[Embed(source="res/tank_shadow.png")]
 		protected var ImgTankShadow:Class;
+		[Embed(source="res/tank_cover.png")]
+		protected var ImgTankCover:Class;
 
 		public function Tank(){
 			super(PlayState.maxWidth / 2 - 8, PlayState.maxHeight / 2 - 8);
@@ -53,6 +56,7 @@ package {
 			addAnimation("move", [0, 1], 12);
 
 			_shadow = new FlxSprite(x, y, ImgTankShadow);
+			cover = new FlxSprite(x, y, ImgTankCover);
 		}
 
 		override public function update():void {
@@ -156,17 +160,22 @@ package {
 			battery.reset(x, y);
 			_shadow.reset(x + 1, y + 1);
 			_shadow.angle = angle;
+			cover.reset(x, y);
+			cover.angle = angle;
+			cover.update();
 		}
 
 		override public function render():void {
 			_shadow.render();
 			super.render();
+			cover.render();
 		}
 
 		override public function hurt(Damage:Number):void {
 			//FlxG.play(SndHit);
 			super.hurt(Damage);
 			flicker(0.2);
+			
 			battery.flicker(0.2);
 			var w:int = health / maxHealth * 50;
 			if (w > 0){
@@ -185,6 +194,7 @@ package {
 
 			battery.kill();
 			_shadow.kill();
+			cover.kill();
 			super.kill();
 			flicker( -1);
 			explode();
@@ -259,6 +269,10 @@ package {
 			Explosion.explosionIndex++;
 			if (Explosion.explosionIndex >= explosions.length)
 				Explosion.explosionIndex = 0;
+		}
+		
+		public function flash():void {
+			
 		}
 	}
 }

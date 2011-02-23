@@ -58,7 +58,7 @@ package {
 			add(txtPrice);
 
 			fore = new FlxSprite(0, 0);
-			fore.createGraphic(24, 18, 0xffcccccc);
+			fore.createGraphic(24, 18, 0xffffffff);
 			fore.scrollFactor = ssf;
 			fore.visible = false;
 			//fore.alpha = 0.5;

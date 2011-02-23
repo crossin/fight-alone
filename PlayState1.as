@@ -27,13 +27,13 @@ package {
 			back.loadGraphic(ImgBack);
 			
 			var block:Block;
-			block = new BlockBox(100, 100);
+			block = new BlockRock(100, 100);
 			blocks.add(block);
-			block = new BlockBox(100, 110);
+			block = new BlockRock(100, 118);
 			blocks.add(block);
-			block = new BlockBox(110, 100);
+			block = new BlockBox(118, 100);
 			blocks.add(block);
-			block = new BlockBox(110, 110);
+			block = new BlockBox(118, 118);
 			blocks.add(block);
 		}
 	}

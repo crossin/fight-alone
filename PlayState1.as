@@ -31,7 +31,7 @@ package {
 			blocks.add(block);
 			block = new BlockSteel(100, 118);
 			blocks.add(block);
-			block = new BlockSteel(118, 100);
+			block = new BlockBarrier(118, 100);
 			blocks.add(block);
 			block = new BlockBox(118, 118);
 			blocks.add(block);

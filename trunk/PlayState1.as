@@ -27,11 +27,11 @@ package {
 			back.loadGraphic(ImgBack);
 			
 			var block:Block;
-			block = new BlockRock(100, 100);
+			block = new BlockBrick(100, 100);
 			blocks.add(block);
-			block = new BlockRock(100, 118);
+			block = new BlockSteel(100, 118);
 			blocks.add(block);
-			block = new BlockBox(118, 100);
+			block = new BlockSteel(118, 100);
 			blocks.add(block);
 			block = new BlockBox(118, 118);
 			blocks.add(block);

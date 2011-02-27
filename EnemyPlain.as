@@ -6,7 +6,7 @@ package {
 	 * @author Crossin
 	 */
 	public class EnemyPlain extends Enemy {
-		[Embed(source="res/enemy.png")]
+		[Embed(source="res/enemy_plain.png")]
 		private var ImgEnemy:Class;
 
 		private var _bullets:Array;
@@ -14,9 +14,14 @@ package {
 		public function EnemyPlain(from:int, pgs:Number){
 			super(from, pgs);
 			loadGraphic(ImgEnemy, true);
-			_maxHealth = 20;
+			_maxHealth = 50;
 			health = _maxHealth;
+			unitVelocity = 20;
 			score = 50;
+			damage = 5;
+			intervalShoot = 3;
+			intervalCheck = 1;
+			defence = 3;
 
 			_bullets = PlayState._enemyBullets.members;
 		}

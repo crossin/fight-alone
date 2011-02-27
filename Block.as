@@ -9,8 +9,8 @@ package {
 		//[Embed(source="res/gibs.png")]
 		protected var ImgGibs:Class;
 		protected var gibs:FlxEmitter;
-		
-		public function Block(ix:int,iy:int){
+
+		public function Block(ix:int, iy:int){
 			super(ix, iy);
 			//loadGraphic(ImgBox, true);
 			fixed = true;
@@ -21,15 +21,15 @@ package {
 			//addAnimation("health1", [3]);
 			gibs = PlayState._gibs;
 		}
-		
+
 		override public function hurt(Damage:Number):void {
-			super.hurt(Damage);
+			super.hurt(1);
 			play("health" + health);
 		}
-		
+
 		override public function kill():void {
 			super.kill();
-			flicker( -1);
+			flicker(-1);
 			gibs.createSprites(ImgGibs);
 			gibs.at(this);
 			gibs.start(true, 0.4, 25);

@@ -20,6 +20,8 @@ package {
 		protected var lifeBar:FlxSprite;
 		protected var maxHealth:Number;
 		protected var _shadow:FlxSprite;
+		protected var damage:int;
+		protected var defence:int;
 
 		[Embed(source="res/tank_plain.png")]
 		protected var ImgTankPlain:Class;
@@ -48,6 +50,8 @@ package {
 			restartClock();
 			shoot = shootPlain;
 			shotSpeed = 250;
+			damage = 10;
+			defence = 3;
 
 			addAnimation("stop", [0]);
 			addAnimation("move", [0, 1], 12);
@@ -165,17 +169,19 @@ package {
 
 		override public function hurt(Damage:Number):void {
 			//FlxG.play(SndHit);
-			super.hurt(Damage);
-			flicker(0.2);
-			
-			battery.flicker(0.2);
-			var w:int = health / maxHealth * 50;
-			if (w > 0){
-				lifeBar.createGraphic(w, 4, 0xfff29a7d);
-				lifeBar.fill(0xfff29a7d);
-			} else {
-				lifeBar.fill(0);
+			if (Damage >= defence){
+				super.hurt(Damage - defence);
+				var w:int = health / maxHealth * 50;
+				if (w > 0){
+					lifeBar.createGraphic(w, 4, 0xfff29a7d);
+					lifeBar.fill(0xfff29a7d);
+				} else {
+					lifeBar.fill(0);
+				}
 			}
+			flicker(0.2);
+			battery.flicker(0.2);
+
 			//FlxG.score += 10;
 
 		}
@@ -187,7 +193,7 @@ package {
 			battery.kill();
 			_shadow.kill();
 			super.kill();
-			flicker( -1);
+			flicker(-1);
 			explode();
 		}
 
@@ -216,6 +222,7 @@ package {
 
 			var b:Bullet = bullets[Bullet.bulletIndex];
 			b.owner = this;
+			b.damage = damage;
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			//b.angle = battery.angle; //FlxU.getAngle(FlxG.mouse.x - x, FlxG.mouse.x - y);
 			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle);
@@ -230,6 +237,7 @@ package {
 			var b:Bullet = bullets[Bullet.bulletIndex];
 			var dist:FlxPoint = FlxU.rotatePoint(0, 5, 0, 0, b.angle);
 			b.owner = this;
+			b.damage = damage;
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			//b.angle = battery.angle;
 			dist = FlxU.rotatePoint(0, height / 4, 0, 0, battery.angle);
@@ -242,6 +250,7 @@ package {
 			b = bullets[Bullet.bulletIndex];
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			b.owner = this;
+			b.damage = damage;
 			dist = FlxU.rotatePoint(0, -height / 4, 0, 0, battery.angle);
 			b.x -= dist.x;
 			b.y -= dist.y;
@@ -249,9 +258,9 @@ package {
 			Bullet.bulletIndex++;
 			if (Bullet.bulletIndex >= bullets.length)
 				Bullet.bulletIndex = 0;
-			
+
 		}
-		
+
 		private function explode():void {
 			var e:Explosion = explosions[Explosion.explosionIndex];
 			e.reset(x, y);
@@ -260,9 +269,9 @@ package {
 			if (Explosion.explosionIndex >= explosions.length)
 				Explosion.explosionIndex = 0;
 		}
-		
+
 		public function flash():void {
-			
+
 		}
 	}
 }

@@ -278,13 +278,13 @@ package {
 			}
 			Object1.kill();
 			if (!(Object1 is EnemyBullet) && ((Object2 is Enemy) || (Object2 is Boss))){
-				Object2.hurt(1);
+				Object2.hurt((Object1 as Bullet).damage);
 			}
 			if (Object2 is Block){
-				Object2.hurt(1);
+				Object2.hurt((Object1 as Bullet).damage);
 			}
 			if ((Object1 is EnemyBullet) && ((Object2 is Base) || (Object2 is Tank))){
-				Object2.hurt(1);
+				Object2.hurt((Object1 as Bullet).damage);
 			}
 			if ((Object1 is Bonus) && (Object2 is Tank)){
 				// add gold

@@ -11,6 +11,7 @@ package {
 		private var ImgBullet:Class;
 		
 		public var owner:FlxObject;
+		public var damage:int;
 		
 		public static var bulletIndex:uint;
 		
@@ -18,6 +19,7 @@ package {
 			super(0, 0, ImgBullet);
 			exists = false;
 			owner = null;
+			damage = 1;
 		}
 	}
 }

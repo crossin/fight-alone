@@ -18,12 +18,17 @@ package {
 		protected var unitVelocity:Number;
 		protected var angleRange:Number;
 		protected var score:uint;
+		protected var damage:int;
+		protected var intervalShoot:Number;
+		protected var intervalCheck:Number;
+		protected var defence:int;
 		private var _lifeBar:FlxSprite;
 		private var _lifeBarBack:FlxSprite;
 		private var shotClock:Number;
 		private var _bullets:Array;
 		private var _explosions:Array;
 		private var progress:Number;
+		private var inside:Boolean;
 
 		//private var _bulletIndex:uint;
 		//private var _explosionIndex:uint;
@@ -62,6 +67,11 @@ package {
 			drag.y = 10;
 			health = _maxHealth;
 			score = 100;
+			inside = false;
+			damage = 5;
+			intervalShoot = 1;
+			intervalCheck = 1;
+			defence = 3;
 			//maxAngular = 5;
 			//angularDrag = 20;
 			//maxVelocity.x = 10;
@@ -88,7 +98,7 @@ package {
 
 		override public function update():void {
 			_timer += FlxG.elapsed;
-			if (_timer > 4 * FlxU.random() + 1){
+			if ((_timer > intervalCheck * FlxU.random() + 1) || (x < 0) || (x > PlayState.maxWidth) || (y < 0) || (y > PlayState.maxHeight)){
 				_timer = 0;
 				_angleDest = FlxU.getAngle(_tank.x - x, _tank.y - y) + angleRange - FlxU.random() * angleRange * 2;
 				_angleDest = (_angleDest + 360) % 360;
@@ -156,6 +166,7 @@ package {
 			//_lifeBar.update();
 			//_lifeBarBack.update();
 			super.update();
+
 			var mouseX:Number = FlxG.mouse.x + 4.5;
 			var mouseY:Number = FlxG.mouse.y + 4.5;
 			if ((mouseX > x && mouseX < x + width) && (mouseY > y && mouseY < y + height)){
@@ -175,7 +186,7 @@ package {
 					c = 0xffff0000 | uint(255 * 4 / 3 * health / _maxHealth) << 8;
 				}
 				var w:uint = uint(health / _maxHealth * width);
-				if (w > 0) {
+				if (w > 0){
 					_lifeBar.createGraphic(w, 1, c);
 					_lifeBar.fill(c);
 				} else {
@@ -185,13 +196,15 @@ package {
 		}
 
 		//override public function render():void {
-			//super.render();
+		//super.render();
 //
 		//}
 
 		override public function hurt(Damage:Number):void {
 			//FlxG.play(SndHit);
-			super.hurt(Damage);
+			if (Damage >= defence){
+				super.hurt(Damage - defence);
+			}
 			flicker(0.2);
 			//FlxG.score += 10;
 
@@ -220,6 +233,7 @@ package {
 			}
 			var b:EnemyBullet = _bullets[EnemyBullet.bulletIndex];
 			b.owner = this;
+			b.damage = damage;
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			b.angle = angle; //FlxU.getAngle(FlxG.mouse.x - x, FlxG.mouse.x - y);
 			b.velocity = FlxU.rotatePoint(150, 0, 0, 0, b.angle);
@@ -241,7 +255,7 @@ package {
 		}
 
 		private function restartClock():void {
-			shotClock = 1 + FlxU.random() * 3;
+			shotClock = intervalShoot * (0.5 + FlxU.random());
 			_angleDest = angle;
 			_timer = 0;
 		}

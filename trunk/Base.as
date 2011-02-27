@@ -15,13 +15,14 @@ package {
 		private var timeDead:Number;
 		private var timeExplode:Number;
 		private var explosions:Array;
+		private var defence:int;
 
 		public function Base(){
 			super(200, 200);
 			loadGraphic(ImgBase, true);
 			explosions = PlayState._explosions.members;
 			_fixed = true;
-			maxHealth = 40;
+			maxHealth = 100;
 			health = maxHealth;
 			addAnimation("safe", [0, 1], 2);
 			addAnimation("minor", [2, 3], 2);
@@ -32,19 +33,23 @@ package {
 			lifeBarBack = PlayState._enemyLifeBarBack;
 			timeDead = 3;
 			timeExplode = 0;
+			defence = 3;
 		}
 
 		override public function hurt(Damage:Number):void {
-			super.hurt(Damage);
-			if (health > 0.6 * maxHealth){
-				play("safe");
-			} else if (health > 0.3 * maxHealth){
-				play("minor");
-			} else if (health > 0){
-				play("severe");
-			} else {
-				play("dead");
+			if (Damage >= defence){
+				super.hurt(Damage - defence);
+				if (health > 0.6 * maxHealth){
+					play("safe");
+				} else if (health > 0.3 * maxHealth){
+					play("minor");
+				} else if (health > 0){
+					play("severe");
+				} else {
+					play("dead");
+				}
 			}
+			flicker(0.2);
 		}
 
 		override public function kill():void {

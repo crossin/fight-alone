@@ -14,11 +14,16 @@ package {
 		public function EnemyFast(from:int, pgs:Number){
 			super(from, pgs);
 			loadGraphic(ImgEnemy, true);
-			_maxHealth = 2;
-			unitVelocity = 70;
-			angleRange = 3;
-			score = 150;
+			_maxHealth = 20;
 			health = _maxHealth;
+			unitVelocity = 70;
+			unitVelocityAngle = 150;
+			angleRange = 45;
+			damage = 5;
+			defence = 2;
+			intervalShoot = 3;
+			intervalCheck = 0.5;
+			score = 70;
 
 			_bullets = PlayState._enemyBullets.members;
 		}

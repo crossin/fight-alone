@@ -16,6 +16,7 @@ package {
 		private var _angleDest:Number;
 		protected var _maxHealth:Number;
 		protected var unitVelocity:Number;
+		protected var unitVelocityAngle:Number;
 		protected var angleRange:Number;
 		protected var score:uint;
 		protected var damage:int;
@@ -61,6 +62,7 @@ package {
 			_angleDest = 0;
 			_maxHealth = 20;
 			unitVelocity = 20;
+			unitVelocityAngle = 100;
 			angleRange = 90;
 			//origin.x=0
 			drag.x = 10;
@@ -118,15 +120,15 @@ package {
 			} else {
 				if (_angleDest < 180){
 					if (angle > _angleDest && angle - _angleDest < 180){
-						angularVelocity = -100;
+						angularVelocity = -unitVelocityAngle;
 					} else {
-						angularVelocity = 100;
+						angularVelocity = unitVelocityAngle;
 					}
 				} else {
 					if (_angleDest > angle && _angleDest - angle < 180){
-						angularVelocity = 100;
+						angularVelocity = unitVelocityAngle;
 					} else {
-						angularVelocity = -100;
+						angularVelocity = -unitVelocityAngle;
 					}
 				}
 			}

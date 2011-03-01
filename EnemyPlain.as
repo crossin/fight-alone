@@ -17,6 +17,8 @@ package {
 			_maxHealth = 50;
 			health = _maxHealth;
 			unitVelocity = 20;
+			unitVelocityAngle = 100;
+			angleRange = 60;
 			score = 50;
 			damage = 5;
 			intervalShoot = 3;

@@ -56,7 +56,7 @@ package {
 			addAnimation("stop", [0]);
 			addAnimation("move", [0, 1], 12);
 
-			_shadow = new FlxSprite(x, y, ImgTankShadow);
+			_shadow = new FlxSprite(x + 1, y + 1, ImgTankShadow);
 		}
 
 		override public function update():void {

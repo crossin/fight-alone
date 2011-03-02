@@ -29,11 +29,11 @@ package {
 			var block:Block;
 			block = new BlockBrick(100, 100);
 			blocks.add(block);
-			block = new BlockSteel(100, 118);
+			block = new BlockSteel(100, 116);
 			blocks.add(block);
-			block = new BlockBarrier(118, 100);
+			block = new BlockBarrier(116, 100);
 			blocks.add(block);
-			block = new BlockBox(118, 118);
+			block = new BlockBox(116, 116);
 			blocks.add(block);
 		}
 	}

@@ -9,6 +9,8 @@ package {
 
 		[Embed(source="res/enemy.png")]
 		private var ImgEnemy:Class;
+		[Embed(source="res/shadow_enemy.png")]
+		private var ImgShadow:Class;
 
 		//private var _gibs:FlxEmitter;
 		private var _timer:Number;
@@ -23,6 +25,7 @@ package {
 		protected var intervalShoot:Number;
 		protected var intervalCheck:Number;
 		protected var defence:int;
+		protected var shadow:FlxSprite;
 		private var _lifeBar:FlxSprite;
 		private var _lifeBarBack:FlxSprite;
 		private var shotClock:Number;
@@ -52,7 +55,7 @@ package {
 					reset(FlxU.random() * PlayState.maxWidth, PlayState.maxHeight + 20);
 					break;
 			}
-			loadGraphic(ImgEnemy, true);
+			//loadGraphic(ImgEnemy, true);
 			//height = height - 1; //draw the crate 1 pixel into the floor
 			//acceleration.y = 400;
 			_tank = (FlxG.state as PlayState)._tank;
@@ -96,6 +99,7 @@ package {
 			//_lifeBarBack.createGraphic(width + 2, 3);
 			//_lifeBar.fill(0xff00ff00);
 			//_lifeBarBack.fill(0xff000000);
+			shadow = new FlxSprite(x + 1, y + 1, ImgShadow);
 		}
 
 		override public function update():void {
@@ -168,7 +172,9 @@ package {
 			//_lifeBar.update();
 			//_lifeBarBack.update();
 			super.update();
-
+			shadow.reset(x + 1, y + 1);
+			shadow.angle = angle;
+			
 			var mouseX:Number = FlxG.mouse.x + 4.5;
 			var mouseY:Number = FlxG.mouse.y + 4.5;
 			if ((mouseX > x && mouseX < x + width) && (mouseY > y && mouseY < y + height)){
@@ -197,10 +203,10 @@ package {
 			}
 		}
 
-		//override public function render():void {
-		//super.render();
-//
-		//}
+		override public function render():void {
+			shadow.render();
+			super.render();
+		}
 
 		override public function hurt(Damage:Number):void {
 			//FlxG.play(SndHit);
@@ -217,6 +223,7 @@ package {
 				return;
 			//FlxG.play(SndExplode);
 			//_lifeBar.kill();
+			shadow.kill();
 			super.kill();
 			flicker(-1);
 			//FlxG.quake.start(0.005, 0.35);

@@ -18,7 +18,7 @@ package {
 		private var defence:int;
 
 		public function Base(){
-			super(200, 200);
+			super(184, 134);
 			loadGraphic(ImgBase, true);
 			explosions = PlayState._explosions.members;
 			_fixed = true;

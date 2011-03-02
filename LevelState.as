@@ -15,7 +15,7 @@ package {
 
 		public static var levels:Array = [PlayState1, PlayState2];
 		public static var levelMax:uint = 2;
-		public static var levelUnlock:uint = 2;
+		public static var levelUnlock:uint = 1;
 
 		public function LevelState(){
 			_title = new FlxText(0, 0, 320, "Choose Level");

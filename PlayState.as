@@ -50,6 +50,7 @@ package {
 		protected var txtScore:FlxText;
 		protected var txtGold:FlxText;
 		protected var index:uint;
+		protected var map:Array;
 
 		public var score:int;
 
@@ -297,6 +298,23 @@ package {
 		}
 
 		protected function makeScene():void {
+			var block:Block;
+			for (var i:int = 0; i < map.length; i++){
+				for (var j:int = 0; j < map[i].length; j++){
+					if (map[i][j] <= 0){
+						continue;
+					} else if (map[i][j] == 1){
+						block = new BlockBox(16 * j + 8, 16 * i + 6);
+					} else if (map[i][j] == 2){
+						block = new BlockBrick(16 * j + 8, 16 * i + 6);
+					} else if (map[i][j] == 3){
+						block = new BlockSteel(16 * j + 8, 16 * i + 6);
+					} else if (map[i][j] == 4){
+						block = new BlockBarrier(16 * j + 8, 16 * i + 6);
+					}
+					blocks.add(block);
+				}
+			}
 		}
 
 		private function onFade():void {

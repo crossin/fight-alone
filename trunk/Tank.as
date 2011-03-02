@@ -31,7 +31,7 @@ package {
 		protected var ImgTankShadow:Class;
 
 		public function Tank(){
-			super(PlayState.maxWidth / 2 - 8, PlayState.maxHeight / 2 - 8);
+			super(168, 150);
 			loadGraphic(ImgTankPlain, true);
 			type = 0;
 			maxHealth = 10;

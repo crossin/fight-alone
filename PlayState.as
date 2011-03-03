@@ -309,13 +309,13 @@ package {
 					if (map[i][j] <= 0){
 						continue;
 					} else if (map[i][j] == 1){
-						block = new BlockBox(16 * j + 8, 16 * i + 6);
+						block = new BlockBox(18 * j + 2, 18 * i + 6);
 					} else if (map[i][j] == 2){
-						block = new BlockBrick(16 * j + 8, 16 * i + 6);
+						block = new BlockBrick(18 * j + 2, 18 * i + 6);
 					} else if (map[i][j] == 3){
-						block = new BlockSteel(16 * j + 8, 16 * i + 6);
+						block = new BlockSteel(18 * j + 2, 18 * i + 6);
 					} else if (map[i][j] == 4){
-						block = new BlockBarrier(16 * j + 8, 16 * i + 6);
+						block = new BlockBarrier(18 * j + 2, 18 * i + 6);
 					}
 					blocks.add(block);
 				}

@@ -128,6 +128,7 @@ package {
 				price += increment;
 				price = (price > 9999) ? 9999 : price;
 				up.doEffect();
+				(FlxG.state as PlayState).upEffect.show(colorName, level.toString());
 			}
 
 			if (fore.visible){

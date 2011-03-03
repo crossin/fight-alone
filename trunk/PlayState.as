@@ -18,6 +18,7 @@ package {
 		private var ImgShield:Class;
 
 		public var _tank:Tank;
+		public var upEffect:UpEffect;
 		public static var _battery:Battery;
 		public static var _bullets:FlxGroup;
 		public static var _lifeBar:FlxSprite;
@@ -171,6 +172,9 @@ package {
 
 			_boss = new Boss(20);
 			_boss.exists = false;
+			
+			upEffect = new UpEffect();
+			
 			add(_enemyBullets);
 			add(_boss);
 			add(_tank);
@@ -181,7 +185,8 @@ package {
 			add(_explosions);
 			add(_enemyLifeBarBack);
 			add(_enemyLifeBar);
-
+			add(upEffect);
+			
 			add(heart);
 			add(_lifeBar);
 			add(flag);
@@ -189,7 +194,7 @@ package {
 			add(upPanel);
 			add(txtScore);
 			add(txtGold);
-
+			
 			_objects.add(_tank);
 			_objects.add(_enemies);
 			//_objects.add(_rock);

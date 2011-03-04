@@ -18,7 +18,7 @@ package {
 		//public static var upgrades:Array = [UpgradeMS, UpgradeAS];
 		public static var upgrades:Array = [-1, -1, -1, -1, -1];
 		public static var upgradesBought:Array = [false, false, false];
-		public static var upgradesAll:Array = [new UpgradeMS, new UpgradeAS, new UpgradeMS];
+		public static var upgradesAll:Array = [new UpgradeMS, new UpgradeAS, new UpgradeAT];
 
 		public function ShopState(){
 			_title = new FlxText(0, 0, 320, "here is SHOP");

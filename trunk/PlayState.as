@@ -40,7 +40,7 @@ package {
 		protected var blocks:FlxGroup;
 		protected var bonuses:FlxGroup;
 		protected var base:FlxSprite;
-		protected var _boss:FlxSprite;
+		//protected var _boss:FlxSprite;
 		protected var shield:FlxSprite;
 		protected var _timer:Number;
 		protected var _timerLast:Number;
@@ -170,13 +170,13 @@ package {
 			//shield.addAnimation("active", [0, 1, 2, 3], 18);
 			//shield.play("active");
 
-			_boss = new Boss(20);
-			_boss.exists = false;
+			//_boss = new Boss(20);
+			//_boss.exists = false;
 			
 			upEffect = new UpEffect();
 			
 			add(_enemyBullets);
-			add(_boss);
+			//add(_boss);
 			add(_tank);
 			add(_bullets);
 			add(_battery);
@@ -198,7 +198,7 @@ package {
 			_objects.add(_tank);
 			_objects.add(_enemies);
 			//_objects.add(_rock);
-			_objects.add(_boss);
+			//_objects.add(_boss);
 
 
 			FlxG.mouse.show(ImgCursor);
@@ -239,10 +239,10 @@ package {
 			super.update();
 
 			FlxU.overlap(_bullets, _enemies, overlapped);
-			FlxU.overlap(_bullets, _boss, overlapped);
+			//FlxU.overlap(_bullets, _boss, overlapped);
 			FlxU.overlap(_enemyBullets, _tank, overlapped);
 			FlxU.overlap(_enemyBullets, _enemies, overlapped);
-			FlxU.overlap(_enemyBullets, _boss, overlapped);
+			//FlxU.overlap(_enemyBullets, _boss, overlapped);
 			FlxU.overlap(_bullets, blocks, overlapped);
 			FlxU.overlap(_enemyBullets, blocks, overlapped);
 			FlxU.overlap(_bullets, base, overlapped);

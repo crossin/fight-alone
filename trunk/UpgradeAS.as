@@ -9,9 +9,9 @@ package {
 			name = "AS";
 			price = 200;
 			increment = 75;
-			colorName = 0xff00cc00;
-			colorPrice = 0xffccffcc;
-			gold = 910;
+			colorName = 0xff7db300;
+			colorPrice = 0xffd1e69f;
+			gold = 10;
 		}
 
 	}

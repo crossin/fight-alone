@@ -33,7 +33,9 @@ package {
 			gibs.createSprites(ImgGibs);
 			gibs.at(this);
 			gibs.start(true, 0.4, 25);
-			(FlxG.state as PlayState).dropBonus(x + origin.x, y + origin.y);
+			if (FlxU.random() < 0.2) {
+				(FlxG.state as PlayState).dropBonus(x + origin.x, y + origin.y);
+			}
 		}
 	}
 }

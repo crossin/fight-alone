@@ -231,6 +231,9 @@ package {
 			//_jets.kill();
 			explode();
 			(FlxG.state as PlayState).updateProgress(progress, score);
+			if (FlxU.random() < 0.5) {
+				(FlxG.state as PlayState).dropBonus(x + origin.x, y + origin.y);
+			}
 			//_gibs.at(this);
 			//_gibs.start(true, 1, 8);
 			//FlxG.score += 200;

@@ -12,8 +12,8 @@ package {
 			name = "MS";
 			price = 100;
 			increment = 50;
-			colorName = 0xffcc0000;
-			colorPrice = 0xffffcccc;
+			colorName = 0xff8f00b3;//0xffcc0000;
+			colorPrice = 0xffd8a3e5//0xffffcccc;
 			gold = 5;
 		}
 

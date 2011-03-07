@@ -14,6 +14,8 @@ package {
 		public function BlockBrick(ix:int, iy:int){
 			super(ix, iy);
 			loadGraphic(ImgBlock, true);
+			width = 18;
+			height = 18;
 			//fixed = false;
 			health = 2;
 			addAnimation("health2", [0]);

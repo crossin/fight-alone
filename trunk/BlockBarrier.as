@@ -12,6 +12,8 @@ package {
 		public function BlockBarrier(ix:int, iy:int){
 			super(ix, iy);
 			loadGraphic(ImgBlock);
+			width = 18;
+			height = 18;
 			//fixed = false;
 		}
 		

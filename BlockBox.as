@@ -14,6 +14,8 @@ package {
 		public function BlockBox(ix:int, iy:int){
 			super(ix, iy);
 			loadGraphic(ImgBlock);
+			width = 18;
+			height = 18;
 			fixed = false;
 			//health = 1;
 			drag.x = 100;

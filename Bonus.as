@@ -8,12 +8,14 @@ package {
 	 * @author Crossin
 	 */
 	public class Bonus extends FlxSprite {
-		[Embed(source="res/gold.png")]
-		private var ImgBonus:Class;
+		//[Embed(source="res/gold.png")]
+		//private var ImgBonus:Class;
 		private var time:Number;
 
-		public function Bonus(iX:int, iY:int){
-			super(iX, iY, ImgBonus);
+		public function Bonus(iX:int, iY:int, img:Class){
+			super(iX, iY, img);
+			x -= width / 2;
+			y -= height / 2;
 			time = 5;
 		}
 
@@ -25,6 +27,10 @@ package {
 				flicker();
 			}
 			super.update();
+		}
+		
+		public function doEffect():void {
+			// to be overrided
 		}
 	}
 }

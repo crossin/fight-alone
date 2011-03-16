@@ -294,8 +294,9 @@ package {
 			}
 			if ((Object1 is Bonus) && (Object2 is Tank)){
 				// add gold
-				FlxG.score += 1;
-				txtGold.text = FlxG.score.toString();
+				//FlxG.score += 1;
+				//txtGold.text = FlxG.score.toString();
+				(Object1 as Bonus).doEffect();
 			}
 		}
 
@@ -327,7 +328,7 @@ package {
 		}
 
 		public function dropBonus(iX:int, iY:int):void {
-			bonuses.add(new Bonus(iX - 4, iY - 4));
+			bonuses.add(new BonusTwo(iX, iY));
 		}
 
 		public function updateProgress(p:uint, s:int):void {

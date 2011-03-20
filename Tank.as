@@ -201,16 +201,23 @@ package {
 			if (type != t){
 				switch (t){
 					case 1:
-						loadGraphic(ImgTankPlain, true);
+						//loadGraphic(ImgTankPlain, true);
+						battery.setType(1);
 						shoot = shootPlain;
 						break;
 					case 2:
-						loadGraphic(ImgTankDouble, true);
+						//loadGraphic(ImgTankDouble, true);
+						battery.setType(2);
 						shoot = shootDouble;
+						break;
+					case 3:
+						//loadGraphic(ImgTankDouble, true);
+						battery.setType(3);
+						shoot = shootThree;
 						break;
 				}
 				type = t;
-				battery.setType(type);
+
 			}
 		}
 
@@ -219,7 +226,6 @@ package {
 		}
 
 		protected function shootPlain():void {
-
 			var b:Bullet = bullets[Bullet.bulletIndex];
 			b.owner = this;
 			b.damage = damage;
@@ -259,6 +265,35 @@ package {
 			if (Bullet.bulletIndex >= bullets.length)
 				Bullet.bulletIndex = 0;
 
+		}
+
+		protected function shootThree():void {
+			var b:Bullet = bullets[Bullet.bulletIndex];
+			b.owner = this;
+			b.damage = damage;
+			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle);
+			Bullet.bulletIndex++;
+			if (Bullet.bulletIndex >= bullets.length)
+				Bullet.bulletIndex = 0;
+
+			b = bullets[Bullet.bulletIndex];
+			b.owner = this;
+			b.damage = damage;
+			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle - 45);
+			Bullet.bulletIndex++;
+			if (Bullet.bulletIndex >= bullets.length)
+				Bullet.bulletIndex = 0;
+
+			b = bullets[Bullet.bulletIndex];
+			b.owner = this;
+			b.damage = damage;
+			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle + 45);
+			Bullet.bulletIndex++;
+			if (Bullet.bulletIndex >= bullets.length)
+				Bullet.bulletIndex = 0;
 		}
 
 		private function explode():void {

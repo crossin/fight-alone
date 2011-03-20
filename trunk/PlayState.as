@@ -328,7 +328,7 @@ package {
 		}
 
 		public function dropBonus(iX:int, iY:int):void {
-			bonuses.add(new BonusTwo(iX, iY));
+			bonuses.add(new BonusThree(iX, iY));
 		}
 
 		public function updateProgress(p:uint, s:int):void {

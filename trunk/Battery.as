@@ -10,6 +10,9 @@ package {
 		protected var ImgBatteryPlain:Class;
 		[Embed(source="res/battery_double.png")]
 		protected var ImgBatteryDouble:Class;
+		[Embed(source="res/battery_three.png")]
+		protected var ImgBatteryThree:Class;
+
 
 		public function Battery(){
 			loadGraphic(ImgBatteryPlain, true);
@@ -30,6 +33,9 @@ package {
 					break;
 				case 2:
 					loadGraphic(ImgBatteryDouble, true);
+					break;
+				case 3:
+					loadGraphic(ImgBatteryThree, true);
 					break;
 			}
 		}

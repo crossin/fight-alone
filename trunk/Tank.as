@@ -211,9 +211,12 @@ package {
 						shoot = shootDouble;
 						break;
 					case 3:
-						//loadGraphic(ImgTankDouble, true);
 						battery.setType(3);
 						shoot = shootThree;
+						break;
+					case 4:
+						battery.setType(4);
+						shoot = shootFour;
 						break;
 				}
 				type = t;
@@ -291,6 +294,44 @@ package {
 			b.damage = damage;
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle + 45);
+			Bullet.bulletIndex++;
+			if (Bullet.bulletIndex >= bullets.length)
+				Bullet.bulletIndex = 0;
+		}
+
+		protected function shootFour():void {
+			var b:Bullet = bullets[Bullet.bulletIndex];
+			b.owner = this;
+			b.damage = damage;
+			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle);
+			Bullet.bulletIndex++;
+			if (Bullet.bulletIndex >= bullets.length)
+				Bullet.bulletIndex = 0;
+
+			b = bullets[Bullet.bulletIndex];
+			b.owner = this;
+			b.damage = damage;
+			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle - 90);
+			Bullet.bulletIndex++;
+			if (Bullet.bulletIndex >= bullets.length)
+				Bullet.bulletIndex = 0;
+
+			b = bullets[Bullet.bulletIndex];
+			b.owner = this;
+			b.damage = damage;
+			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle + 90);
+			Bullet.bulletIndex++;
+			if (Bullet.bulletIndex >= bullets.length)
+				Bullet.bulletIndex = 0;
+
+			b = bullets[Bullet.bulletIndex];
+			b.owner = this;
+			b.damage = damage;
+			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle + 180);
 			Bullet.bulletIndex++;
 			if (Bullet.bulletIndex >= bullets.length)
 				Bullet.bulletIndex = 0;

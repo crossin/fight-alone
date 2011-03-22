@@ -10,15 +10,15 @@ package {
 		private var ImgHeart:Class;
 		[Embed(source="res/flag.png")]
 		private var ImgFlag:Class;
-		[Embed(source="res/upgrade.png")]
-		private var ImgUpgrade:Class;
+		//[Embed(source="res/upgrade.png")]
+		//private var ImgUpgrade:Class;
 		//[Embed(source="res/back.png")]
 		//private var ImgBack:Class;
 		[Embed(source="res/shield.png")]
 		private var ImgShield:Class;
 
 		public var _tank:Tank;
-		public var upEffect:UpEffect;
+		//public var upEffect:UpEffect;
 		public static var _battery:Battery;
 		public static var _bullets:FlxGroup;
 		public static var _lifeBar:FlxSprite;
@@ -49,7 +49,7 @@ package {
 		protected var progress:Number;
 		protected var hasWin:Boolean;
 		protected var txtScore:FlxText;
-		protected var txtGold:FlxText;
+		//protected var txtGold:FlxText;
 		protected var index:uint;
 		protected var map:Array;
 
@@ -78,8 +78,8 @@ package {
 			_enemyLifeBar = new FlxSprite();
 			_enemyLifeBarBack = new FlxSprite();
 			// upgrade panel
-			var upPanel:FlxSprite = new FlxSprite(5, 215, ImgUpgrade);
-			upPanel.scrollFactor = ssf;
+			//var upPanel:FlxSprite = new FlxSprite(5, 215, ImgUpgrade);
+			//upPanel.scrollFactor = ssf;
 			//score
 			txtScore = new FlxText(0, 218, 50, "0");
 			txtScore.size = 8;
@@ -88,12 +88,12 @@ package {
 			//txtScore.antialiasing = false;
 			txtScore.scrollFactor = ssf;
 			//txtScore.alpha = 0.5;
-			txtGold = new FlxText(120, 20, 100, FlxG.score.toString());
-			txtGold.size = 8;
+			//txtGold = new FlxText(120, 20, 100, FlxG.score.toString());
+			//txtGold.size = 8;
 			//txtGold.alignment = "center";
-			txtGold.color = 0x999933;
+			//txtGold.color = 0x999933;
 			//txtGold.antialiasing = false;
-			txtGold.scrollFactor = ssf;
+			//txtGold.scrollFactor = ssf;
 
 
 			_objects = new FlxGroup();
@@ -172,9 +172,9 @@ package {
 
 			//_boss = new Boss(20);
 			//_boss.exists = false;
-			
-			upEffect = new UpEffect();
-			
+
+			//upEffect = new UpEffect();
+
 			add(_enemyBullets);
 			//add(_boss);
 			add(_tank);
@@ -185,16 +185,16 @@ package {
 			add(_explosions);
 			add(_enemyLifeBarBack);
 			add(_enemyLifeBar);
-			add(upEffect);
-			
+			//add(upEffect);
+
 			add(heart);
 			add(_lifeBar);
 			add(flag);
 			add(progressBar);
-			add(upPanel);
+			//add(upPanel);
 			add(txtScore);
-			add(txtGold);
-			
+			//add(txtGold);
+
 			_objects.add(_tank);
 			_objects.add(_enemies);
 			//_objects.add(_rock);
@@ -217,17 +217,17 @@ package {
 			score = 0;
 
 			// upgrades
-			var u:UpgradeItem;
-			var index:int;
-			for (i = 0; i < 5; i++){
-				index = ShopState.upgrades[i];
-				if (index >= 0){
-					u = new UpgradeItem(index, i + 1);
-					u.reset(49 + i * 25, 217);
-					//u.scrollFactor = ssf;
-					add(u);
-				}
-			}
+			//var u:UpgradeItem;
+			//var index:int;
+			//for (i = 0; i < 5; i++){
+			//index = ShopState.upgrades[i];
+			//if (index >= 0){
+			//u = new UpgradeItem(index, i + 1);
+			//u.reset(49 + i * 25, 217);
+			//u.scrollFactor = ssf;
+			//add(u);
+			//}
+			//}
 		}
 
 		override public function update():void {
@@ -328,7 +328,14 @@ package {
 		}
 
 		public function dropBonus(iX:int, iY:int):void {
-			bonuses.add(new BonusFour(iX, iY));
+			var ran:Number = FlxU.random();
+			if (ran < 0.3){
+				bonuses.add(new BonusTwo(iX, iY));
+			} else if (ran < 0.6){
+				bonuses.add(new BonusThree(iX, iY));
+			} else if (ran < 0.9){
+				bonuses.add(new BonusFour(iX, iY));
+			}
 		}
 
 		public function updateProgress(p:uint, s:int):void {

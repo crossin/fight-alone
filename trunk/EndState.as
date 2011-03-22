@@ -59,31 +59,33 @@ package {
 			b.loadText(t1, t2);
 			add(b);
 			// next level
-			b = new FlxButton(195, 150, onNext);
-			b.loadGraphic((new FlxSprite()).createGraphic(50, 30, 0xff3a5c39), (new FlxSprite()).createGraphic(50, 30, 0xff729954));
-			t1 = new FlxText(0, 8, 48, "Next");
-			t1.color = 0x729954;
-			t1.size = 8;
-			t1.alignment = "center";
-			t2 = new FlxText(0, 8, 48, "Next");
-			t2.color = 0xd8eba2;
-			t2.size = 8;
-			t2.alignment = "center";
-			b.loadText(t1, t2);
-			add(b);
+			if (index < LevelState.levelUnlock){
+				b = new FlxButton(195, 150, onNext);
+				b.loadGraphic((new FlxSprite()).createGraphic(50, 30, 0xff3a5c39), (new FlxSprite()).createGraphic(50, 30, 0xff729954));
+				t1 = new FlxText(0, 8, 48, "Next");
+				t1.color = 0x729954;
+				t1.size = 8;
+				t1.alignment = "center";
+				t2 = new FlxText(0, 8, 48, "Next");
+				t2.color = 0xd8eba2;
+				t2.size = 8;
+				t2.alignment = "center";
+				b.loadText(t1, t2);
+				add(b);
+			}
 			// shop
-			b = new FlxButton(135, 190, onShop);
-			b.loadGraphic((new FlxSprite()).createGraphic(50, 30, 0xff3a5c39), (new FlxSprite()).createGraphic(50, 30, 0xff729954));
-			t1 = new FlxText(0, 8, 48, "Shop");
-			t1.color = 0x729954;
-			t1.size = 8;
-			t1.alignment = "center";
-			t2 = new FlxText(0, 8, 48, "Shop");
-			t2.color = 0xd8eba2;
-			t2.size = 8;
-			t2.alignment = "center";
-			b.loadText(t1, t2);
-			add(b);
+			//b = new FlxButton(135, 190, onShop);
+			//b.loadGraphic((new FlxSprite()).createGraphic(50, 30, 0xff3a5c39), (new FlxSprite()).createGraphic(50, 30, 0xff729954));
+			//t1 = new FlxText(0, 8, 48, "Shop");
+			//t1.color = 0x729954;
+			//t1.size = 8;
+			//t1.alignment = "center";
+			//t2 = new FlxText(0, 8, 48, "Shop");
+			//t2.color = 0xd8eba2;
+			//t2.size = 8;
+			//t2.alignment = "center";
+			//b.loadText(t1, t2);
+			//add(b);
 
 			FlxG.mouse.show(ImgCursor);
 		}
@@ -119,13 +121,12 @@ package {
 			}
 		}
 
-		private function onShop():void {
-			FlxG.flash.start(0xffd8eba2, 1);
-			FlxG.fade.start(0xff131c1b, 1, onShopFade);
-		}
-
-		private function onShopFade():void {
-			FlxG.state = new ShopState();
-		}
+		//private function onShop():void {
+		//FlxG.flash.start(0xffd8eba2, 1);
+		//FlxG.fade.start(0xff131c1b, 1, onShopFade);
+		//}
+		//private function onShopFade():void {
+		//FlxG.state = new ShopState();
+		//}
 	}
 }

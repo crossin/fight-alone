@@ -27,8 +27,12 @@ package {
 		protected var ImgTankPlain:Class;
 		[Embed(source="res/tank_double.png")]
 		protected var ImgTankDouble:Class;
+		[Embed(source="res/tank_small.png")]
+		protected var ImgTankSmall:Class;
 		[Embed(source="res/tank_shadow.png")]
 		protected var ImgTankShadow:Class;
+		[Embed(source="res/tank_shadow_small.png")]
+		protected var ImgTankShadowSmall:Class;
 
 		public function Tank(){
 			super(168, 150);
@@ -157,7 +161,7 @@ package {
 				}
 			}
 			super.update();
-			battery.reset(x, y);
+			battery.reset(x + (width - battery.width) / 2, y + (height - battery.height) / 2);
 			_shadow.reset(x + 1, y + 1);
 			_shadow.angle = angle;
 		}
@@ -217,6 +221,12 @@ package {
 					case 4:
 						battery.setType(4);
 						shoot = shootFour;
+						break;
+					case 5:
+						loadGraphic(ImgTankSmall, true);
+						_shadow.loadGraphic(ImgTankShadowSmall, true);
+						maxVelocity.x = 70;
+						maxVelocity.y = 70;
 						break;
 				}
 				type = t;

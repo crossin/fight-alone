@@ -330,11 +330,11 @@ package {
 		public function dropBonus(iX:int, iY:int):void {
 			var ran:Number = FlxU.random();
 			if (ran < 0.3){
-				bonuses.add(new BonusFast(iX, iY));
+				bonuses.add(new BonusBig(iX, iY));
 			} else if (ran < 0.6){
-				bonuses.add(new BonusFast(iX, iY));
+				bonuses.add(new BonusBig(iX, iY));
 			} else if (ran < 0.9){
-				bonuses.add(new BonusFast(iX, iY));
+				bonuses.add(new BonusBig(iX, iY));
 			}
 		}
 

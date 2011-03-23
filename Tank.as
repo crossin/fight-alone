@@ -29,10 +29,14 @@ package {
 		protected var ImgTankDouble:Class;
 		[Embed(source="res/tank_small.png")]
 		protected var ImgTankSmall:Class;
+		[Embed(source="res/tank_big.png")]
+		protected var ImgTankBig:Class;
 		[Embed(source="res/tank_shadow.png")]
 		protected var ImgTankShadow:Class;
 		[Embed(source="res/tank_shadow_small.png")]
 		protected var ImgTankShadowSmall:Class;
+		[Embed(source="res/tank_shadow_big.png")]
+		protected var ImgTankShadowBig:Class;
 
 		public function Tank(){
 			super(168, 150);
@@ -227,6 +231,11 @@ package {
 						_shadow.loadGraphic(ImgTankShadowSmall, true);
 						maxVelocity.x = 70;
 						maxVelocity.y = 70;
+						break;
+					case 6:
+						loadGraphic(ImgTankBig, true);
+						_shadow.loadGraphic(ImgTankShadowBig, true);
+						defence = 5;
 						break;
 				}
 				type = t;

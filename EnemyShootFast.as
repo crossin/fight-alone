@@ -19,7 +19,7 @@ package {
 			unitVelocity = 20;
 			damage = 4;
 			intervalShoot = 1;
-			defence = 3;
+			defence = 0.3;
 			angleRange = 60;
 			unitVelocityAngle = 100;
 			intervalCheck = 1;

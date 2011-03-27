@@ -22,7 +22,7 @@ package {
 			unitVelocityAngle = 150;
 			angleRange = 45;
 			damage = 5;
-			defence = 2;
+			defence = 0.2;
 			intervalShoot = 3;
 			intervalCheck = 0.5;
 			score = 70;

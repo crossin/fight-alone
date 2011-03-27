@@ -14,13 +14,15 @@ package {
 		//private var ImgUpgrade:Class;
 		//[Embed(source="res/back.png")]
 		//private var ImgBack:Class;
-		[Embed(source="res/shield.png")]
-		private var ImgShield:Class;
+		//[Embed(source="res/shield.png")]
+		//private var ImgShield:Class;
 
 		public var _tank:Tank;
+		public var shield:Shield;
 		//public var upEffect:UpEffect;
 		public static var _battery:Battery;
 		public static var _bullets:FlxGroup;
+		public static var _bulletsSmall:FlxGroup;
 		public static var _lifeBar:FlxSprite;
 		public static var progressBar:FlxSprite;
 		public static var _enemyLifeBar:FlxSprite;
@@ -41,7 +43,6 @@ package {
 		protected var bonuses:FlxGroup;
 		protected var base:FlxSprite;
 		//protected var _boss:FlxSprite;
-		protected var shield:FlxSprite;
 		protected var _timer:Number;
 		protected var _timerLast:Number;
 		protected var _timerInterval:Number;
@@ -144,8 +145,12 @@ package {
 				//s.height = 10;
 				//s.offset.x = -31;
 				//s.offset.y = -31;
-
 				_bullets.add(s);
+			}
+			_bulletsSmall = new FlxGroup();
+			for (i = 0; i < 32; i++){
+				s = new BulletSmall();
+				_bulletsSmall.add(s);
 			}
 
 			_enemyBullets = new FlxGroup();
@@ -165,11 +170,8 @@ package {
 			//_enemies.add(enemy);
 			//}
 
-			//shield = new FlxSprite();
-			//shield.loadGraphic(ImgShield, true);
-			//shield.addAnimation("active", [0, 1, 2, 3], 18);
-			//shield.play("active");
-
+			shield = new Shield();
+			shield.exists = false;
 			//_boss = new Boss(20);
 			//_boss.exists = false;
 
@@ -179,9 +181,10 @@ package {
 			//add(_boss);
 			add(_tank);
 			add(_bullets);
+			add(_bulletsSmall);
 			add(_battery);
 			add(_enemies);
-			//add(shield);
+			add(shield);
 			add(_explosions);
 			add(_enemyLifeBarBack);
 			add(_enemyLifeBar);
@@ -239,15 +242,19 @@ package {
 			super.update();
 
 			FlxU.overlap(_bullets, _enemies, overlapped);
+			FlxU.overlap(_bulletsSmall, _enemies, overlapped);
 			//FlxU.overlap(_bullets, _boss, overlapped);
 			FlxU.overlap(_enemyBullets, _tank, overlapped);
 			FlxU.overlap(_enemyBullets, _enemies, overlapped);
 			//FlxU.overlap(_enemyBullets, _boss, overlapped);
 			FlxU.overlap(_bullets, blocks, overlapped);
+			FlxU.overlap(_bulletsSmall, blocks, overlapped);
 			FlxU.overlap(_enemyBullets, blocks, overlapped);
 			FlxU.overlap(_bullets, base, overlapped);
+			FlxU.overlap(_bulletsSmall, base, overlapped);
 			FlxU.overlap(_enemyBullets, base, overlapped);
 			FlxU.overlap(bonuses, _tank, overlapped);
+			FlxU.overlap(_enemyBullets, shield, overlapped);
 			FlxU.collide(_objects, _objects);
 
 			//if (FlxG.keys.justPressed("ONE")) {
@@ -266,16 +273,16 @@ package {
 			if (!_tank.exists || !base.active){
 				FlxG.fade.start(0xff131c1b, 2, onFade);
 			}
-		/*
-		   for each (var eny:Enemy in _enemies.members) {
-		   if (!eny.exists) {
-		   _enemies.remove(eny, true);
-		   }
-		   }
-		 */
-
-			 //shield.x = _tank.x;
-			 //shield.y = _tank.y;
+			/*
+			   for each (var eny:Enemy in _enemies.members) {
+			   if (!eny.exists) {
+			   _enemies.remove(eny, true);
+			   }
+			   }
+			 */
+			shield.angle = _tank.angle;
+			shield.x = _tank.x + (_tank.width - shield.width) / 2;
+			shield.y = _tank.y + (_tank.height - shield.height) / 2;
 		}
 
 		protected function overlapped(Object1:FlxObject, Object2:FlxObject):void {
@@ -285,11 +292,12 @@ package {
 			Object1.kill();
 			if (!(Object1 is EnemyBullet) && ((Object2 is Enemy) || (Object2 is Boss))){
 				Object2.hurt((Object1 as Bullet).damage);
+				trace((Object1 as Bullet).damage)
 			}
 			if (Object2 is Block){
 				Object2.hurt((Object1 as Bullet).damage);
 			}
-			if ((Object1 is EnemyBullet) && ((Object2 is Base) || (Object2 is Tank))){
+			if ((Object1 is EnemyBullet) && ((Object2 is Base) || (Object2 is Tank) || (Object2 is Shield))){
 				Object2.hurt((Object1 as Bullet).damage);
 			}
 			if ((Object1 is Bonus) && (Object2 is Tank)){
@@ -330,11 +338,11 @@ package {
 		public function dropBonus(iX:int, iY:int):void {
 			var ran:Number = FlxU.random();
 			if (ran < 0.3){
-				bonuses.add(new BonusLife(iX, iY));
+				bonuses.add(new BonusBomb(iX, iY));
 			} else if (ran < 0.6){
-				bonuses.add(new BonusLife(iX, iY));
+				bonuses.add(new BonusBomb(iX, iY));
 			} else if (ran < 0.9){
-				bonuses.add(new BonusLife(iX, iY));
+				bonuses.add(new BonusBomb(iX, iY));
 			}
 		}
 
@@ -355,6 +363,16 @@ package {
 			if (progress == 100){
 				hasWin = true;
 				FlxG.fade.start(0xff131c1b, 2, onFade);
+			}
+		}
+
+		public function bomb():void {
+			FlxG.quake.start(0.005, 0.35);
+			FlxG.flash.start(0xffcccccc, 0.5);
+			for each (var eny:Enemy in _enemies.members){
+				if (eny.exists){
+					eny.hurt(100);
+				}
 			}
 		}
 	}

@@ -19,7 +19,7 @@ package {
 			super(0, 0, ImgBullet);
 			exists = false;
 			owner = null;
-			damage = 1;
+			damage = 10;
 		}
 	}
 }

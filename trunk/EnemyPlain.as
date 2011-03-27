@@ -23,7 +23,7 @@ package {
 			damage = 5;
 			intervalShoot = 3;
 			intervalCheck = 1;
-			defence = 3;
+			defence = 0.3;
 
 			_bullets = PlayState._enemyBullets.members;
 		}

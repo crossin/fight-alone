@@ -24,7 +24,7 @@ package {
 		protected var damage:int;
 		protected var intervalShoot:Number;
 		protected var intervalCheck:Number;
-		protected var defence:int;
+		protected var defence:Number;
 		protected var shadow:FlxSprite;
 		private var _lifeBar:FlxSprite;
 		private var _lifeBarBack:FlxSprite;
@@ -76,7 +76,7 @@ package {
 			damage = 5;
 			intervalShoot = 1;
 			intervalCheck = 1;
-			defence = 3;
+			defence = 0.3;
 			//maxAngular = 5;
 			//angularDrag = 20;
 			//maxVelocity.x = 10;
@@ -174,7 +174,7 @@ package {
 			super.update();
 			shadow.reset(x + 1, y + 1);
 			shadow.angle = angle;
-			
+
 			var mouseX:Number = FlxG.mouse.x + 4.5;
 			var mouseY:Number = FlxG.mouse.y + 4.5;
 			if ((mouseX > x && mouseX < x + width) && (mouseY > y && mouseY < y + height)){
@@ -210,12 +210,12 @@ package {
 
 		override public function hurt(Damage:Number):void {
 			//FlxG.play(SndHit);
-			if (Damage >= defence){
-				super.hurt(Damage - defence);
-			}
+			//if (Damage >= defence){
+			//super.hurt(Damage - defence);
+			//}
+			super.hurt(Damage * (1 - defence));
 			flicker(0.2);
 			//FlxG.score += 10;
-
 		}
 
 		override public function kill():void {
@@ -231,7 +231,7 @@ package {
 			//_jets.kill();
 			explode();
 			(FlxG.state as PlayState).updateProgress(progress, score);
-			if (FlxU.random() < 0.5) {
+			if (FlxU.random() < 0.5){
 				(FlxG.state as PlayState).dropBonus(x + origin.x, y + origin.y);
 			}
 			//_gibs.at(this);

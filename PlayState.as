@@ -205,7 +205,8 @@ package {
 
 
 			FlxG.mouse.show(ImgCursor);
-			FlxG.follow(_tank);
+			FlxG.follow(_tank, 2);
+			//FlxG.followAdjust(0.5,0.0);
 			FlxG.followBounds(0, 0, maxWidth, maxHeight);
 
 			_timer = 0;

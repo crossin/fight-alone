@@ -272,7 +272,7 @@ package {
 
 			// check lose
 			if (!_tank.exists || !base.active){
-				FlxG.fade.start(0xff131c1b, 2, onFade);
+				FlxG.fade.start(0xff1e150f, 2, onFade);
 			}
 			/*
 			   for each (var eny:Enemy in _enemies.members) {
@@ -363,7 +363,7 @@ package {
 			// check win
 			if (progress == 100){
 				hasWin = true;
-				FlxG.fade.start(0xff131c1b, 2, onFade);
+				FlxG.fade.start(0xff1e150f, 2, onFade);
 			}
 		}
 

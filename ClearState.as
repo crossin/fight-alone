@@ -24,8 +24,8 @@ package {
 
 		override public function update():void {
 			if (FlxG.mouse.justPressed()){
-				FlxG.flash.start(0xffd8eba2, 1);
-				FlxG.fade.start(0xff131c1b, 1, onFade);
+				FlxG.flash.start(0xffe3cba2, 1);
+				FlxG.fade.start(0xff1e150f, 1, onFade);
 			}
 		}
 

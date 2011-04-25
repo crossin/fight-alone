@@ -91,8 +91,8 @@ package {
 		}
 
 		private function onLevels():void {
-			FlxG.flash.start(0xffd8eba2, 1);
-			FlxG.fade.start(0xff131c1b, 1, onLevelsFade);
+			FlxG.flash.start(0xffe3cba2, 1);
+			FlxG.fade.start(0xff1e150f, 1, onLevelsFade);
 		}
 
 		private function onLevelsFade():void {
@@ -100,8 +100,8 @@ package {
 		}
 
 		private function onReplay():void {
-			FlxG.flash.start(0xffd8eba2, 1);
-			FlxG.fade.start(0xff131c1b, 1, onReplayFade);
+			FlxG.flash.start(0xffe3cba2, 1);
+			FlxG.fade.start(0xff1e150f, 1, onReplayFade);
 		}
 
 		private function onReplayFade():void {
@@ -109,8 +109,8 @@ package {
 		}
 
 		private function onNext():void {
-			FlxG.flash.start(0xffd8eba2, 1);
-			FlxG.fade.start(0xff131c1b, 1, onNextFade);
+			FlxG.flash.start(0xffe3cba2, 1);
+			FlxG.fade.start(0xff1e150f, 1, onNextFade);
 		}
 
 		private function onNextFade():void {

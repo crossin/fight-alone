@@ -10,6 +10,8 @@ package {
 		private var ImgCursor:Class;
 		[Embed(source="res/title.png")]
 		private var ImgTitle:Class;
+		[Embed(source="res/back_mud.png")]
+		private var ImgBack:Class;
 		
 		private var _title:FlxText;
 
@@ -21,6 +23,11 @@ package {
 			_title.antialiasing = true;
 			add(_title);
 			
+			var back:FlxTileblock;
+			back = new FlxTileblock(0, 0, FlxG.width, FlxG.height);
+			back.loadGraphic(ImgBack);
+			add(back);
+			
 			var bg:FlxSprite = new FlxSprite(0, 0, ImgTitle);
 			add(bg);
 			
@@ -29,8 +36,8 @@ package {
 
 		override public function update():void {
 			if (FlxG.mouse.justPressed()){
-				FlxG.flash.start(0xffd8eba2, 1);
-				FlxG.fade.start(0xff131c1b, 1, onFade);
+				FlxG.flash.start(0xffe3cba2, 1);
+				FlxG.fade.start(0xff1e150f, 1, onFade);
 			}
 		}
 

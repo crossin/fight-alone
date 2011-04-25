@@ -9,15 +9,22 @@ package {
 	public class LevelState extends FlxState {
 		[Embed(source="res/cursor.png")]
 		private var ImgCursor:Class;
+		[Embed(source="res/back_mud.png")]
+		private var ImgBack:Class;
 
 		private var _title:FlxText;
 		private var btnLevels:FlxGroup;
 
 		public static var levels:Array = [PlayState1, PlayState2];
-		public static var levelMax:uint = 2;
-		public static var levelUnlock:uint = 1;
+		public static var levelMax:uint = 20;
+		public static var levelUnlock:uint = 18;
 
-		public function LevelState(){
+		public function LevelState() {
+			var back:FlxTileblock;
+			back = new FlxTileblock(0, 0, FlxG.width, FlxG.height);
+			back.loadGraphic(ImgBack);
+			add(back);
+			
 			_title = new FlxText(0, 0, 320, "Choose Level");
 			_title.size = 16;
 			_title.alignment = "center";
@@ -31,7 +38,7 @@ package {
 			//var t1:FlxText;
 			//var t2:FlxText;
 			for (i = 0; i < levelMax; i++){
-				b = new LevelButton(60 + i % 5 * 40, 50 + int(i / 5) * 40, i + 1);
+				b = new LevelButton(60 + i % 5 * 40, 50 + int(i / 5) * 40, i + 1, int(i / 5));
 				//if (i < levelUnlock) {
 				//b.loadGraphic((new FlxSprite()).createGraphic(30, 30, 0xff3a5c39), (new FlxSprite()).createGraphic(30, 30, 0xff729954));
 				//t1 = new FlxText(0, 4, 28, (i + 1).toString());

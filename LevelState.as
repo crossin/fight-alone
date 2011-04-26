@@ -17,7 +17,7 @@ package {
 
 		public static var levels:Array = [PlayState1, PlayState2];
 		public static var levelMax:uint = 20;
-		public static var levelUnlock:uint = 18;
+		public static var levelUnlock:uint = 2;
 
 		public function LevelState() {
 			var back:FlxTileblock;

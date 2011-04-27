@@ -38,7 +38,7 @@ package {
 			//var t1:FlxText;
 			//var t2:FlxText;
 			for (i = 0; i < levelMax; i++){
-				b = new LevelButton(60 + i % 5 * 40, 50 + int(i / 5) * 40, i + 1, int(i / 5));
+				b = new LevelButton(70 + i % 5 * 40, 40 + int(i / 5) * 40, i + 1, int(i / 5));
 				//if (i < levelUnlock) {
 				//b.loadGraphic((new FlxSprite()).createGraphic(30, 30, 0xff3a5c39), (new FlxSprite()).createGraphic(30, 30, 0xff729954));
 				//t1 = new FlxText(0, 4, 28, (i + 1).toString());
@@ -56,6 +56,23 @@ package {
 			}
 			add(btnLevels);
 
+			var t1:FlxText;
+			var t2:FlxText;
+			// menu
+			b = new FlxButton((FlxG.width - 80) / 2, 200, onMenu);
+			b.loadGraphic((new FlxSprite()).createGraphic(80, 12, 0x00000000));
+			t1 = new FlxText(0, 0, 80, "MENU");
+			t1.color = 0x672a02;
+			t1.shadow = 0xe3cba2;
+			t1.size = 8;
+			t1.alignment = "center";
+			t2 = new FlxText(0, 0, 80, "MENU");
+			t2.color = 0xe3cba2;
+			t2.shadow = 0x672a02;
+			t2.size = 8;
+			t2.alignment = "center";
+			b.loadText(t1, t2);
+			add(b);
 			// shop
 			//b = new FlxButton(135, 190, onShop);
 			//b.loadGraphic((new FlxSprite()).createGraphic(50, 30, 0xff3a5c39), (new FlxSprite()).createGraphic(50, 30, 0xff729954));
@@ -78,6 +95,14 @@ package {
 			FlxG.state = new levels[index - 1];
 		}
 
+		private function onMenu():void {
+			FlxG.flash.start(0xffe3cba2, 1);
+			FlxG.fade.start(0xff1e150f, 1, onMenuFade);
+		}
+		
+		private function onMenuFade():void {
+			FlxG.state = new MenuState();
+		}
 		//private function onShop():void {
 			//FlxG.flash.start(0xffd8eba2, 1);
 			//FlxG.fade.start(0xff131c1b, 1, onShopFade);

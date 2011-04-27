@@ -90,7 +90,7 @@ package {
 		}
 
 		private function onLevelFade():void {
-			FlxG.state = new LevelState();
+			FlxG.state = new EndState(true,1);
 		}
 	}
 

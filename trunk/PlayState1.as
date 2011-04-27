@@ -34,7 +34,7 @@ package {
 
 		override protected function addEnemy():void {
 			if ((enemyCount < 10) && (_timer % _timerInterval < _timerLast % _timerInterval)){
-				_enemies.add(new EnemyShootFast(int(FlxU.random() * 4), 8));
+				_enemies.add(new EnemyShootFast(int(FlxU.random() * 4), 118));
 				enemyCount++;
 			}
 			if ((enemyCount >= 10) && (enemyCount < 12) && (_timer % _timerInterval < _timerLast % _timerInterval)){

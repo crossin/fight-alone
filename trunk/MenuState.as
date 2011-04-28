@@ -12,7 +12,13 @@ package {
 		private var ImgTitle:Class;
 		[Embed(source="res/back_mud.png")]
 		private var ImgBack:Class;
-
+		[Embed(source="res/tank_plain.png")]
+		private var ImgTank:Class;
+		[Embed(source="res/battery_plain.png")]
+		private var ImgBattery:Class;
+		[Embed(source="res/tank_shadow.png")]
+		private var ImgShadow:Class;
+		
 		//private var _title:FlxText;
 
 		public function MenuState(){
@@ -30,6 +36,19 @@ package {
 
 			var bg:FlxSprite = new FlxSprite(0, 0, ImgTitle);
 			add(bg);
+			
+			var tank:FlxSprite;
+			tank = new FlxSprite(21, 201, ImgShadow);
+			add(tank);
+			tank = new FlxSprite(20, 200);
+			tank.loadGraphic(ImgTank, true);
+			tank.addAnimation("move", [0, 1], 12);
+			tank.play("move");
+			add(tank);
+			tank = new FlxSprite(20, 200);
+			tank.loadGraphic(ImgBattery, true);
+			tank.angle = -90;
+			add(tank);
 
 			var b:FlxButton;
 			var t1:FlxText;
@@ -90,7 +109,8 @@ package {
 		}
 
 		private function onLevelFade():void {
-			FlxG.state = new EndState(true,1);
+			//FlxG.state = new EndState(true,1);
+			FlxG.state = new LevelState();
 		}
 	}
 

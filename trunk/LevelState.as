@@ -25,10 +25,10 @@ package {
 			back.loadGraphic(ImgBack);
 			add(back);
 			
-			_title = new FlxText(0, 0, 320, "Choose Level");
+			_title = new FlxText(0, 10, 320, "Choose Level");
 			_title.size = 16;
 			_title.alignment = "center";
-			_title.color = 0xffffff;
+			_title.color = 0x672a02;
 			_title.antialiasing = true;
 			add(_title);
 

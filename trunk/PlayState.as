@@ -338,12 +338,24 @@ package {
 
 		public function dropBonus(iX:int, iY:int):void {
 			var ran:Number = FlxU.random();
-			if (ran < 0.3){
+			if (ran < 0.1){
+				bonuses.add(new BonusBig(iX, iY));
+			} else if (ran < 0.2){
 				bonuses.add(new BonusBomb(iX, iY));
+			} else if (ran < 0.3){
+				bonuses.add(new BonusFast(iX, iY));
+			} else if (ran < 0.4){
+				bonuses.add(new BonusFour(iX, iY));
+			} else if (ran < 0.5){
+				bonuses.add(new BonusLife(iX, iY));
 			} else if (ran < 0.6){
-				bonuses.add(new BonusBomb(iX, iY));
+				bonuses.add(new BonusShield(iX, iY));
+			} else if (ran < 0.7){
+				bonuses.add(new BonusShootfast(iX, iY));
+			} else if (ran < 0.8){
+				bonuses.add(new BonusThree(iX, iY));
 			} else if (ran < 0.9){
-				bonuses.add(new BonusBomb(iX, iY));
+				bonuses.add(new BonusTwo(iX, iY));
 			}
 		}
 

@@ -50,6 +50,14 @@ package {
 			tank.angle = -90;
 			add(tank);
 
+			var title:FlxText = new FlxText(115, 16, 200, "VIVA  FOR  VICTOR");
+			title.size = 16;
+			title.alignment = "center";
+			title.color = 0x672a02;
+			title.antialiasing = true;
+			//title.
+			add(title);
+			
 			var b:FlxButton;
 			var t1:FlxText;
 			var t2:FlxText;

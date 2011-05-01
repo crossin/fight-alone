@@ -1,0 +1,77 @@
+TERRAN 1: "WASTELAND"||- Build a Barracks.||- Train 10 Marines.||- Raynor must survive.->人族 1: "荒地"||- 建造一个兵营.||- 训练10个机枪兵.||- 雷纳不能死亡.|| 
+TERRAN 1: "WASTELAND"||- Find Raynor.||- Build a Barracks.||- Train 10 Marines.->人族 1: "荒地"||- 找到雷纳.||- 建造一个兵营.||- 训练10个机枪兵. 
+TERRAN 2: "BACKWATER STATION"||- Eradicate the alien infestation.||- Raynor must survive.->人族 2: "死水站"||- 根除外来侵袭.||- 雷纳不能死亡. 
+TERRAN 3: "DESPERATE ALLIANCE"||- Survive for 30 minutes.->人族 3: "绝望的联盟"||- 坚持30分钟. 
+TERRAN 4: "THE JACOBS INSTALLATION"||- Retrieve the data discs from the|| Confederate Network.||- Raynor must survive.->人族 4: "雅各布基地"||- 从联盟的网络中取得数据磁盘.||- 雷纳不能死亡. 
+TERRAN 5: "REVOLUTION"||- Bring Kerrigan to the Antigan || Command Center.||- Defend the Antigan rebels.||- Raynor and Kerrigan must|| survive.->人族 5: "革命"||- 带凯瑞甘去指挥中心.||- 保护反叛军.||- 雷纳和凯瑞甘不能死亡. 
+TERRAN 5: "REVOLUTION"||- Destroy the Confederate base.||- Raynor and Kerrigan must|| survive.->人族 5: "革命"||- 摧毁联盟基地.||- 雷纳和凯瑞甘不能死亡. 
+TERRAN 6: "NORAD II"||- Protect Battlecruiser Norad II.||- Bring Raynor and 2 dropships || to Norad II.->-人族 6: "诺拉德二号"||- 保护巡洋舰诺拉德二号.||- 将雷纳和两艘运输机带到诺拉德二号. 
+TERRAN 7: "THE TRUMP CARD"||- Bring the Psi Emitter to the enemy base.||- Kerrigan must survive.->人族 7: "王牌"||- 将幽能发生器带至敌人基地.||- 凯瑞甘不能死亡. 
+TERRAN 8: "THE BIG PUSH"||-Eliminate the Confederate forces.||-Duke must survive.->人族 8: "勇闯敌营"||- 歼灭联盟军队.||- 杜克不能死亡. 
+TERRAN 9: "NEW GETTYSBURG"||- Destroy the Protoss force.||- All Zerg buildings must survive.||- Kerrigan must survive.->人族 9: "新盖茨堡"||- 打败神族部队.||- 所有虫族建筑必须安全.||- 凯瑞甘不能死亡. 
+TERRAN 10: "THE HAMMER FALLS"||- Destroy the Ion Cannon.||- Raynor must survive.->人族 10: "致命一击"||- 摧毁离子大炮.||- 雷纳不能死亡. 
+
+ZERG 1: "AMONG THE RUINS"||- Create a Spawning Pool.||- Create a Hydralisk Den.||- Protect the Chrysalis.->虫族 1: "废墟之间"||- 创造一个产卵池.||- 创造一个刺蛇穴.||- 保护异蛹. 
+ZERG 2: "EGRESSION"||- Bring the Chrysalis to the beacon.->虫族 2: "出发"||- 把异蛹带到路标处. 
+ZERG 3: "THE NEW DOMINION"||- Protect the Chrysalis.||- Eliminate the Terran Presence.->虫族 3: "新领地"||- 保护异蛹.||- 歼灭人族. 
+ZERG 4: "AGENTS OF THE SWARM"||- Protect the Chrysalis until it is || ready to hatch.->虫族 4: "种群的使者"||- 保护异蛹直到它孵化出来. 
+ZERG 5: "THE AMERIGO"||- Bring Kerrigan to the Supercomputer.||- Kerrigan must survive.->虫族 5: "亚美利哥号"||- 带凯瑞甘找到超级计算机.||- 凯瑞甘不能死亡. 
+ZERG 6: "THE DARK TEMPLAR"||- Exterminate the Protoss intruders.||- Kerrigan must survive.->虫族 6: "黑暗圣堂武士"||- 消灭神族入侵者.||- 凯瑞甘不能死亡.|| 
+ZERG 7: "THE CULLING"||- Eradicate every last remnant of the Garm Brood.->虫族 7: "剿灭"||- 剿灭所有嘉尔姆家族的残余. 
+ZERG 8: "EYE FOR AN EYE"||- Destroy the Protoss bases.||- Let no Dark Templar escape.||- Kerrigan must survive.->虫族 8: "以眼还眼"||- 摧毁神族基地.||- 不能让任何黑暗圣堂武士逃走.||- 凯瑞甘不能死亡. 
+ZERG 9: "THE INVASION OF AIUR"||- Bring a Drone to the Khaydarin Crystal Formation.->虫族 9: "入侵艾尔"||- 将一个雄蜂带到柯亥达林水晶构造体. 
+ZERG 9: "THE INVASION OF AIUR"||- Bring Khaydarin Crystal to the Beacon.->虫族 9: "入侵艾尔"||- 将柯亥达林水晶送至路标. 
+ZERG 9: "THE INVASION OF AIUR"||- Hold off the protoss forces while the|| drone harvests the Khaydarin Crystal.->虫族 9: "入侵艾尔"||- 在雄蜂开采柯亥达林水晶期间抵抗神族进攻。 
+ZERG 10: "FULL CIRCLE"||- Bring Khaydarin Crystal to the || remains of the Protoss Temple.->虫族 10: "大功告成"||- 将柯亥达林水晶带到神庙的废墟上. 
+ZERG 10: "FULL CIRCLE"||- Destroy the Protoss Temple.->虫族 10: "大功告成"||- 摧毁神庙. 
+
+PROTOSS 1: "FIRST STRIKE"||- Meet Fenix at Antioch.||- Destroy the Zerg base.||- Fenix must survive.->神族 1: "初次反击"||- 在安提亚克与费尼克斯会合.||- 摧毁虫族基地.||- 费尼克斯不能死亡. 
+PROTOSS 2: "INTO THE FLAMES"||- Distract the Zerg while|| Fenix gets into position.||- Kill the Zerg Cerebrate.||- Fenix must survive.->神族 2: "初露锋芒"||- 牵制虫族, 直到费尼克斯到达.||- 摧毁脑虫.||- 费尼克斯不能死亡. 
+PROTOSS 2: "INTO THE FLAMES"||- Kill the Zerg Cerebrate.||- Fenix must survive.->神族 2: "初露锋芒"||- 摧毁脑虫.||- 费尼克斯不能死亡. 
+PROTOSS 3: "HIGHER GROUND"||- Destroy the Zerg colonies.->神族 3: "高原"||- 破坏所有虫族建筑. 
+PROTOSS 4: "THE HUNT FOR TASSADAR"||- Find Tassadar.||- Bring Tassadar to the beacon.->神族 4: "寻找塔萨达"||- 找到塔萨达.||- 把塔萨达带到路标. 
+PROTOSS 4: "THE HUNT FOR TASSADAR"||- Bring Tassadar and Raynor to the Beacon.->神族 4: "寻找塔萨达"||- 将塔萨达和雷纳带到路标. 
+PROTOSS 5: "CHOOSING SIDES"||- Bring Tassadar and two Zealots to the installation entrance.->神族 5: "立场的选择"||- 将塔萨达和二个狂战士带到基地入口. 
+PROTOSS 6: "INTO THE DARKNESS"||- Rescue Zeratul.||- Tassadar must survive.->神族 6: "深入黑暗"||- 援救泽拉托.||- 塔萨达不能死亡. 
+PROTOSS 7: "HOMELAND"||- Destroy the heart of the Conclave.||- Fenix, Zeratul and Tassadar must survive.->神族 7: "重返家园"||- 摧毁最高议会的总部.||- 费尼克斯, 泽拉托, 塔萨达不能死亡. 
+PROTOSS 8: "THE TRIAL OF TASSADAR"||- Destroy the Stasis Cell.||- Fenix and Raynor must survive.->神族 8: "审判塔萨达"||- 破坏禁锢牢房.||- 费尼克斯和雷纳不能死亡. 
+PROTOSS 9: "SHADOW HUNTERS"||- Use Zeratul to destroy the Zerg Cerebrates.||- Zeratul and Fenix must survive.->神族 9: "影子猎人"||- 用泽拉托杀死脑虫. ||- 泽拉托和费尼克斯不能死亡. 
+PROTOSS 10: "EYE OF THE STORM"||- Destroy the Overmind.||- Tassadar, Raynor, and || Zeratul must survive.->神族 10: "风暴之眼"||- 摧毁主宰.||- 塔萨达, 雷纳, 泽拉托不能死亡. 
+
+PROTOSS 1: "ESCAPE FROM AIUR"||- Bring Zeratul to the warp gate.||- Zeratul must survive.->神族 1: "逃离艾尔"||- 将泽拉托带至传送门。||- 泽拉托必须存活。 
+PROTOSS 2: "DUNES OF SHAKURAS"||- Destroy the Zerg base.->神族 2: "沙古拉斯沙丘"||- 摧毁虫族基地。 
+PROTOSS 2: "DUNES OF SHAKURAS"||- Establish a base and find the Dark Templar.->神族 2: "沙古拉斯沙丘"||- 建立一个基地并找到黑暗圣堂武士。 
+PROTOSS 3: "LEGACY OF THE XEL'NAGA"||- Destroy the Zerg cerebrates.->神族 3: "赛尔纳加的遗产"||- 消灭虫族脑虫。 
+PROTOSS 4:"THE QUEST FOR URAJ"||- Bring Kerrigan to the Uraj crystal.||- Kerrigan must survive.->神族 4:"寻找乌拉什水晶"||- 将凯瑞甘带到乌拉什水晶处。||- 凯瑞甘不能死亡。 
+PROTOSS 5: "THE BATTLE OF BRAXIS"||- Destroy all power generators to || pierce the UED blockade.||- Artanis must survive.->神族 5: "布拉克西思战役"||- 穿越UED防御工事。||- 阿尔坦尼斯必须存活。 
+PROTOSS 6: "RETURN TO CHAR"||- Retrieve the Khalis crystal with a|| probe or drone.|| - OR -||- Do enough damage to the Overmind|| to send it into remission.->神族 6: "回到查尔行星"||- 用探针或雄蜂取得柯哈里斯水晶。|| - 或者 -||- 打击主宰以令其进入休克状态。 
+PROTOSS 7: "THE INSURGENT"||- Kill the traitor Aldaris.->神族 7: "叛徒"||- 杀死叛徒阿尔达瑞斯。 
+PROTOSS 8: "COUNTDOWN"||- Bring Artanis and Zeratul to the Temple.||- Protect the Temple from the Zerg.||- Artanis and Zeratul must survive.->神族 8: "倒数计时"||- 将阿尔坦尼斯和泽拉托带到盛殿。||- 保护圣殿不被虫族摧毁。||- 阿尔坦尼斯和泽拉托必须存活。 
+PROTOSS 8: "COUNTDOWN"||- Save the Temple from being destroyed.->神族 8: "倒计时"||- 保护圣殿不被摧毁。 
+
+BONUS SCENARIO : "THE DARK ORIGIN"||- Investigate the energy signature.||- Zeratul must survive.->附加关卡 : "黑暗源头"||- 调查能量信号。||- 泽拉托必须存活。 
+
+TERRAN 1: "FIRST STRIKE"||- Destroy the enemy command center.||- Duran must survive.->人族 1: "第一次出击"||- 摧毁敌方指挥中心。||- 杜兰必须存活。 
+TERRAN 1: "FIRST STRIKE"||- Destroy the enemy command center.->人族 1: "第一次出击"||- 摧毁敌方指挥中心。 
+TERRAN 2: "THE DYLARIAN SHIPYARDS"||- Steal battlecruisers.||- Defeat the Dominion strike force.->人族 2: "迪拉利安船厂"||- 偷取巡洋战舰。||- 歼灭帝国反击部队。 
+TERRAN 3: "RUINS OF TARSONIS"||- Bring Duran to the Psi Disrupter.||- Duran must survive.->人族 3: "塔尔苏尼斯废墟"||- 将杜兰带到幽能干扰器。 ||- 杜兰必须存活。 
+TERRAN 3: "RUINS OF TARSONIS"||- Destroy Zerg hives to disable Zerg broods.||- Bring Duran to the Psi Disrupter after|| Zerg hives are destroyed.||- Duran must survive.->人族 3: "塔尔苏尼斯废墟"||- 摧毁所有蜂房以瘫痪虫群行动。||- 摧毁所有蜂房后，带杜兰到幽能干扰器处。||- 杜兰必须存活。 
+TERRAN 4: "ASSAULT ON KORHAL"||- Destroy the enemy physics labs|| -OR-||- Destroy the enemy nuclear silos.->人族 4: "袭击柯哈尔"||- 摧毁敌方的物理研究所。|| - 或者 -||- 摧毁敌方的核弹发射井。 
+TERRAN 5A: "EMPEROR'S FALL (GROUND ZERO)"||- Destroy Mengsk's command center.->人族 5A: "帝国覆灭（归零点）"||- 摧毁蒙斯克的指挥中心。 
+TERRAN 5B: "EMPEROR'S FALL (BIRDS OF WAR)"||- Destroy Mengsk's Command Center.->人族 5B: "帝国覆灭（战争之鸟）"||- 摧毁蒙斯克的指挥中心。 
+TERRAN 6: "EMPEROR'S FLIGHT"||- Destroy Raynor's command center.->人族 6: "皇帝的出逃"||- 摧毁雷纳的指挥中心。 
+TERRAN 7: "PATRIOT'S BLOOD"||- Find and kill Admiral Stukov.||- Duran must survive.->人族 7: "爱国者之血"||- 找到并杀死斯图可夫将军。||- 杜兰必须存活。 
+- Get to the override terminal before time|| runs out.->- 在15分钟内赶到手动控制台前。 
+TERRAN 8: "TO CHAIN THE BEAST"||- Bring a medic to each of the|| beacons surrounding the Overmind.||- Kill Zerg cerebrates to weaken|| the Overmind's defenses.->人族 8: "锁捕野兽"||- 将医护兵带到主宰周围每个路标。 ||- 摧毁脑虫以减低主宰的防御力量。 
+
+ZERG 1: "DISRUPTION"||- Rescue all hives from destruction.->虫族 1: "扰乱"||- 拯救所有的蜂房不被毁灭。 
+ZERG 2: "REIGN OF FIRE"||- Destroy the Psi Disrupter.->虫族 2: "火的统治"||- 摧毁幽能干扰器。 
+ZERG 3: "THE KEL-MORIAN COMBINE"||- Obtain 10,000 minerals.||- Fenix must survive.||||OPTIONAL OBJECTIVE||- Infest command centers for|| next mission.->虫族 3: "克尔默里安联合体"||- 采集10000 矿石。||- 费尼克斯不能死亡。||||附加任务：||- 为下一关感染人类指挥中心。 
+ZERG 4: "THE LIBERATION OF KORHAL"||- Destroy all enemy bases.->虫族 4: "柯哈尔的解放"||- 摧毁所有敌方基地。 
+ZERG 5: "TRUE COLORS"||- Destroy the enemy bases.||- Kill Duke||- Kill Fenix->ZERG 5: "原形毕露"||- 摧毁敌人基地。 ||- 杀死杜克将军||- 杀死费尼克斯 
+ZERG 6: "FURY OF THE SWARM"||- Destroy the renegade zerg.->虫族 6: "虫群之怒"||- 消灭变节虫族。 
+ZERG 6: "FURY OF THE SWARM"||- Kill all UED Scientists.->ZERG 6: "虫群之怒"||- 杀死所有UED科学家。 
+ZERG 7: "DRAWING OF THE WEB"||- Bring Duran to each zerg beacon.||- Duran must survive.->虫族 7: "设网"||- 将杜兰带至每一个路标。||- 杜兰必须存活。 
+ZERG 8: "TO SLAY THE BEAST"||- Destroy the Overmind with Dark Templar.||- Must be able to make Dark Templar.->虫族 8: "主宰的灭亡"||- 用黑暗圣堂武士消灭主宰。||- 必须保证拥有黑暗圣堂武士。 
+ZERG 9: "THE RECKONING"||- Destroy the Protoss base within 30 minutes.||- Recover the Matriarch and Zeratul.->虫族 9: "清算"||- 30分钟内摧毁神族基地。||- 找回女酋长和泽拉托。 
+ZERG 10: "OMEGA"||- Destroy all enemy forces.->虫族 10: "结局"||- 消灭所有敌人 

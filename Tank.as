@@ -39,8 +39,8 @@ package {
 		[Embed(source="res/tank_shadow_big.png")]
 		protected var ImgTankShadowBig:Class;
 
-		public function Tank(){
-			super(168, 150);
+		public function Tank(startX:int, startY:int){
+			super(startX, startY);
 			loadGraphic(ImgTankPlain, true);
 			type = 0;
 			maxHealth = 50;

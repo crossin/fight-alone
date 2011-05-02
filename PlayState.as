@@ -41,7 +41,7 @@ package {
 		protected var back:FlxTileblock;
 		protected var blocks:FlxGroup;
 		protected var bonuses:FlxGroup;
-		protected var base:FlxSprite;
+		//protected var base:FlxSprite;
 		//protected var _boss:FlxSprite;
 		protected var _timer:Number;
 		protected var _timerLast:Number;
@@ -53,6 +53,8 @@ package {
 		//protected var txtGold:FlxText;
 		protected var index:uint;
 		protected var map:Array;
+		protected var startX:int;
+		protected var startY:int;
 
 		public var score:int;
 
@@ -132,9 +134,9 @@ package {
 			// to be overrided by every level
 			makeScene();
 
-			base = new Base();
-			add(base);
-			_objects.add(base);
+			//base = new Base();
+			//add(base);
+			//_objects.add(base);
 
 			var s:FlxSprite;
 			_bullets = new FlxGroup();
@@ -160,7 +162,7 @@ package {
 			}
 
 			_battery = new Battery();
-			_tank = new Tank();
+			_tank = new Tank(startX, startY);
 
 			_enemies = new FlxGroup();
 			//var enemy:Enemy;
@@ -251,9 +253,9 @@ package {
 			FlxU.overlap(_bullets, blocks, overlapped);
 			FlxU.overlap(_bulletsSmall, blocks, overlapped);
 			FlxU.overlap(_enemyBullets, blocks, overlapped);
-			FlxU.overlap(_bullets, base, overlapped);
-			FlxU.overlap(_bulletsSmall, base, overlapped);
-			FlxU.overlap(_enemyBullets, base, overlapped);
+			//FlxU.overlap(_bullets, base, overlapped);
+			//FlxU.overlap(_bulletsSmall, base, overlapped);
+			//FlxU.overlap(_enemyBullets, base, overlapped);
 			FlxU.overlap(bonuses, _tank, overlapped);
 			FlxU.overlap(_enemyBullets, shield, overlapped);
 			FlxU.collide(_objects, _objects);
@@ -271,7 +273,7 @@ package {
 			_timerLast = _timer;
 
 			// check lose
-			if (!_tank.exists || !base.active){
+			if (!_tank.exists /*|| !base.active*/){
 				FlxG.fade.start(0xff1e150f, 2, onFade);
 			}
 			/*

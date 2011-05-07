@@ -56,7 +56,7 @@ package {
 			drag.x = 200;
 			drag.y = 200;
 			antialiasing = true;
-			shootInterval = 0.3;
+			shootInterval = 0.5;
 			restartClock();
 			shoot = shootPlain;
 			shotSpeed = 250;
@@ -231,6 +231,7 @@ package {
 					case 5:
 						loadGraphic(ImgTankSmall, true);
 						_shadow.loadGraphic(ImgTankShadowSmall, true);
+						defence = 0.2;
 						maxVelocity.x = 70;
 						maxVelocity.y = 70;
 						break;
@@ -238,6 +239,8 @@ package {
 						loadGraphic(ImgTankBig, true);
 						_shadow.loadGraphic(ImgTankShadowBig, true);
 						defence = 0.5;
+						maxVelocity.x = 30;
+						maxVelocity.y = 30;
 						break;
 				}
 				type = t;
@@ -259,11 +262,13 @@ package {
 			switch (t){
 				case 0:
 					bullets = PlayState._bullets.members;
-					shootInterval = 0.3;
+					shootInterval = 0.5;
+					shotSpeed = 250;
 					break;
 				case 1:
 					bullets = PlayState._bulletsSmall.members;
-					shootInterval = 0.03;
+					shootInterval = 0.1;
+					shotSpeed = 400;
 					break;
 			}
 		}
@@ -333,7 +338,7 @@ package {
 			//b.damage = damage;
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle - 45);
-			b.angle = battery.angle;
+			b.angle = battery.angle - 45;
 			Bullet.bulletIndex++;
 			if (Bullet.bulletIndex >= bullets.length)
 				Bullet.bulletIndex = 0;
@@ -343,7 +348,7 @@ package {
 			//b.damage = damage;
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle + 45);
-			b.angle = battery.angle;
+			b.angle = battery.angle + 45;
 			Bullet.bulletIndex++;
 			if (Bullet.bulletIndex >= bullets.length)
 				Bullet.bulletIndex = 0;
@@ -365,7 +370,7 @@ package {
 			//b.damage = damage;
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle - 90);
-			b.angle = battery.angle;
+			b.angle = battery.angle - 90;
 			Bullet.bulletIndex++;
 			if (Bullet.bulletIndex >= bullets.length)
 				Bullet.bulletIndex = 0;
@@ -375,7 +380,7 @@ package {
 			//b.damage = damage;
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle + 90);
-			b.angle = battery.angle;
+			b.angle = battery.angle + 90;
 			Bullet.bulletIndex++;
 			if (Bullet.bulletIndex >= bullets.length)
 				Bullet.bulletIndex = 0;
@@ -385,7 +390,7 @@ package {
 			//b.damage = damage;
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle + 180);
-			b.angle = battery.angle;
+			b.angle = battery.angle + 180;
 			Bullet.bulletIndex++;
 			if (Bullet.bulletIndex >= bullets.length)
 				Bullet.bulletIndex = 0;

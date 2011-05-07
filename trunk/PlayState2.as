@@ -5,7 +5,9 @@ package {
 		[Embed(source="res/back_sand.png")]
 		private var ImgBack:Class;
 
+
 		//public var _explosionIndex:uint;
+		protected var target:Target;
 
 		override public function create():void {
 			map = [
@@ -32,6 +34,17 @@ package {
 			startY = 188;
 			super.create();
 			back.loadGraphic(ImgBack);
+			
+			target = new Target();
+			target.map = [
+			[100, 100],
+			[200, 200],
+			[100, 200],
+			[200, 100]
+			];
+			add(target);
+			target.nextStep();
+			
 			index = 2;
 		}
 
@@ -42,5 +55,14 @@ package {
 			//}
 		}
 		
+		override public function update():void {
+			super.update();	
+			FlxU.overlap(target, _tank, overlapped2);
+		}
+		
+		protected function overlapped2(Object1:FlxObject, Object2:FlxObject):void {
+			target.nextStep();
+			(FlxG.state as PlayState).updateProgress(25, 0);
+		}
 	}
 }

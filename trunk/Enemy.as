@@ -67,6 +67,7 @@ package {
 			unitVelocity = 20;
 			unitVelocityAngle = 100;
 			angleRange = 90;
+			angle = FlxU.random() * 360;
 			//origin.x=0
 			drag.x = 10;
 			drag.y = 10;

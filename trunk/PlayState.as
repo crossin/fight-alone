@@ -150,13 +150,13 @@ package {
 				_bullets.add(s);
 			}
 			_bulletsSmall = new FlxGroup();
-			for (i = 0; i < 32; i++){
+			for (i = 0; i < 64; i++){
 				s = new BulletSmall();
 				_bulletsSmall.add(s);
 			}
 
 			_enemyBullets = new FlxGroup();
-			for (i = 0; i < 32; i++){
+			for (i = 0; i < 64; i++){
 				s = new EnemyBullet();
 				_enemyBullets.add(s);
 			}

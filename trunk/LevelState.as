@@ -15,9 +15,14 @@ package {
 		private var _title:FlxText;
 		private var btnLevels:FlxGroup;
 
-		public static var levels:Array = [PlayState1, PlayState2];
+		public static var levels:Array = [
+		PlayState1, 
+		PlayState2,
+		PlayState3,
+		];
+		
 		public static var levelMax:uint = 20;
-		public static var levelUnlock:uint = 2;
+		public static var levelUnlock:uint = 3;
 
 		public function LevelState() {
 			var back:FlxTileblock;

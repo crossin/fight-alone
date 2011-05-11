@@ -19,6 +19,7 @@ package {
 		PlayState1, 
 		PlayState2,
 		PlayState3,
+		PlayState4,
 		];
 		
 		public static var levelMax:uint = 20;

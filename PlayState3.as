@@ -36,15 +36,15 @@ package {
 
 		override protected function addEnemy():void {
 			if ((enemyCount < 10) && (_timer % _timerInterval < _timerLast % _timerInterval)){
-				_enemies.add(new EnemyPlain(enemyCount % 2 + 1, 0));
+				_enemies.add(new EnemyPlain(int(FlxU.random() * 4), 0));
 				enemyCount++;
 			}
 			if ((enemyCount >= 10) && (enemyCount < 20) && (_timer % _timerInterval < _timerLast % _timerInterval)){
-				_enemies.add(new EnemyShootFast(enemyCount % 2 + 1, 0));
+				_enemies.add(new EnemyShootFast(int(FlxU.random() * 4), 0));
 				enemyCount++;
 			}
 			if ((enemyCount >= 20) && (enemyCount < 30) && (_timer % _timerInterval < _timerLast % _timerInterval)){
-				_enemies.add(new EnemyFast(enemyCount % 2 + 1, 0));
+				_enemies.add(new EnemyFast(int(FlxU.random() * 4), 0));
 				enemyCount++;
 			}
 			

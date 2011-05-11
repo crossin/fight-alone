@@ -23,7 +23,7 @@ package {
 		];
 		
 		public static var levelMax:uint = 20;
-		public static var levelUnlock:uint = 3;
+		public static var levelUnlock:uint = 4;
 
 		public function LevelState() {
 			var back:FlxTileblock;

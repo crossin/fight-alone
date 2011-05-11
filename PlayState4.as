@@ -1,7 +1,7 @@
 package {
 	import org.flixel.*;
 
-	public class PlayState3 extends PlayState {
+	public class PlayState4 extends PlayState {
 		[Embed(source="res/back_mud.png")]
 		private var ImgBack:Class;
 
@@ -31,7 +31,7 @@ package {
 
 			_timerInterval = 2;
 			
-			index = 3;
+			index = 4;
 		}
 
 		override protected function addEnemy():void {

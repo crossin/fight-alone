@@ -20,10 +20,11 @@ package {
 		PlayState2,
 		PlayState3,
 		PlayState4,
+		PlayState5,
 		];
 		
 		public static var levelMax:uint = 20;
-		public static var levelUnlock:uint = 4;
+		public static var levelUnlock:uint = 5;
 
 		public function LevelState() {
 			var back:FlxTileblock;

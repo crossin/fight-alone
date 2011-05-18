@@ -65,5 +65,12 @@ package {
 			//FlxU.collide(_tank, boss.base);
 			//FlxU.overlap(target, _tank, overlapped2);
 		}
+		
+		override protected function overlapped(Object1:FlxObject, Object2:FlxObject):void {
+			if (Object2 == boss.cannon) {
+				return;
+			}
+			super.overlapped(Object1, Object2);
+		}
 	}
 }

@@ -67,10 +67,12 @@ package {
 		}
 		
 		override protected function overlapped(Object1:FlxObject, Object2:FlxObject):void {
-			if (Object2 == boss.cannon) {
-				return;
+			if (Object2 != boss.cannon) {
+				super.overlapped(Object1, Object2);
+				if (!(Object1 is EnemyBullet) && (Object2 == boss.base)){
+					boss.hurt((Object1 as Bullet).damage);
+				}
 			}
-			super.overlapped(Object1, Object2);
 		}
 	}
 }

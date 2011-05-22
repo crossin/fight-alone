@@ -11,7 +11,11 @@ package {
 		private var ImgEnemy:Class;
 		[Embed(source="res/shadow_enemy.png")]
 		private var ImgShadow:Class;
-
+		[Embed(source = "res/sound/hit.mp3")]
+		private var SndHit:Class;
+		[Embed(source = "res/sound/explode.mp3")]
+		private var SndExplode:Class;
+		
 		//private var _gibs:FlxEmitter;
 		private var _timer:Number;
 		private var _tank:Tank;
@@ -210,7 +214,7 @@ package {
 		}
 
 		override public function hurt(Damage:Number):void {
-			//FlxG.play(SndHit);
+			FlxG.play(SndHit);
 			//if (Damage >= defence){
 			//super.hurt(Damage - defence);
 			//}
@@ -222,7 +226,7 @@ package {
 		override public function kill():void {
 			if (dead)
 				return;
-			//FlxG.play(SndExplode);
+			FlxG.play(SndExplode);
 			//_lifeBar.kill();
 			shadow.kill();
 			super.kill();

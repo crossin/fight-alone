@@ -38,6 +38,8 @@ package {
 		protected var ImgTankShadowSmall:Class;
 		[Embed(source="res/tank_shadow_big.png")]
 		protected var ImgTankShadowBig:Class;
+		[Embed(source = "res/sound/shoot.mp3")]
+		private var SndShoot:Class;
 
 		public function Tank(startX:int, startY:int){
 			super(startX, startY);
@@ -127,6 +129,7 @@ package {
 				restartClock();
 				battery.play("idle");
 				battery.play("shot");
+				FlxG.play(SndShoot);
 				shoot();
 			}
 			speed = Math.sqrt(velocity.x * velocity.x + velocity.y * velocity.y)

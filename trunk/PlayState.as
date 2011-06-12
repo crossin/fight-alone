@@ -60,7 +60,7 @@ package {
 
 		
 		// blur
-		private const _blur:Number = 0.2;
+		private const _blur:Number = 0.3;
 		private var _helper:FlxSprite;
 		
 		override public function create():void {
@@ -212,7 +212,7 @@ package {
 
 
 			FlxG.mouse.show(ImgCursor);
-			FlxG.follow(ship, 2);
+			FlxG.follow(ship, 3);
 			//FlxG.followAdjust(0.5,0.0);
 			FlxG.followBounds(0, 0, maxWidth, maxHeight);
 

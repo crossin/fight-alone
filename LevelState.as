@@ -16,11 +16,11 @@ package {
 		private var btnLevels:FlxGroup;
 
 		public static var levels:Array = [
-		PlayState1, 
-		PlayState2,
-		PlayState3,
-		PlayState4,
-		PlayState5,
+		//PlayState1, 
+		//PlayState2,
+		//PlayState3,
+		//PlayState4,
+		//PlayState5,
 		];
 		
 		public static var levelMax:uint = 20;

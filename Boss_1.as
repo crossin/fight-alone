@@ -36,7 +36,7 @@ package {
 		public function Boss_1(){
 			super();
 
-			_tank = (FlxG.state as PlayState)._tank;
+			//_tank = (FlxG.state as PlayState).ship;
 
 			_timer = 0;
 			_angleDest = 0;

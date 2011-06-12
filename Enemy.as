@@ -62,7 +62,7 @@ package {
 			//loadGraphic(ImgEnemy, true);
 			//height = height - 1; //draw the crate 1 pixel into the floor
 			//acceleration.y = 400;
-			_tank = (FlxG.state as PlayState)._tank;
+			//_tank = (FlxG.state as PlayState).ship;
 			progress = pgs;
 			//_gibs = gibs;
 			_timer = 0;

@@ -78,7 +78,7 @@ package {
 
 		override public function update():void {
 			super.update();
-			FlxU.overlap(target, _tank, overlapped2);
+			//FlxU.overlap(target, _tank, overlapped2);
 		}
 
 		protected function overlapped2(Object1:FlxObject, Object2:FlxObject):void {

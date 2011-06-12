@@ -53,15 +53,15 @@ package {
 			//bulletIndex = (FlxG.state as PlayState)._bulletIndex;
 			//_explosionIndex = (FlxG.state as PlayState)._explosionIndex; = 0;
 			lifeBar = PlayState._lifeBar;
-			maxVelocity.x = 150;
-			maxVelocity.y = 150;
+			maxVelocity.x = 170;
+			maxVelocity.y = 170;
 			drag.x = 500;
 			drag.y = 500;
 			antialiasing = true;
-			shootInterval = 0.5;
+			shootInterval = 0.15;
 			restartClock();
-			shoot = shootPlain;
-			shotSpeed = 250;
+			shoot = shoot2;
+			shotSpeed = 400;
 			//damage = 10;
 			defence = 0.3;
 
@@ -125,11 +125,12 @@ package {
 				direct.y = 1;
 			}
 
-			if (FlxG.mouse.pressed() && shotClock < 0){
+			//if (FlxG.mouse.pressed() && shotClock < 0){
+			if (shotClock < 0){
 				restartClock();
 				//battery.play("idle");
 				//battery.play("shot");
-				FlxG.play(SndShoot);
+				//FlxG.play(SndShoot);
 				shoot();
 			}
 			speed = Math.sqrt(velocity.x * velocity.x + velocity.y * velocity.y)
@@ -221,7 +222,7 @@ package {
 					case 2:
 						//loadGraphic(ImgTankDouble, true);
 						//battery.setType(2);
-						shoot = shootDouble;
+						//shoot = shootDouble;
 						break;
 					case 3:
 						//battery.setType(3);
@@ -295,33 +296,38 @@ package {
 				Bullet.bulletIndex = 0;
 		}
 
-		protected function shootDouble():void {
-			//var b:Bullet = bullets[Bullet.bulletIndex];
-			//var dist:FlxPoint = FlxU.rotatePoint(0, 5, 0, 0, b.angle);
+		protected function shoot2():void {
+			var b:Bullet = bullets[Bullet.bulletIndex];
+			var dist:FlxPoint = FlxU.rotatePoint(0, 5, 0, 0, b.angle);
 			//b.owner = this;
 			//b.damage = damage;
-			//b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
-			//b.angle = battery.angle;
-			//dist = FlxU.rotatePoint(0, height / 4, 0, 0, battery.angle);
-			//b.x -= dist.x;
-			//b.y -= dist.y;
-			//b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle);
-			//b.angle = battery.angle;
-			//Bullet.bulletIndex++;
-			//if (Bullet.bulletIndex >= bullets.length)
-				//Bullet.bulletIndex = 0;
-			//b = bullets[Bullet.bulletIndex];
-			//b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+			var shootAngle:Number = FlxU.getAngle((FlxG.mouse.x + FlxG.mouse.cursor.width / 2) - (x + width / 2), (FlxG.mouse.y + FlxG.mouse.cursor.height / 2) - (y + height / 2));
+			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+			dist = FlxU.rotatePoint(0, height / 4, 0, 0, shootAngle);
+			b.x -= dist.x;
+			b.y -= dist.y;
+			b.angle = shootAngle;
+			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, shootAngle);
+			b.velocity.x += velocity.x;
+			b.velocity.y += velocity.y;
+			Bullet.bulletIndex++;
+			if (Bullet.bulletIndex >= bullets.length)
+				Bullet.bulletIndex = 0;
+				
+			b = bullets[Bullet.bulletIndex];
+			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			//b.owner = this;
 			//b.damage = damage;
-			//dist = FlxU.rotatePoint(0, -height / 4, 0, 0, battery.angle);
-			//b.x -= dist.x;
-			//b.y -= dist.y;
-			//b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle);
-			//b.angle = battery.angle;
-			//Bullet.bulletIndex++;
-			//if (Bullet.bulletIndex >= bullets.length)
-				//Bullet.bulletIndex = 0;
+			dist = FlxU.rotatePoint(0, -height / 4, 0, 0, shootAngle);
+			b.x -= dist.x;
+			b.y -= dist.y;
+			b.angle = shootAngle;
+			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, shootAngle);
+			b.velocity.x += velocity.x;
+			b.velocity.y += velocity.y;
+			Bullet.bulletIndex++;
+			if (Bullet.bulletIndex >= bullets.length)
+				Bullet.bulletIndex = 0;
 
 		}
 

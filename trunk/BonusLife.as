@@ -16,7 +16,7 @@ package {
 		}
 		
 		override public function doEffect():void {
-			(FlxG.state as PlayState)._tank.addLife(10);
+			(FlxG.state as PlayState).ship.addLife(10);
 		}
 	}
 }

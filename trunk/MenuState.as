@@ -108,7 +108,8 @@ package {
 		}
 
 		private function onStartFade():void {
-			FlxG.state = new LevelState.levels[LevelState.levelUnlock - 1];
+			//FlxG.state = new LevelState.levels[LevelState.levelUnlock - 1];
+			FlxG.state = new PlayState();
 		}
 
 		private function onLevel():void {

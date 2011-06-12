@@ -16,7 +16,7 @@ package {
 		}
 		
 		override public function doEffect():void {
-			(FlxG.state as PlayState)._tank.setType(6);
+			(FlxG.state as PlayState).ship.setType(6);
 		}
 	}
 }

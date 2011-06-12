@@ -1,7 +1,7 @@
 package {
 	import org.flixel.*;
 
-	public class PlayState extends FlxState {
+	public class PlayState0 extends FlxState {
 		[Embed(source="res/gibs.png")]
 		private var ImgGibs:Class;
 		[Embed(source="res/crosshair.png")]
@@ -17,10 +17,10 @@ package {
 		//[Embed(source="res/shield.png")]
 		//private var ImgShield:Class;
 
-		public var ship:Ship;
+		public var _tank:Tank;
 		public var shield:Shield;
 		//public var upEffect:UpEffect;
-		//public static var _battery:Battery;
+		public static var _battery:Battery;
 		public static var _bullets:FlxGroup;
 		public static var _bulletsSmall:FlxGroup;
 		public static var _lifeBar:FlxSprite;
@@ -53,20 +53,15 @@ package {
 		//protected var txtGold:FlxText;
 		protected var index:uint;
 		protected var map:Array;
-		//protected var startX:int;
-		//protected var startY:int;
+		protected var startX:int;
+		protected var startY:int;
 
 		public var score:int;
 
-		
-		// blur
-		private const _blur:Number = 0.2;
-		private var _helper:FlxSprite;
-		
 		override public function create():void {
 			//back
-			maxWidth = 800;
-			maxHeight = 600;
+			maxWidth = 400;
+			maxHeight = 300;
 			back = new FlxTileblock(0, 0, maxWidth, maxHeight);
 			add(back);
 
@@ -166,8 +161,8 @@ package {
 				_enemyBullets.add(s);
 			}
 
-			//_battery = new Battery();
-			ship = new Ship(400, 300);
+			_battery = new Battery();
+			_tank = new Tank(startX, startY);
 
 			_enemies = new FlxGroup();
 			//var enemy:Enemy;
@@ -186,10 +181,10 @@ package {
 
 			add(_enemyBullets);
 			//add(_boss);
-			add(ship);
+			add(_tank);
 			add(_bullets);
 			add(_bulletsSmall);
-			//add(_battery);
+			add(_battery);
 			add(_enemies);
 			add(shield);
 			add(_explosions);
@@ -205,14 +200,14 @@ package {
 			add(txtScore);
 			//add(txtGold);
 
-			_objects.add(ship);
+			_objects.add(_tank);
 			_objects.add(_enemies);
 			//_objects.add(_rock);
 			//_objects.add(_boss);
 
 
 			FlxG.mouse.show(ImgCursor);
-			FlxG.follow(ship, 2);
+			FlxG.follow(_tank, 2);
 			//FlxG.followAdjust(0.5,0.0);
 			FlxG.followBounds(0, 0, maxWidth, maxHeight);
 
@@ -239,10 +234,6 @@ package {
 			//add(u);
 			//}
 			//}
-			
-			_helper = new FlxSprite();
-			_helper.createGraphic(FlxG.width,FlxG.height,0xff000000,true);
-			_helper.alpha = _blur;
 		}
 
 		override public function update():void {
@@ -256,7 +247,7 @@ package {
 			FlxU.overlap(_bullets, _enemies, overlapped);
 			FlxU.overlap(_bulletsSmall, _enemies, overlapped);
 			//FlxU.overlap(_bullets, _boss, overlapped);
-			FlxU.overlap(_enemyBullets, ship, overlapped);
+			FlxU.overlap(_enemyBullets, _tank, overlapped);
 			FlxU.overlap(_enemyBullets, _enemies, overlapped);
 			//FlxU.overlap(_enemyBullets, _boss, overlapped);
 			FlxU.overlap(_bullets, blocks, overlapped);
@@ -265,7 +256,7 @@ package {
 			//FlxU.overlap(_bullets, base, overlapped);
 			//FlxU.overlap(_bulletsSmall, base, overlapped);
 			//FlxU.overlap(_enemyBullets, base, overlapped);
-			FlxU.overlap(bonuses, ship, overlapped);
+			FlxU.overlap(bonuses, _tank, overlapped);
 			FlxU.overlap(_enemyBullets, shield, overlapped);
 			FlxU.collide(_objects, _objects);
 
@@ -282,7 +273,7 @@ package {
 			_timerLast = _timer;
 
 			// check lose
-			if (!ship.exists /*|| !base.active*/){
+			if (!_tank.exists /*|| !base.active*/){
 				FlxG.fade.start(0xff1e150f, 2, onFade);
 			}
 			/*
@@ -292,9 +283,9 @@ package {
 			   }
 			   }
 			 */
-			shield.angle = ship.angle;
-			shield.x = ship.x + (ship.width - shield.width) / 2;
-			shield.y = ship.y + (ship.height - shield.height) / 2;
+			shield.angle = _tank.angle;
+			shield.x = _tank.x + (_tank.width - shield.width) / 2;
+			shield.y = _tank.y + (_tank.height - shield.height) / 2;
 		}
 
 		protected function overlapped(Object1:FlxObject, Object2:FlxObject):void {
@@ -308,10 +299,10 @@ package {
 			if (Object2 is Block){
 				Object2.hurt((Object1 as Bullet).damage);
 			}
-			if ((Object1 is EnemyBullet) && ((Object2 is Base) || (Object2 is Ship) || (Object2 is Shield))){
+			if ((Object1 is EnemyBullet) && ((Object2 is Base) || (Object2 is Tank) || (Object2 is Shield))){
 				Object2.hurt((Object1 as Bullet).damage);
 			}
-			if ((Object1 is Bonus) && (Object2 is Ship)){
+			if ((Object1 is Bonus) && (Object2 is Tank)){
 				// add gold
 				//FlxG.score += 1;
 				//txtGold.text = FlxG.score.toString();
@@ -323,15 +314,23 @@ package {
 		}
 
 		protected function makeScene():void {
-			var border:Border;
-			border = new Border(50, 51, 1);
-			blocks.add(border);
-			border = new Border(749, 51, 1);
-			blocks.add(border);
-			border = new Border(51, 50, 2);
-			blocks.add(border);
-			border = new Border(51, 549, 2);
-			blocks.add(border);
+			var block:Block;
+			for (var i:int = 0; i < map.length; i++){
+				for (var j:int = 0; j < map[i].length; j++){
+					if (map[i][j] <= 0){
+						continue;
+					} else if (map[i][j] == 1){
+						block = new BlockBox(18 * j + 2, 18 * i + 6);
+					} else if (map[i][j] == 2){
+						block = new BlockBrick(18 * j + 2, 18 * i + 6);
+					} else if (map[i][j] == 3){
+						block = new BlockSteel(18 * j + 2, 18 * i + 6);
+					} else if (map[i][j] == 4){
+						block = new BlockBarrier(18 * j + 2, 18 * i + 6);
+					}
+					blocks.add(block);
+				}
+			}
 		}
 
 		private function onFade():void {
@@ -389,11 +388,6 @@ package {
 					eny.hurt(100);
 				}
 			}
-		}
-		
-		override public function preProcess():void
-		{
-			screen.draw(_helper);
 		}
 	}
 }

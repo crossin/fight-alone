@@ -6,10 +6,14 @@ package {
 	 * @author Crossin
 	 */
 	public class Border extends FlxSprite {
-		[Embed(source="res/border_v.png")]
-		private var ImgBorderV:Class;
-		[Embed(source="res/border_h.png")]
-		private var ImgBorderH:Class;
+		[Embed(source="res/border_t.png")]
+		private var ImgBorderT:Class;
+		[Embed(source="res/border_r.png")]
+		private var ImgBorderR:Class;
+		[Embed(source="res/border_b.png")]
+		private var ImgBorderB:Class;
+		[Embed(source="res/border_l.png")]
+		private var ImgBorderL:Class;
 		//[Embed(source="res/gibs.png")]
 		protected var ImgGibs:Class;
 		protected var gibs:FlxEmitter;
@@ -18,10 +22,19 @@ package {
 
 			super(ix, iy);
 			fixed = true;
-			if (type == 1){
-				loadGraphic(ImgBorderV);
-			} else {
-				loadGraphic(ImgBorderH);
+			switch (type){
+				case 1:
+					loadGraphic(ImgBorderT);
+					break;
+				case 2:
+					loadGraphic(ImgBorderR);
+					break;
+				case 3:
+					loadGraphic(ImgBorderB);
+					break;
+				case 4:
+					loadGraphic(ImgBorderL);
+					break;
 			}
 
 			//health = 4;

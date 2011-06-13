@@ -27,7 +27,7 @@ package {
 			super.kill();
 			var gibs:FlxEmitter = PlayState._gibs;
 			gibs.at(this);
-			gibs.start(true, 0.4, 25);
+			gibs.start(true, 0.5, 10);
 		}
 	}
 }

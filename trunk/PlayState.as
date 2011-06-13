@@ -2,7 +2,7 @@ package {
 	import org.flixel.*;
 
 	public class PlayState extends FlxState {
-		[Embed(source="res/gibs.png")]
+		[Embed(source="res/gibs_white.png")]
 		private var ImgGibs:Class;
 		[Embed(source="res/crosshair.png")]
 		private var ImgCursor:Class;
@@ -38,7 +38,7 @@ package {
 		protected var _enemies:FlxGroup;
 		protected var _objects:FlxGroup;
 		//protected var _rock:Box;
-		protected var back:FlxTileblock;
+		//protected var back:FlxTileblock;
 		protected var blocks:FlxGroup;
 		protected var bonuses:FlxGroup;
 		//protected var base:FlxSprite;
@@ -67,8 +67,8 @@ package {
 			//back
 			maxWidth = 800;
 			maxHeight = 600;
-			back = new FlxTileblock(0, 0, maxWidth, maxHeight);
-			add(back);
+			//back = new FlxTileblock(0, 0, maxWidth, maxHeight);
+			//add(back);
 
 			// hud
 			var ssf:FlxPoint = new FlxPoint(0, 0);
@@ -116,18 +116,8 @@ package {
 				s.exists = false;
 				_explosions.add(s);
 			}
-
-			_gibs = new FlxEmitter();
-			_gibs.setXSpeed(-100, 100);
-			_gibs.setYSpeed(-100, 100);
-			//_gibs.setRotation(0,50);
-			//_gibs.setSize(10, 10);
-			_gibs.gravity = 0;
-			_gibs.particleDrag.x = 200;
-			_gibs.particleDrag.y = 200;
-			_gibs.createSprites(ImgGibs);
-			add(_gibs);
-			_objects.add(_gibs);
+			
+			makeEmitter();
 
 			bonuses = new FlxGroup();
 			add(bonuses);
@@ -322,6 +312,20 @@ package {
 		protected function addEnemy():void {
 		}
 
+		protected function makeEmitter():void {
+			_gibs = new FlxEmitter();
+			_gibs.setXSpeed(-100, 100);
+			_gibs.setYSpeed(-100, 100);
+			//_gibs.setRotation(0,50);
+			//_gibs.setSize(10, 10);
+			_gibs.gravity = 0;
+			_gibs.particleDrag.x = 200;
+			_gibs.particleDrag.y = 200;
+			_gibs.createSprites(ImgGibs);
+			add(_gibs);
+			//_objects.add(_gibs);
+		}
+		
 		protected function makeScene():void {
 			var border:Border;
 			border = new Border(50, 51, 1);

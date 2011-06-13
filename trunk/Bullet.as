@@ -1,4 +1,5 @@
 package {
+	import org.flixel.FlxEmitter;
 	import org.flixel.FlxObject;
 	import org.flixel.FlxSprite;
 
@@ -20,6 +21,13 @@ package {
 			exists = false;
 			owner = null;
 			damage = 10;
+		}
+		
+		override public function kill():void {
+			super.kill();
+			var gibs:FlxEmitter = PlayState._gibs;
+			gibs.at(this);
+			gibs.start(true, 0.4, 25);
 		}
 	}
 }

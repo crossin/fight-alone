@@ -170,6 +170,8 @@ package {
 					}
 				}
 			}
+			//color = 0x00ff0000;
+			//alpha = (alpha * 100 + 1) % 100 / 100;
 			super.update();
 			//battery.reset(x + (width - battery.width) / 2, y + (height - battery.height) / 2);
 			//_shadow.reset(x + 1, y + 1);

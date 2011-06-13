@@ -58,11 +58,11 @@ package {
 
 		public var score:int;
 
-		
+
 		// blur
 		private const _blur:Number = 0.3;
 		private var _helper:FlxSprite;
-		
+
 		override public function create():void {
 			//back
 			maxWidth = 800;
@@ -116,7 +116,7 @@ package {
 				s.exists = false;
 				_explosions.add(s);
 			}
-			
+
 			makeEmitter();
 
 			bonuses = new FlxGroup();
@@ -195,8 +195,9 @@ package {
 			add(txtScore);
 			//add(txtGold);
 
-			_objects.add(ship);
-			_objects.add(_enemies);
+			//_objects.add(ship);
+			//_objects.add(_enemies);
+			
 			//_objects.add(_rock);
 			//_objects.add(_boss);
 
@@ -229,9 +230,9 @@ package {
 			//add(u);
 			//}
 			//}
-			
+
 			_helper = new FlxSprite();
-			_helper.createGraphic(FlxG.width,FlxG.height,0xff000000,true);
+			_helper.createGraphic(FlxG.width, FlxG.height, 0xff000000, true);
 			_helper.alpha = _blur;
 		}
 
@@ -257,7 +258,9 @@ package {
 			//FlxU.overlap(_enemyBullets, base, overlapped);
 			FlxU.overlap(bonuses, ship, overlapped);
 			FlxU.overlap(_enemyBullets, shield, overlapped);
-			FlxU.collide(_objects, _objects);
+			//FlxU.collide(_objects, _objects);
+			FlxU.collide(blocks, _enemies);
+			FlxU.collide(blocks, ship);
 
 			//if (FlxG.keys.justPressed("ONE")) {
 			//_tank.setType(1)
@@ -310,31 +313,36 @@ package {
 		}
 
 		protected function addEnemy():void {
+			//if ((enemyCount < 30) && (_timer % _timerInterval < _timerLast % _timerInterval)){
+			if (_timerLast < 1 && _timer >= 1){
+				_enemies.add(new EnemyRect(enemyCount % 2 + 1, 0));
+					//enemyCount++;
+			}
 		}
 
 		protected function makeEmitter():void {
 			_gibs = new FlxEmitter();
-			_gibs.setXSpeed(-100, 100);
-			_gibs.setYSpeed(-100, 100);
+			_gibs.setXSpeed(-300, 300);
+			_gibs.setYSpeed(-300, 300);
 			//_gibs.setRotation(0,50);
 			//_gibs.setSize(10, 10);
 			_gibs.gravity = 0;
-			_gibs.particleDrag.x = 200;
-			_gibs.particleDrag.y = 200;
-			_gibs.createSprites(ImgGibs);
+			_gibs.particleDrag.x = 100;
+			_gibs.particleDrag.y = 100;
+			_gibs.createSprites(ImgGibs, 100, 0, false);
 			add(_gibs);
 			//_objects.add(_gibs);
 		}
-		
+
 		protected function makeScene():void {
 			var border:Border;
-			border = new Border(50, 51, 1);
+			border = new Border(51, 43, 1);
 			blocks.add(border);
-			border = new Border(749, 51, 1);
+			border = new Border(749, 51, 2);
 			blocks.add(border);
-			border = new Border(51, 50, 2);
+			border = new Border(51, 549, 3);
 			blocks.add(border);
-			border = new Border(51, 549, 2);
+			border = new Border(43, 51, 4);
 			blocks.add(border);
 		}
 
@@ -394,9 +402,8 @@ package {
 				}
 			}
 		}
-		
-		override public function preProcess():void
-		{
+
+		override public function preProcess():void {
 			screen.draw(_helper);
 		}
 	}

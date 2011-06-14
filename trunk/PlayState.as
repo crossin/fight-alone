@@ -321,27 +321,29 @@ package {
 		}
 
 		protected function addEnemy():void {
-			//if ((enemyCount < 30) && (_timer % _timerInterval < _timerLast % _timerInterval)){
-			if (_timerLast < 1 && _timer >= 1){
-				_enemies.add(new EnemyRect(enemyCount % 2 + 1, 0));
-					//enemyCount++;
+			if (_timer % 1 < _timerLast % 1) {
+				_enemies.add(new EnemyRect());
 			}
-						if (_timerLast < 2 && _timer >= 2){
-				_enemies.add(new EnemyRect(enemyCount % 2 + 1, 0));
+			//if (_timerLast < 1 && _timer >= 1){
+				//_enemies.add(new EnemyRect());
 					//enemyCount++;
-			}
-						if (_timerLast < 3 && _timer >= 3){
-				_enemies.add(new EnemyRect(enemyCount % 2 + 1, 0));
+			//}
+						//if (_timerLast < 2 && _timer >= 2){
+				//_enemies.add(new EnemyRect());
 					//enemyCount++;
-			}
-						if (_timerLast < 4 && _timer >= 4){
-				_enemies.add(new EnemyRect(enemyCount % 2 + 1, 0));
+			//}
+						//if (_timerLast < 3 && _timer >= 3){
+				//_enemies.add(new EnemyRect();
 					//enemyCount++;
-			}
-						if (_timerLast < 5 && _timer >= 5){
-				_enemies.add(new EnemyRect(enemyCount % 2 + 1, 0));
+			//}
+						//if (_timerLast < 4 && _timer >= 4){
+				//_enemies.add(new EnemyRect());
 					//enemyCount++;
-			}
+			//}
+						//if (_timerLast < 5 && _timer >= 5){
+				//_enemies.add(new EnemyRect());
+					//enemyCount++;
+			//}
 		}
 
 		protected function makeEmitter():void {

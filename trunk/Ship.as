@@ -145,10 +145,10 @@ package {
 				play("stop");
 			}
 
-			x = (x < 0) ? 0 : x;
-			x = (x + width > PlayState.maxWidth) ? PlayState.maxWidth - width : x;
-			y = (y < 0) ? 0 : y;
-			y = (y + height > PlayState.maxHeight) ? PlayState.maxHeight - height : y;
+			//x = (x < 0) ? 0 : x;
+			//x = (x + width > PlayState.maxWidth) ? PlayState.maxWidth - width : x;
+			//y = (y < 0) ? 0 : y;
+			//y = (y + height > PlayState.maxHeight) ? PlayState.maxHeight - height : y;
 
 			if (direct.x != 0 || direct.y != 0){
 				angle_dest = (FlxU.getAngle(direct.x, direct.y) + 450) % 360;

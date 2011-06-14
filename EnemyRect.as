@@ -232,24 +232,10 @@ package {
 		}
 
 		override public function kill():void {
-			if (dead)
-				return;
-			FlxG.play(SndExplode);
-			//_lifeBar.kill();
-			//shadow.kill();
 			super.kill();
-			flicker(-1);
-			//FlxG.quake.start(0.005, 0.35);
-			//FlxG.flash.start(0xffd8eba2, 0.35);
-			//_jets.kill();
-			explode();
-			(FlxG.state as PlayState).updateProgress(progress, score);
-			if (FlxU.random() < 0.5){
-				(FlxG.state as PlayState).dropBonus(x + origin.x, y + origin.y);
-			}
-			//_gibs.at(this);
-			//_gibs.start(true, 1, 8);
-			//FlxG.score += 200;
+			var gibs:FlxEmitter = PlayState.gibsRect;
+			gibs.at(this);
+			gibs.start(true, 0.5, 20);
 		}
 
 		private function shoot():void {

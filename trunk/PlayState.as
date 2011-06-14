@@ -2,14 +2,16 @@ package {
 	import org.flixel.*;
 
 	public class PlayState extends FlxState {
-		[Embed(source="res/gibs_white.png")]
-		private var ImgGibs:Class;
 		[Embed(source="res/crosshair.png")]
 		private var ImgCursor:Class;
 		[Embed(source="res/heart.png")]
 		private var ImgHeart:Class;
 		[Embed(source="res/flag.png")]
 		private var ImgFlag:Class;
+		[Embed(source="res/gibs_white.png")]
+		private var ImgGibs:Class;
+		[Embed(source="res/gibs_rect.png")]
+		private var ImgGibsRect:Class;
 		//[Embed(source="res/upgrade.png")]
 		//private var ImgUpgrade:Class;
 		//[Embed(source="res/back.png")]
@@ -32,6 +34,7 @@ package {
 		public static var maxHeight:int;
 		public static var _explosions:FlxGroup;
 		public static var _gibs:FlxEmitter;
+		public static var gibsRect:FlxEmitter;
 
 		//public var _explosionIndex:uint;
 
@@ -245,19 +248,19 @@ package {
 			super.update();
 
 			FlxU.overlap(_bullets, _enemies, overlapped);
-			FlxU.overlap(_bulletsSmall, _enemies, overlapped);
+			//FlxU.overlap(_bulletsSmall, _enemies, overlapped);
 			//FlxU.overlap(_bullets, _boss, overlapped);
-			FlxU.overlap(_enemyBullets, ship, overlapped);
-			FlxU.overlap(_enemyBullets, _enemies, overlapped);
+			//FlxU.overlap(_enemyBullets, ship, overlapped);
+			//FlxU.overlap(_enemyBullets, _enemies, overlapped);
 			//FlxU.overlap(_enemyBullets, _boss, overlapped);
 			FlxU.overlap(_bullets, blocks, overlapped);
-			FlxU.overlap(_bulletsSmall, blocks, overlapped);
-			FlxU.overlap(_enemyBullets, blocks, overlapped);
+			//FlxU.overlap(_bulletsSmall, blocks, overlapped);
+			//FlxU.overlap(_enemyBullets, blocks, overlapped);
 			//FlxU.overlap(_bullets, base, overlapped);
 			//FlxU.overlap(_bulletsSmall, base, overlapped);
 			//FlxU.overlap(_enemyBullets, base, overlapped);
-			FlxU.overlap(bonuses, ship, overlapped);
-			FlxU.overlap(_enemyBullets, shield, overlapped);
+			//FlxU.overlap(bonuses, ship, overlapped);
+			//FlxU.overlap(_enemyBullets, shield, overlapped);
 			//FlxU.collide(_objects, _objects);
 			FlxU.collide(blocks, _enemies);
 			FlxU.collide(blocks, ship);
@@ -291,30 +294,51 @@ package {
 		}
 
 		protected function overlapped(Object1:FlxObject, Object2:FlxObject):void {
-			if ((Object1 is Bullet) && ((Object1 as Bullet).owner == Object2)){
-				return;
-			}
+			
+			
+			//if ((Object1 is Bullet) && ((Object1 as Bullet).owner == Object2)){
+				//return;
+			//}
 			Object1.kill();
-			if (!(Object1 is EnemyBullet) && ((Object2 is Enemy) || (Object2 is Boss))){
-				Object2.hurt((Object1 as Bullet).damage);
+			if (Object2 is EnemyRect) {
+				Object2.kill();
 			}
-			if (Object2 is Block){
-				Object2.hurt((Object1 as Bullet).damage);
-			}
-			if ((Object1 is EnemyBullet) && ((Object2 is Base) || (Object2 is Ship) || (Object2 is Shield))){
-				Object2.hurt((Object1 as Bullet).damage);
-			}
-			if ((Object1 is Bonus) && (Object2 is Ship)){
+			//if (!(Object1 is EnemyBullet) && ((Object2 is Enemy) || (Object2 is Boss))){
+				//Object2.hurt((Object1 as Bullet).damage);
+			//}
+			//if (Object2 is Block){
+				//Object2.hurt((Object1 as Bullet).damage);
+			//}
+			//if ((Object1 is EnemyBullet) && ((Object2 is Base) || (Object2 is Ship) || (Object2 is Shield))){
+				//Object2.hurt((Object1 as Bullet).damage);
+			//}
+			//if ((Object1 is Bonus) && (Object2 is Ship)){
 				// add gold
 				//FlxG.score += 1;
 				//txtGold.text = FlxG.score.toString();
-				(Object1 as Bonus).doEffect();
-			}
+				//(Object1 as Bonus).doEffect();
+			//}
 		}
 
 		protected function addEnemy():void {
 			//if ((enemyCount < 30) && (_timer % _timerInterval < _timerLast % _timerInterval)){
 			if (_timerLast < 1 && _timer >= 1){
+				_enemies.add(new EnemyRect(enemyCount % 2 + 1, 0));
+					//enemyCount++;
+			}
+						if (_timerLast < 2 && _timer >= 2){
+				_enemies.add(new EnemyRect(enemyCount % 2 + 1, 0));
+					//enemyCount++;
+			}
+						if (_timerLast < 3 && _timer >= 3){
+				_enemies.add(new EnemyRect(enemyCount % 2 + 1, 0));
+					//enemyCount++;
+			}
+						if (_timerLast < 4 && _timer >= 4){
+				_enemies.add(new EnemyRect(enemyCount % 2 + 1, 0));
+					//enemyCount++;
+			}
+						if (_timerLast < 5 && _timer >= 5){
 				_enemies.add(new EnemyRect(enemyCount % 2 + 1, 0));
 					//enemyCount++;
 			}
@@ -332,6 +356,15 @@ package {
 			_gibs.createSprites(ImgGibs, 100, 0, false);
 			add(_gibs);
 			//_objects.add(_gibs);
+			
+			gibsRect = new FlxEmitter();
+			gibsRect.setXSpeed(-500, 500);
+			gibsRect.setYSpeed(-500, 500);
+			gibsRect.gravity = 0;
+			gibsRect.particleDrag.x = 100;
+			gibsRect.particleDrag.y = 100;
+			gibsRect.createSprites(ImgGibsRect, 100, 0, false);
+			add(gibsRect);
 		}
 
 		protected function makeScene():void {

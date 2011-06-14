@@ -35,14 +35,14 @@ package {
 		private var shotClock:Number;
 		private var _bullets:Array;
 		private var _explosions:Array;
-		private var progress:Number;
+		//private var progress:Number;
 		private var inside:Boolean;
 
 		//private var _bulletIndex:uint;
 		//private var _explosionIndex:uint;
 
 
-		public function EnemyRect(from:int, pgs:Number){
+		public function EnemyRect(){
 			//super();
 			//switch (from){
 			//case 0:
@@ -59,15 +59,16 @@ package {
 			//reset(FlxU.random() * PlayState.maxWidth, PlayState.maxHeight + 20);
 			//break;
 			//}
-			super(200, 200, ImgEnemy);
+			super(100 + 600 * FlxU.random(), 100 + 400 * FlxU.random(), ImgEnemy);
 
 			solid = false;
 			alpha = 0;
+
 			//loadGraphic(ImgEnemy, true);
 			//height = height - 1; //draw the crate 1 pixel into the floor
 			//acceleration.y = 400;
 			//_tank = (FlxG.state as PlayState).ship;
-			progress = pgs;
+			//progress = pgs;
 			//_gibs = gibs;
 			_timer = 0;
 			_angleDest = 0;
@@ -118,9 +119,9 @@ package {
 				if (alpha >= 1){
 					solid = true;
 					color = 0x00ff00;
+					velocity.x = 150 * FlxU.random();
+					//velocity.y = 150 * 
 				}
-			} else {
-				velocity.x = 50;
 			}
 			//if ((_timer > intervalCheck * FlxU.random() + 1) || (x < 0) || (x > PlayState.maxWidth) || (y < 0) || (y > PlayState.maxHeight)){
 			//_timer = 0;

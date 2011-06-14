@@ -4,12 +4,14 @@ package {
 	public class PlayState extends FlxState {
 		[Embed(source="res/crosshair.png")]
 		private var ImgCursor:Class;
-		[Embed(source="res/heart.png")]
-		private var ImgHeart:Class;
-		[Embed(source="res/flag.png")]
-		private var ImgFlag:Class;
+		//[Embed(source="res/heart.png")]
+		//private var ImgHeart:Class;
+		//[Embed(source="res/flag.png")]
+		//private var ImgFlag:Class;
 		[Embed(source="res/gibs_white.png")]
 		private var ImgGibs:Class;
+		[Embed(source="res/gibs_ship.png")]
+		private var ImgGibsShip:Class;
 		[Embed(source="res/gibs_rect.png")]
 		private var ImgGibsRect:Class;
 		//[Embed(source="res/upgrade.png")]
@@ -20,42 +22,43 @@ package {
 		//private var ImgShield:Class;
 
 		public var ship:Ship;
-		public var shield:Shield;
+		//public var shield:Shield;
 		//public var upEffect:UpEffect;
 		//public static var _battery:Battery;
 		public static var _bullets:FlxGroup;
-		public static var _bulletsSmall:FlxGroup;
-		public static var _lifeBar:FlxSprite;
-		public static var progressBar:FlxSprite;
-		public static var _enemyLifeBar:FlxSprite;
-		public static var _enemyLifeBarBack:FlxSprite;
-		public static var _enemyBullets:FlxGroup;
+		//public static var _bulletsSmall:FlxGroup;
+		//public static var _lifeBar:FlxSprite;
+		//public static var progressBar:FlxSprite;
+		//public static var _enemyLifeBar:FlxSprite;
+		//public static var _enemyLifeBarBack:FlxSprite;
+		//public static var _enemyBullets:FlxGroup;
 		public static var maxWidth:int;
 		public static var maxHeight:int;
-		public static var _explosions:FlxGroup;
+		//public static var _explosions:FlxGroup;
 		public static var _gibs:FlxEmitter;
 		public static var gibsRect:FlxEmitter;
+		public static var gibsShip:FlxEmitter;
 
 		//public var _explosionIndex:uint;
 
 		protected var _enemies:FlxGroup;
-		protected var _objects:FlxGroup;
+		//protected var _objects:FlxGroup;
 		//protected var _rock:Box;
 		//protected var back:FlxTileblock;
-		protected var blocks:FlxGroup;
-		protected var bonuses:FlxGroup;
+		public var blocks:FlxGroup;
+		//protected var bonuses:FlxGroup;
 		//protected var base:FlxSprite;
 		//protected var _boss:FlxSprite;
 		protected var _timer:Number;
 		protected var _timerLast:Number;
 		protected var _timerInterval:Number;
-		protected var enemyCount:uint;
-		protected var progress:Number;
-		protected var hasWin:Boolean;
+		//protected var enemyCount:uint;
+		//protected var progress:Number;
+		//protected var hasWin:Boolean;
 		protected var txtScore:FlxText;
 		//protected var txtGold:FlxText;
-		protected var index:uint;
-		protected var map:Array;
+		//protected var index:uint;
+		//protected var map:Array;
 		//protected var startX:int;
 		//protected var startY:int;
 
@@ -75,19 +78,19 @@ package {
 
 			// hud
 			var ssf:FlxPoint = new FlxPoint(0, 0);
-			var heart:FlxSprite = new FlxSprite(20, 10, ImgHeart);
-			heart.scrollFactor = ssf;
-			_lifeBar = new FlxSprite(heart.x + 13, heart.y + 2);
-			_lifeBar.createGraphic(50, 4);
-			_lifeBar.fill(0xfff29a7d);
-			_lifeBar.scrollFactor = ssf;
-			var flag:FlxSprite = new FlxSprite(240, 230, ImgFlag);
-			flag.scrollFactor = ssf;
-			progressBar = new FlxSprite(flag.x + 1, flag.y + 2);
-			progressBar.fill(0);
-			progressBar.scrollFactor = ssf;
-			_enemyLifeBar = new FlxSprite();
-			_enemyLifeBarBack = new FlxSprite();
+			//var heart:FlxSprite = new FlxSprite(20, 10, ImgHeart);
+			//heart.scrollFactor = ssf;
+			//_lifeBar = new FlxSprite(heart.x + 13, heart.y + 2);FlxG.save
+			//_lifeBar.createGraphic(50, 4);
+			//_lifeBar.fill(0xfff29a7d);
+			//_lifeBar.scrollFactor = ssf;
+			//var flag:FlxSprite = new FlxSprite(240, 230, ImgFlag);
+			//flag.scrollFactor = ssf;
+			//progressBar = new FlxSprite(flag.x + 1, flag.y + 2);
+			//progressBar.fill(0);
+			//progressBar.scrollFactor = ssf;
+			//_enemyLifeBar = new FlxSprite();
+			//_enemyLifeBarBack = new FlxSprite();
 			// upgrade panel
 			//var upPanel:FlxSprite = new FlxSprite(5, 215, ImgUpgrade);
 			//upPanel.scrollFactor = ssf;
@@ -107,27 +110,27 @@ package {
 			//txtGold.scrollFactor = ssf;
 
 
-			_objects = new FlxGroup();
+			//_objects = new FlxGroup();
 
-			_explosions = new FlxGroup();
-			for (i = 0; i < 10; i++){
-				s = new Explosion();
+			//_explosions = new FlxGroup();
+			//for (i = 0; i < 10; i++){
+				//s = new Explosion();
 				//s.width = 50;
 				//s.height = 10;
 				//s.offset.x = -31;
 				//s.offset.y = -31;
-				s.exists = false;
-				_explosions.add(s);
-			}
+				//s.exists = false;
+				//_explosions.add(s);
+			//}
 
 			makeEmitter();
 
-			bonuses = new FlxGroup();
-			add(bonuses);
+			//bonuses = new FlxGroup();
+			//add(bonuses);
 
 			blocks = new FlxGroup();
 			add(blocks);
-			_objects.add(blocks);
+			//_objects.add(blocks);
 
 			// to be overrided by every level
 			makeScene();
@@ -147,17 +150,17 @@ package {
 				//s.offset.y = -31;
 				_bullets.add(s);
 			}
-			_bulletsSmall = new FlxGroup();
-			for (i = 0; i < 64; i++){
-				s = new BulletSmall();
-				_bulletsSmall.add(s);
-			}
-
-			_enemyBullets = new FlxGroup();
-			for (i = 0; i < 64; i++){
-				s = new EnemyBullet();
-				_enemyBullets.add(s);
-			}
+			//_bulletsSmall = new FlxGroup();
+			//for (i = 0; i < 64; i++){
+				//s = new BulletSmall();
+				//_bulletsSmall.add(s);
+			//}
+//
+			//_enemyBullets = new FlxGroup();
+			//for (i = 0; i < 64; i++){
+				//s = new EnemyBullet();
+				//_enemyBullets.add(s);
+			//}
 
 			//_battery = new Battery();
 			ship = new Ship(400, 300);
@@ -170,30 +173,30 @@ package {
 			//_enemies.add(enemy);
 			//}
 
-			shield = new Shield();
-			shield.exists = false;
+			//shield = new Shield();
+			//shield.exists = false;
 			//_boss = new Boss(20);
 			//_boss.exists = false;
 
 			//upEffect = new UpEffect();
 
-			add(_enemyBullets);
+			//add(_enemyBullets);
 			//add(_boss);
 			add(ship);
 			add(_bullets);
-			add(_bulletsSmall);
+			//add(_bulletsSmall);
 			//add(_battery);
 			add(_enemies);
-			add(shield);
-			add(_explosions);
-			add(_enemyLifeBarBack);
-			add(_enemyLifeBar);
+			//add(shield);
+			//add(_explosions);
+			//add(_enemyLifeBarBack);
+			//add(_enemyLifeBar);
 			//add(upEffect);
 
-			add(heart);
-			add(_lifeBar);
-			add(flag);
-			add(progressBar);
+			//add(heart);
+			//add(_lifeBar);
+			//add(flag);
+			//add(progressBar);
 			//add(upPanel);
 			add(txtScore);
 			//add(txtGold);
@@ -215,10 +218,10 @@ package {
 			_timerInterval = 5;
 			//_bulletIndex = 0;
 			//_explosionIndex = 0;
-			enemyCount = 0;
-			progress = 0;
-			hasWin = false;
-			index = 0;
+			//enemyCount = 0;
+			//progress = 0;
+			//hasWin = false;
+			//index = 0;
 			score = 0;
 
 			// upgrades
@@ -240,8 +243,8 @@ package {
 		}
 
 		override public function update():void {
-			_enemyLifeBarBack.visible = false;
-			_enemyLifeBar.visible = false;
+			//_enemyLifeBarBack.visible = false;
+			//_enemyLifeBar.visible = false;
 
 			txtScore.text = score.toString();
 
@@ -254,6 +257,7 @@ package {
 			//FlxU.overlap(_enemyBullets, _enemies, overlapped);
 			//FlxU.overlap(_enemyBullets, _boss, overlapped);
 			FlxU.overlap(_bullets, blocks, overlapped);
+			FlxU.overlap(ship, _enemies, overlapped);
 			//FlxU.overlap(_bulletsSmall, blocks, overlapped);
 			//FlxU.overlap(_enemyBullets, blocks, overlapped);
 			//FlxU.overlap(_bullets, base, overlapped);
@@ -278,9 +282,9 @@ package {
 			_timerLast = _timer;
 
 			// check lose
-			if (!ship.exists /*|| !base.active*/){
-				FlxG.fade.start(0xff1e150f, 2, onFade);
-			}
+			//if (!ship.exists /*|| !base.active*/){
+				//FlxG.fade.start(0xff1e150f, 2, onFade);
+			//}
 			/*
 			   for each (var eny:Enemy in _enemies.members) {
 			   if (!eny.exists) {
@@ -288,9 +292,9 @@ package {
 			   }
 			   }
 			 */
-			shield.angle = ship.angle;
-			shield.x = ship.x + (ship.width - shield.width) / 2;
-			shield.y = ship.y + (ship.height - shield.height) / 2;
+			//shield.angle = ship.angle;
+			//shield.x = ship.x + (ship.width - shield.width) / 2;
+			//shield.y = ship.y + (ship.height - shield.height) / 2;
 		}
 
 		protected function overlapped(Object1:FlxObject, Object2:FlxObject):void {
@@ -359,6 +363,15 @@ package {
 			add(_gibs);
 			//_objects.add(_gibs);
 			
+			gibsShip = new FlxEmitter();
+			gibsShip.setXSpeed(-500, 500);
+			gibsShip.setYSpeed(-500, 500);
+			gibsShip.gravity = 0;
+			gibsShip.particleDrag.x = 100;
+			gibsShip.particleDrag.y = 100;
+			gibsShip.createSprites(ImgGibsShip, 30, 0, false);
+			add(gibsShip);
+			
 			gibsRect = new FlxEmitter();
 			gibsRect.setXSpeed(-500, 500);
 			gibsRect.setYSpeed(-500, 500);
@@ -382,61 +395,61 @@ package {
 		}
 
 		private function onFade():void {
-			FlxG.state = new EndState(hasWin, index);
+			//FlxG.state = new EndState(hasWin, index);
 		}
 
-		public function dropBonus(iX:int, iY:int):void {
-			var ran:Number = FlxU.random();
-			if (ran < 0.1){
-				bonuses.add(new BonusBig(iX, iY));
-			} else if (ran < 0.2){
-				bonuses.add(new BonusBomb(iX, iY));
-			} else if (ran < 0.3){
-				bonuses.add(new BonusFast(iX, iY));
-			} else if (ran < 0.4){
-				bonuses.add(new BonusFour(iX, iY));
-			} else if (ran < 0.5){
-				bonuses.add(new BonusLife(iX, iY));
-			} else if (ran < 0.6){
-				bonuses.add(new BonusShield(iX, iY));
-			} else if (ran < 0.7){
-				bonuses.add(new BonusShootfast(iX, iY));
-			} else if (ran < 0.8){
-				bonuses.add(new BonusThree(iX, iY));
-			} else if (ran < 0.9){
-				bonuses.add(new BonusTwo(iX, iY));
-			}
-		}
+		//public function dropBonus(iX:int, iY:int):void {
+			//var ran:Number = FlxU.random();
+			//if (ran < 0.1){
+				//bonuses.add(new BonusBig(iX, iY));
+			//} else if (ran < 0.2){
+				//bonuses.add(new BonusBomb(iX, iY));
+			//} else if (ran < 0.3){
+				//bonuses.add(new BonusFast(iX, iY));
+			//} else if (ran < 0.4){
+				//bonuses.add(new BonusFour(iX, iY));
+			//} else if (ran < 0.5){
+				//bonuses.add(new BonusLife(iX, iY));
+			//} else if (ran < 0.6){
+				//bonuses.add(new BonusShield(iX, iY));
+			//} else if (ran < 0.7){
+				//bonuses.add(new BonusShootfast(iX, iY));
+			//} else if (ran < 0.8){
+				//bonuses.add(new BonusThree(iX, iY));
+			//} else if (ran < 0.9){
+				//bonuses.add(new BonusTwo(iX, iY));
+			//}
+		//}
 
-		public function updateProgress(p:uint, s:int):void {
+		//public function updateProgress(p:uint, s:int):void {
 			// update score
-			score += s;
-
-			progress += p;
-			progress = progress > 100 ? 100 : progress;
-			var w:int = progress / 100 * 50;
-			if (w > 0){
-				progressBar.createGraphic(w, 2, 0xff00ff00);
-				progressBar.fill(0xff00ff00);
-			} else {
-				progressBar.fill(0);
-			}
+			//score += s;
+//
+			//progress += p;
+			//progress = progress > 100 ? 100 : progress;
+			//var w:int = progress / 100 * 50;
+			//if (w > 0){
+				//progressBar.createGraphic(w, 2, 0xff00ff00);
+				//progressBar.fill(0xff00ff00);
+			//} else {
+				//progressBar.fill(0);
+			//}
 			// check win
-			if (progress == 100){
-				hasWin = true;
-				FlxG.fade.start(0xff1e150f, 2, onFade);
-			}
-		}
+			//if (progress == 100){
+				//hasWin = true;
+				//FlxG.fade.start(0xff1e150f, 2, onFade);
+			//}
+		//}
 
-		public function bomb():void {
-			FlxG.quake.start(0.005, 0.35);
-			FlxG.flash.start(0xffcccccc, 0.5);
-			for each (var eny:Enemy in _enemies.members){
-				if (eny.exists){
-					eny.hurt(100);
-				}
-			}
-		}
+		//public function bomb():void {
+			//FlxG.quake.start(0.005, 0.35);
+			//FlxG.flash.start(0xffcccccc, 0.5);
+			//for each (var eny:Enemy in _enemies.members){
+				//if (eny.exists){
+					//eny.hurt(100);
+				//}
+			//}
+		//}
 
 		override public function preProcess():void {
 			screen.draw(_helper);

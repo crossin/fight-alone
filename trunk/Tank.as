@@ -49,10 +49,10 @@ package {
 			health = maxHealth;
 			//battery = PlayState._battery;
 			bullets = PlayState._bullets.members;
-			explosions = PlayState._explosions.members;
+			//explosions = PlayState._explosions.members;
 			//bulletIndex = (FlxG.state as PlayState)._bulletIndex;
 			//_explosionIndex = (FlxG.state as PlayState)._explosionIndex; = 0;
-			lifeBar = PlayState._lifeBar;
+			//lifeBar = PlayState._lifeBar;
 			maxVelocity.x = 50;
 			maxVelocity.y = 50;
 			drag.x = 200;
@@ -262,18 +262,18 @@ package {
 		}
 
 		public function changeBullet(t:int):void {
-			switch (t){
-				case 0:
-					bullets = PlayState._bullets.members;
-					shootInterval = 0.5;
-					shotSpeed = 250;
-					break;
-				case 1:
-					bullets = PlayState._bulletsSmall.members;
-					shootInterval = 0.1;
-					shotSpeed = 400;
-					break;
-			}
+			//switch (t){
+				//case 0:
+					//bullets = PlayState._bullets.members;
+					//shootInterval = 0.5;
+					//shotSpeed = 250;
+					//break;
+				//case 1:
+					//bullets = PlayState._bulletsSmall.members;
+					//shootInterval = 0.1;
+					//shotSpeed = 400;
+					//break;
+			//}
 		}
 
 		protected function restartClock():void {

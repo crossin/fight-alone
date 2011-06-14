@@ -78,8 +78,8 @@ package {
 			angleRange = 90;
 			//angle = FlxU.random() * 360;
 			//origin.x=0
-			drag.x = 10;
-			drag.y = 10;
+			//drag.x = 10;
+			//drag.y = 10;
 			health = _maxHealth;
 			score = 100;
 			inside = false;
@@ -92,8 +92,8 @@ package {
 			//maxVelocity.x = 10;
 			//maxVelocity.y = 10;
 
-			_bullets = PlayState._enemyBullets.members;
-			_explosions = PlayState._explosions.members;
+			//_bullets = PlayState._enemyBullets.members;
+			//_explosions = PlayState._explosions.members;
 			//_bulletIndex = (FlxG.state as PlayState)._bulletIndex;
 			//_explosionIndex = (FlxG.state as PlayState)._explosionIndex;
 			restartClock();
@@ -101,8 +101,8 @@ package {
 			addAnimation("idle", [0]);
 			addAnimation("move", [0, 1], 12);
 
-			_lifeBar = PlayState._enemyLifeBar;
-			_lifeBarBack = PlayState._enemyLifeBarBack;
+			//_lifeBar = PlayState._enemyLifeBar;
+			//_lifeBarBack = PlayState._enemyLifeBarBack;
 			//_lifeBar.reset(x, y - 2);
 			//_lifeBarBack.reset(x - 1, y - 3);
 			//_lifeBar.createGraphic(width, 1);
@@ -119,10 +119,14 @@ package {
 				if (alpha >= 1){
 					solid = true;
 					color = 0x00ff00;
-					velocity.x = 150 * FlxU.random();
-					//velocity.y = 150 * 
+					velocity.x = -150 + 300 * FlxU.random();
+					velocity.y = Math.sqrt(150 * 150 - velocity.x * velocity.x);
+					velocity.y = (FlxU.random() < 0.5) ? -velocity.y : velocity.y;
+					angularVelocity = (FlxU.random() < 0.5) ? -90 : 90;
 				}
 			}
+			
+			//hitLeft((FlxG.state as PlayState).blocks, 50);
 			//if ((_timer > intervalCheck * FlxU.random() + 1) || (x < 0) || (x > PlayState.maxWidth) || (y < 0) || (y > PlayState.maxHeight)){
 			//_timer = 0;
 			//_angleDest = FlxU.getAngle(_tank.x - x, _tank.y - y) + angleRange - FlxU.random() * angleRange * 2;
@@ -222,6 +226,21 @@ package {
 			//}
 		}
 
+		override public function hitSide(Contact:FlxObject,Velocity:Number):void
+		{
+			velocity.x = -velocity.x;
+		}
+		
+		override public function hitTop(Contact:FlxObject,Velocity:Number):void
+		{
+			velocity.y = -velocity.y;
+		}
+		
+		override public function hitBottom(Contact:FlxObject,Velocity:Number):void
+		{
+			velocity.y = -velocity.y;
+		}
+		
 		override public function hurt(Damage:Number):void {
 			FlxG.play(SndHit);
 			//if (Damage >= defence){

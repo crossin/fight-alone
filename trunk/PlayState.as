@@ -16,8 +16,12 @@ package {
 		private var ImgGibsRect:Class;
 		//[Embed(source="res/upgrade.png")]
 		//private var ImgUpgrade:Class;
-		//[Embed(source="res/back.png")]
-		//private var ImgBack:Class;
+		[Embed(source="res/back1.png")]
+		private var ImgBack1:Class;
+		[Embed(source="res/back2.png")]
+		private var ImgBack2:Class;
+		[Embed(source="res/back3.png")]
+		private var ImgBack3:Class;
 		//[Embed(source="res/shield.png")]
 		//private var ImgShield:Class;
 
@@ -61,6 +65,9 @@ package {
 		//protected var map:Array;
 		//protected var startX:int;
 		//protected var startY:int;
+		protected var back1:FlxSprite;
+		protected var back2:FlxSprite;
+		protected var back3:FlxSprite;
 
 		public var score:int;
 
@@ -109,18 +116,24 @@ package {
 			//txtGold.antialiasing = false;
 			//txtGold.scrollFactor = ssf;
 
+			back1 = new FlxSprite(0, 0, ImgBack1);
+			add(back1);
+			back2 = new FlxSprite(0, 0, ImgBack2);
+			add(back2);
+			back3 = new FlxSprite(0, 0, ImgBack3);
+			add(back3);
 
 			//_objects = new FlxGroup();
 
 			//_explosions = new FlxGroup();
 			//for (i = 0; i < 10; i++){
-				//s = new Explosion();
-				//s.width = 50;
-				//s.height = 10;
-				//s.offset.x = -31;
-				//s.offset.y = -31;
-				//s.exists = false;
-				//_explosions.add(s);
+			//s = new Explosion();
+			//s.width = 50;
+			//s.height = 10;
+			//s.offset.x = -31;
+			//s.offset.y = -31;
+			//s.exists = false;
+			//_explosions.add(s);
 			//}
 
 			makeEmitter();
@@ -152,14 +165,14 @@ package {
 			}
 			//_bulletsSmall = new FlxGroup();
 			//for (i = 0; i < 64; i++){
-				//s = new BulletSmall();
-				//_bulletsSmall.add(s);
+			//s = new BulletSmall();
+			//_bulletsSmall.add(s);
 			//}
 //
 			//_enemyBullets = new FlxGroup();
 			//for (i = 0; i < 64; i++){
-				//s = new EnemyBullet();
-				//_enemyBullets.add(s);
+			//s = new EnemyBullet();
+			//_enemyBullets.add(s);
 			//}
 
 			//_battery = new Battery();
@@ -203,7 +216,7 @@ package {
 
 			//_objects.add(ship);
 			//_objects.add(_enemies);
-			
+
 			//_objects.add(_rock);
 			//_objects.add(_boss);
 
@@ -281,72 +294,80 @@ package {
 			addEnemy();
 			_timerLast = _timer;
 
+			// move background
+			var w:int = FlxG.scroll.x + (maxWidth - FlxG.width) / 2;
+			var h:int = FlxG.scroll.y + (maxHeight - FlxG.height) / 2;
+			back3.x = -w;
+			back3.y = -h;
+			back2.x = -w / 2;
+			back2.y = -h / 2;
+
 			// check lose
 			//if (!ship.exists /*|| !base.active*/){
-				//FlxG.fade.start(0xff1e150f, 2, onFade);
+			//FlxG.fade.start(0xff1e150f, 2, onFade);
 			//}
-			/*
-			   for each (var eny:Enemy in _enemies.members) {
-			   if (!eny.exists) {
-			   _enemies.remove(eny, true);
-			   }
-			   }
-			 */
-			//shield.angle = ship.angle;
-			//shield.x = ship.x + (ship.width - shield.width) / 2;
-			//shield.y = ship.y + (ship.height - shield.height) / 2;
+		/*
+		   for each (var eny:Enemy in _enemies.members) {
+		   if (!eny.exists) {
+		   _enemies.remove(eny, true);
+		   }
+		   }
+		 */
+			 //shield.angle = ship.angle;
+			 //shield.x = ship.x + (ship.width - shield.width) / 2;
+			 //shield.y = ship.y + (ship.height - shield.height) / 2;
 		}
 
 		protected function overlapped(Object1:FlxObject, Object2:FlxObject):void {
-			
-			
+
+
 			//if ((Object1 is Bullet) && ((Object1 as Bullet).owner == Object2)){
-				//return;
+			//return;
 			//}
 			Object1.kill();
-			if (Object2 is EnemyRect) {
+			if (Object2 is EnemyRect){
 				Object2.kill();
 			}
 			//if (!(Object1 is EnemyBullet) && ((Object2 is Enemy) || (Object2 is Boss))){
-				//Object2.hurt((Object1 as Bullet).damage);
+			//Object2.hurt((Object1 as Bullet).damage);
 			//}
 			//if (Object2 is Block){
-				//Object2.hurt((Object1 as Bullet).damage);
+			//Object2.hurt((Object1 as Bullet).damage);
 			//}
 			//if ((Object1 is EnemyBullet) && ((Object2 is Base) || (Object2 is Ship) || (Object2 is Shield))){
-				//Object2.hurt((Object1 as Bullet).damage);
+			//Object2.hurt((Object1 as Bullet).damage);
 			//}
 			//if ((Object1 is Bonus) && (Object2 is Ship)){
-				// add gold
-				//FlxG.score += 1;
-				//txtGold.text = FlxG.score.toString();
-				//(Object1 as Bonus).doEffect();
+			// add gold
+			//FlxG.score += 1;
+			//txtGold.text = FlxG.score.toString();
+			//(Object1 as Bonus).doEffect();
 			//}
 		}
 
 		protected function addEnemy():void {
-			if (_timer % 1 < _timerLast % 1) {
+			if (_timer % 1 < _timerLast % 1){
 				_enemies.add(new EnemyRect());
 			}
 			//if (_timerLast < 1 && _timer >= 1){
-				//_enemies.add(new EnemyRect());
-					//enemyCount++;
+			//_enemies.add(new EnemyRect());
+			//enemyCount++;
 			//}
-						//if (_timerLast < 2 && _timer >= 2){
-				//_enemies.add(new EnemyRect());
-					//enemyCount++;
+			//if (_timerLast < 2 && _timer >= 2){
+			//_enemies.add(new EnemyRect());
+			//enemyCount++;
 			//}
-						//if (_timerLast < 3 && _timer >= 3){
-				//_enemies.add(new EnemyRect();
-					//enemyCount++;
+			//if (_timerLast < 3 && _timer >= 3){
+			//_enemies.add(new EnemyRect();
+			//enemyCount++;
 			//}
-						//if (_timerLast < 4 && _timer >= 4){
-				//_enemies.add(new EnemyRect());
-					//enemyCount++;
+			//if (_timerLast < 4 && _timer >= 4){
+			//_enemies.add(new EnemyRect());
+			//enemyCount++;
 			//}
-						//if (_timerLast < 5 && _timer >= 5){
-				//_enemies.add(new EnemyRect());
-					//enemyCount++;
+			//if (_timerLast < 5 && _timer >= 5){
+			//_enemies.add(new EnemyRect());
+			//enemyCount++;
 			//}
 		}
 
@@ -362,7 +383,7 @@ package {
 			_gibs.createSprites(ImgGibs, 100, 0, false);
 			add(_gibs);
 			//_objects.add(_gibs);
-			
+
 			gibsShip = new FlxEmitter();
 			gibsShip.setXSpeed(-500, 500);
 			gibsShip.setYSpeed(-500, 500);
@@ -371,7 +392,7 @@ package {
 			gibsShip.particleDrag.y = 100;
 			gibsShip.createSprites(ImgGibsShip, 30, 0, false);
 			add(gibsShip);
-			
+
 			gibsRect = new FlxEmitter();
 			gibsRect.setXSpeed(-500, 500);
 			gibsRect.setYSpeed(-500, 500);
@@ -399,56 +420,56 @@ package {
 		}
 
 		//public function dropBonus(iX:int, iY:int):void {
-			//var ran:Number = FlxU.random();
-			//if (ran < 0.1){
-				//bonuses.add(new BonusBig(iX, iY));
-			//} else if (ran < 0.2){
-				//bonuses.add(new BonusBomb(iX, iY));
-			//} else if (ran < 0.3){
-				//bonuses.add(new BonusFast(iX, iY));
-			//} else if (ran < 0.4){
-				//bonuses.add(new BonusFour(iX, iY));
-			//} else if (ran < 0.5){
-				//bonuses.add(new BonusLife(iX, iY));
-			//} else if (ran < 0.6){
-				//bonuses.add(new BonusShield(iX, iY));
-			//} else if (ran < 0.7){
-				//bonuses.add(new BonusShootfast(iX, iY));
-			//} else if (ran < 0.8){
-				//bonuses.add(new BonusThree(iX, iY));
-			//} else if (ran < 0.9){
-				//bonuses.add(new BonusTwo(iX, iY));
-			//}
+		//var ran:Number = FlxU.random();
+		//if (ran < 0.1){
+		//bonuses.add(new BonusBig(iX, iY));
+		//} else if (ran < 0.2){
+		//bonuses.add(new BonusBomb(iX, iY));
+		//} else if (ran < 0.3){
+		//bonuses.add(new BonusFast(iX, iY));
+		//} else if (ran < 0.4){
+		//bonuses.add(new BonusFour(iX, iY));
+		//} else if (ran < 0.5){
+		//bonuses.add(new BonusLife(iX, iY));
+		//} else if (ran < 0.6){
+		//bonuses.add(new BonusShield(iX, iY));
+		//} else if (ran < 0.7){
+		//bonuses.add(new BonusShootfast(iX, iY));
+		//} else if (ran < 0.8){
+		//bonuses.add(new BonusThree(iX, iY));
+		//} else if (ran < 0.9){
+		//bonuses.add(new BonusTwo(iX, iY));
+		//}
 		//}
 
 		//public function updateProgress(p:uint, s:int):void {
-			// update score
-			//score += s;
+		// update score
+		//score += s;
 //
-			//progress += p;
-			//progress = progress > 100 ? 100 : progress;
-			//var w:int = progress / 100 * 50;
-			//if (w > 0){
-				//progressBar.createGraphic(w, 2, 0xff00ff00);
-				//progressBar.fill(0xff00ff00);
-			//} else {
-				//progressBar.fill(0);
-			//}
-			// check win
-			//if (progress == 100){
-				//hasWin = true;
-				//FlxG.fade.start(0xff1e150f, 2, onFade);
-			//}
+		//progress += p;
+		//progress = progress > 100 ? 100 : progress;
+		//var w:int = progress / 100 * 50;
+		//if (w > 0){
+		//progressBar.createGraphic(w, 2, 0xff00ff00);
+		//progressBar.fill(0xff00ff00);
+		//} else {
+		//progressBar.fill(0);
+		//}
+		// check win
+		//if (progress == 100){
+		//hasWin = true;
+		//FlxG.fade.start(0xff1e150f, 2, onFade);
+		//}
 		//}
 
 		//public function bomb():void {
-			//FlxG.quake.start(0.005, 0.35);
-			//FlxG.flash.start(0xffcccccc, 0.5);
-			//for each (var eny:Enemy in _enemies.members){
-				//if (eny.exists){
-					//eny.hurt(100);
-				//}
-			//}
+		//FlxG.quake.start(0.005, 0.35);
+		//FlxG.flash.start(0xffcccccc, 0.5);
+		//for each (var eny:Enemy in _enemies.members){
+		//if (eny.exists){
+		//eny.hurt(100);
+		//}
+		//}
 		//}
 
 		override public function preProcess():void {

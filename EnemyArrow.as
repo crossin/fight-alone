@@ -11,6 +11,7 @@ package {
 
 		public function EnemyArrow(){
 			super(ImgEnemy);
+			score = 40;
 			var r:Number = FlxU.random();
 			if (r < 0.25) {
 				angle = 180;
@@ -43,7 +44,7 @@ package {
 			}
 
 			//angularVelocity = (FlxU.random() < 0.5) ? -90 : 90;
-			gibs = PlayState.gibsRect;
+			gibs = PlayState.gibsArrow;
 		}
 		
 		override public function hitLeft(Contact:FlxObject,Velocity:Number):void

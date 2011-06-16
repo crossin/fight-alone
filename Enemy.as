@@ -24,7 +24,7 @@ package {
 			solid = false;
 			alpha = 0;
 			//gibs = PlayState.gibsRect;
-			score = 100;
+			//score = 100;
 			antialiasing = true;
 		}
 
@@ -48,6 +48,7 @@ package {
 			super.kill();
 			gibs.at(this);
 			gibs.start(true, 0.5, 20);
+			FlxG.score += score;
 		}
 	}
 }

@@ -14,6 +14,8 @@ package {
 		private var ImgGibsShip:Class;
 		[Embed(source="res/gibs_rect.png")]
 		private var ImgGibsRect:Class;
+		[Embed(source="res/gibs_arrow.png")]
+		private var ImgGibsArrow:Class;
 		//[Embed(source="res/upgrade.png")]
 		//private var ImgUpgrade:Class;
 		[Embed(source="res/back1.png")]
@@ -40,8 +42,9 @@ package {
 		public static var maxHeight:int;
 		//public static var _explosions:FlxGroup;
 		public static var _gibs:FlxEmitter;
-		public static var gibsRect:FlxEmitter;
 		public static var gibsShip:FlxEmitter;
+		public static var gibsRect:FlxEmitter;
+		public static var gibsArrow:FlxEmitter;
 
 		//public var _explosionIndex:uint;
 
@@ -69,7 +72,7 @@ package {
 		protected var back2:FlxSprite;
 		protected var back3:FlxSprite;
 
-		public var score:int;
+		//public var score:int;
 
 
 		// blur
@@ -102,8 +105,8 @@ package {
 			//var upPanel:FlxSprite = new FlxSprite(5, 215, ImgUpgrade);
 			//upPanel.scrollFactor = ssf;
 			//score
-			txtScore = new FlxText(0, 218, 50, "0");
-			txtScore.size = 8;
+			txtScore = new FlxText(0, 218, 200, "0");
+			txtScore.size = 24;
 			txtScore.alignment = "center";
 			txtScore.color = 0xf0f0f0;
 			//txtScore.antialiasing = false;
@@ -235,7 +238,7 @@ package {
 			//progress = 0;
 			//hasWin = false;
 			//index = 0;
-			score = 0;
+			//score = 0;
 
 			// upgrades
 			//var u:UpgradeItem;
@@ -259,7 +262,7 @@ package {
 			//_enemyLifeBarBack.visible = false;
 			//_enemyLifeBar.visible = false;
 
-			txtScore.text = score.toString();
+			txtScore.text = FlxG.score.toString();
 
 			super.update();
 
@@ -347,6 +350,7 @@ package {
 
 		protected function addEnemy():void {
 			if (_timer % 1 < _timerLast % 1){
+				_enemies.add(new EnemyRect());
 				_enemies.add(new EnemyArrow());
 			}
 			//if (_timerLast < 1 && _timer >= 1){
@@ -401,6 +405,15 @@ package {
 			gibsRect.particleDrag.y = 100;
 			gibsRect.createSprites(ImgGibsRect, 100, 0, false);
 			add(gibsRect);
+			
+			gibsArrow = new FlxEmitter();
+			gibsArrow.setXSpeed(-500, 500);
+			gibsArrow.setYSpeed(-500, 500);
+			gibsArrow.gravity = 0;
+			gibsArrow.particleDrag.x = 100;
+			gibsArrow.particleDrag.y = 100;
+			gibsArrow.createSprites(ImgGibsArrow, 100, 0, false);
+			add(gibsArrow);
 		}
 
 		protected function makeScene():void {

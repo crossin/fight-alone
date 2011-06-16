@@ -325,7 +325,7 @@ package {
 			//return;
 			//}
 			Object1.kill();
-			if (Object2 is EnemyRect){
+			if (Object2 is Enemy){
 				Object2.kill();
 			}
 			//if (!(Object1 is EnemyBullet) && ((Object2 is Enemy) || (Object2 is Boss))){
@@ -347,7 +347,7 @@ package {
 
 		protected function addEnemy():void {
 			if (_timer % 1 < _timerLast % 1){
-				_enemies.add(new EnemyRect());
+				_enemies.add(new EnemyArrow());
 			}
 			//if (_timerLast < 1 && _timer >= 1){
 			//_enemies.add(new EnemyRect());

@@ -11,6 +11,7 @@ package {
 
 		public function EnemyRect(){
 			super(ImgEnemy);
+			score = 50;
 		}
 
 		override protected function start():void {

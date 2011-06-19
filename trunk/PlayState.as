@@ -16,6 +16,16 @@ package {
 		private var ImgGibsRect:Class;
 		[Embed(source="res/gibs_arrow.png")]
 		private var ImgGibsArrow:Class;
+		[Embed(source="res/gibs_dart.png")]
+		private var ImgGibsDart:Class;
+		[Embed(source="res/gibs_luna.png")]
+		private var ImgGibsLuna:Class;
+		[Embed(source="res/gibs_shuttle.png")]
+		private var ImgGibsShuttle:Class;
+		[Embed(source="res/gibs_circle.png")]
+		private var ImgGibsCircle:Class;
+		[Embed(source="res/gibs_cross.png")]
+		private var ImgGibsCross:Class;
 		//[Embed(source="res/upgrade.png")]
 		//private var ImgUpgrade:Class;
 		[Embed(source="res/back1.png")]
@@ -45,6 +55,11 @@ package {
 		public static var gibsShip:FlxEmitter;
 		public static var gibsRect:FlxEmitter;
 		public static var gibsArrow:FlxEmitter;
+		public static var gibsDart:FlxEmitter;
+		public static var gibsLuna:FlxEmitter;
+		public static var gibsShuttle:FlxEmitter;
+		public static var gibsCircle:FlxEmitter;
+		public static var gibsCross:FlxEmitter;
 
 		//public var _explosionIndex:uint;
 
@@ -81,8 +96,8 @@ package {
 
 		override public function create():void {
 			//back
-			maxWidth = 800;
-			maxHeight = 600;
+			maxWidth = 1200;
+			maxHeight = 900;
 			//back = new FlxTileblock(0, 0, maxWidth, maxHeight);
 			//add(back);
 
@@ -328,8 +343,12 @@ package {
 			//return;
 			//}
 			Object1.kill();
-			if (Object2 is Enemy){
-				Object2.kill();
+			if (Object2 is Enemy) {
+				if (Object2 is EnemyCross) {
+					Object2.hurt(1);
+				} else {
+					Object2.kill();
+				}
 			}
 			//if (!(Object1 is EnemyBullet) && ((Object2 is Enemy) || (Object2 is Boss))){
 			//Object2.hurt((Object1 as Bullet).damage);
@@ -349,9 +368,15 @@ package {
 		}
 
 		protected function addEnemy():void {
-			if (_timer % 1 < _timerLast % 1){
-				_enemies.add(new EnemyRect());
-				_enemies.add(new EnemyArrow());
+			if (_timer % 2 < _timerLast % 2){
+				_enemies.add(new EnemyCross());
+				//_enemies.add(new EnemyArrow());
+				//for (var i:int; i < 22; i++){
+					//_enemies.add(new EnemyArrow(2, i));
+				//}
+				//for (var i:int; i < 16; i++){
+					//_enemies.add(new EnemyArrow(3, i));
+				//}
 			}
 			//if (_timerLast < 1 && _timer >= 1){
 			//_enemies.add(new EnemyRect());
@@ -389,8 +414,8 @@ package {
 			//_objects.add(_gibs);
 
 			gibsShip = new FlxEmitter();
-			gibsShip.setXSpeed(-500, 500);
-			gibsShip.setYSpeed(-500, 500);
+			gibsShip.setXSpeed(-700, 700);
+			gibsShip.setYSpeed(-700, 700);
 			gibsShip.gravity = 0;
 			gibsShip.particleDrag.x = 100;
 			gibsShip.particleDrag.y = 100;
@@ -405,7 +430,7 @@ package {
 			gibsRect.particleDrag.y = 100;
 			gibsRect.createSprites(ImgGibsRect, 100, 0, false);
 			add(gibsRect);
-			
+
 			gibsArrow = new FlxEmitter();
 			gibsArrow.setXSpeed(-500, 500);
 			gibsArrow.setYSpeed(-500, 500);
@@ -414,15 +439,60 @@ package {
 			gibsArrow.particleDrag.y = 100;
 			gibsArrow.createSprites(ImgGibsArrow, 100, 0, false);
 			add(gibsArrow);
+
+			gibsDart = new FlxEmitter();
+			gibsDart.setXSpeed(-500, 500);
+			gibsDart.setYSpeed(-500, 500);
+			gibsDart.gravity = 0;
+			gibsDart.particleDrag.x = 100;
+			gibsDart.particleDrag.y = 100;
+			gibsDart.createSprites(ImgGibsDart, 100, 0, false);
+			add(gibsDart);
+			
+			gibsLuna = new FlxEmitter();
+			gibsLuna.setXSpeed(-500, 500);
+			gibsLuna.setYSpeed(-500, 500);
+			gibsLuna.gravity = 0;
+			gibsLuna.particleDrag.x = 100;
+			gibsLuna.particleDrag.y = 100;
+			gibsLuna.createSprites(ImgGibsLuna, 100, 0, false);
+			add(gibsLuna);
+			
+			gibsShuttle = new FlxEmitter();
+			gibsShuttle.setXSpeed(-500, 500);
+			gibsShuttle.setYSpeed(-500, 500);
+			gibsShuttle.gravity = 0;
+			gibsShuttle.particleDrag.x = 100;
+			gibsShuttle.particleDrag.y = 100;
+			gibsShuttle.createSprites(ImgGibsShuttle, 100, 0, false);
+			add(gibsShuttle);
+			
+			gibsCircle = new FlxEmitter();
+			gibsCircle.setXSpeed(-500, 500);
+			gibsCircle.setYSpeed(-500, 500);
+			gibsCircle.gravity = 0;
+			gibsCircle.particleDrag.x = 100;
+			gibsCircle.particleDrag.y = 100;
+			gibsCircle.createSprites(ImgGibsCircle, 100, 0, false);
+			add(gibsCircle);
+			
+			gibsCross = new FlxEmitter();
+			gibsCross.setXSpeed(-500, 500);
+			gibsCross.setYSpeed(-500, 500);
+			gibsCross.gravity = 0;
+			gibsCross.particleDrag.x = 100;
+			gibsCross.particleDrag.y = 100;
+			gibsCross.createSprites(ImgGibsCross, 100, 0, false);
+			add(gibsCross);
 		}
 
 		protected function makeScene():void {
 			var border:Border;
 			border = new Border(51, 43, 1);
 			blocks.add(border);
-			border = new Border(749, 51, 2);
+			border = new Border(1149, 51, 2);
 			blocks.add(border);
-			border = new Border(51, 549, 3);
+			border = new Border(51, 849, 3);
 			blocks.add(border);
 			border = new Border(43, 51, 4);
 			blocks.add(border);

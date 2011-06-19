@@ -16,7 +16,7 @@ package {
 		public function EnemyCircle(){
 			super(ImgEnemy);
 			gibs = PlayState.gibsCircle;
-			score = 50;
+			score = 70;
 			_timer = 0;
 			ship = (FlxG.state as PlayState).ship;
 		}

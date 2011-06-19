@@ -15,7 +15,7 @@ package {
 		public function EnemyLuna(){
 			super(ImgEnemy);
 			gibs = PlayState.gibsLuna;
-			score = 50;
+			score = 90;
 			ship = (FlxG.state as PlayState).ship;
 		}
 

@@ -50,6 +50,7 @@ package {
 
 		override public function kill():void {
 			super.kill();
+			FlxG.play(SndExplode, 0.5);
 			gibs.at(this);
 			gibs.start(true, 0.5, 20);
 			FlxG.score += score;

@@ -36,12 +36,15 @@ package {
 		private var ImgBack3:Class;
 		//[Embed(source="res/shield.png")]
 		//private var ImgShield:Class;
+		[Embed(source="res/sound/bgm.mp3")]
+		private var SndBgm:Class;
 
 		public var ship:Ship;
 		//public var shield:Shield;
 		//public var upEffect:UpEffect;
 		//public static var _battery:Battery;
 		public static var _bullets:FlxGroup;
+		public var _scraps:FlxGroup;
 		//public static var _bulletsSmall:FlxGroup;
 		//public static var _lifeBar:FlxSprite;
 		//public static var progressBar:FlxSprite;
@@ -74,6 +77,7 @@ package {
 		protected var _timer:Number;
 		protected var _timerLast:Number;
 		protected var _timerInterval:Number;
+		protected var _timerEnd:Number;
 		//protected var enemyCount:uint;
 		//protected var progress:Number;
 		//protected var hasWin:Boolean;
@@ -120,10 +124,10 @@ package {
 			//var upPanel:FlxSprite = new FlxSprite(5, 215, ImgUpgrade);
 			//upPanel.scrollFactor = ssf;
 			//score
-			txtScore = new FlxText(0, 218, 200, "0");
+			txtScore = new FlxText(0, 0, 640, "0");
 			txtScore.size = 24;
-			txtScore.alignment = "center";
-			txtScore.color = 0xf0f0f0;
+			txtScore.alignment = "right";
+			//txtScore.color = 0xf0f0f0;
 			//txtScore.antialiasing = false;
 			txtScore.scrollFactor = ssf;
 			//txtScore.alpha = 0.5;
@@ -173,7 +177,7 @@ package {
 			var s:FlxSprite;
 			_bullets = new FlxGroup();
 			var i:int;
-			for (i = 0; i < 32; i++){
+			for (i = 0; i < 48; i++){
 				s = new Bullet();
 				//s.width = 50;
 				//s.height = 10;
@@ -181,6 +185,15 @@ package {
 				//s.offset.y = -31;
 				_bullets.add(s);
 			}
+
+			_scraps = new FlxGroup();
+			for (i = 0; i < 36; i++){
+				s = new Scrap();
+				_scraps.add(s);
+			}
+
+
+
 			//_bulletsSmall = new FlxGroup();
 			//for (i = 0; i < 64; i++){
 			//s = new BulletSmall();
@@ -215,6 +228,7 @@ package {
 			//add(_boss);
 			add(ship);
 			add(_bullets);
+			add(_scraps);
 			//add(_bulletsSmall);
 			//add(_battery);
 			add(_enemies);
@@ -247,6 +261,9 @@ package {
 			_timer = 0;
 			_timerLast = 0;
 			_timerInterval = 5;
+			_timerEnd = 3;
+
+			FlxG.score = 0;
 			//_bulletIndex = 0;
 			//_explosionIndex = 0;
 			//enemyCount = 0;
@@ -271,6 +288,8 @@ package {
 			_helper = new FlxSprite();
 			_helper.createGraphic(FlxG.width, FlxG.height, 0xff000000, true);
 			_helper.alpha = _blur;
+
+			FlxG.playMusic(SndBgm, 0.7);
 		}
 
 		override public function update():void {
@@ -289,6 +308,8 @@ package {
 			//FlxU.overlap(_enemyBullets, _boss, overlapped);
 			FlxU.overlap(_bullets, blocks, overlapped);
 			FlxU.overlap(ship, _enemies, overlapped);
+			FlxU.overlap(ship, _scraps, overlapped);
+			FlxU.overlap(_scraps, blocks, overlapped);
 			//FlxU.overlap(_bulletsSmall, blocks, overlapped);
 			//FlxU.overlap(_enemyBullets, blocks, overlapped);
 			//FlxU.overlap(_bullets, base, overlapped);
@@ -309,7 +330,11 @@ package {
 
 			// add enemies
 			_timer += FlxG.elapsed;
-			addEnemy();
+			if (_timer < 120){
+				addEnemy1();
+			} else {
+				addEnemy2();
+			}
 			_timerLast = _timer;
 
 			// move background
@@ -321,9 +346,15 @@ package {
 			back2.y = -h / 2;
 
 			// check lose
-			//if (!ship.exists /*|| !base.active*/){
-			//FlxG.fade.start(0xff1e150f, 2, onFade);
-			//}
+			if (!ship.exists /*|| !base.active*/){
+				//FlxG.music.volume -= 0.01;
+				FlxG.music.stop();
+				_timerEnd -= FlxG.elapsed;
+				if (_timerEnd < 0){
+					FlxG.state = new EndState();
+				}
+					//FlxG.fade.start(0xff1e150f, 2, onFade);
+			}
 		/*
 		   for each (var eny:Enemy in _enemies.members) {
 		   if (!eny.exists) {
@@ -343,12 +374,20 @@ package {
 			//return;
 			//}
 			Object1.kill();
-			if (Object2 is Enemy) {
-				if (Object2 is EnemyCross) {
+			if (Object2 is Enemy){
+				if (Object2 is EnemyCross){
 					Object2.hurt(1);
 				} else {
 					Object2.kill();
 				}
+			}
+
+			if (Object2 is Scrap){
+				Object2.kill();
+			}
+
+			if (Object1 is Bullet && Object2 is Border){
+				//FlxG.play(SndHit);
 			}
 			//if (!(Object1 is EnemyBullet) && ((Object2 is Enemy) || (Object2 is Boss))){
 			//Object2.hurt((Object1 as Bullet).damage);
@@ -367,37 +406,100 @@ package {
 			//}
 		}
 
-		protected function addEnemy():void {
-			if (_timer % 2 < _timerLast % 2){
-				_enemies.add(new EnemyCross());
-				//_enemies.add(new EnemyArrow());
-				//for (var i:int; i < 22; i++){
-					//_enemies.add(new EnemyArrow(2, i));
-				//}
-				//for (var i:int; i < 16; i++){
-					//_enemies.add(new EnemyArrow(3, i));
-				//}
+		protected function addEnemy1():void {
+			// rect
+			if (_timer < 20 && _timer % 2 < _timerLast % 2){
+				_enemies.add(new EnemyRect());
+				_enemies.add(new EnemyRect());
 			}
-			//if (_timerLast < 1 && _timer >= 1){
-			//_enemies.add(new EnemyRect());
-			//enemyCount++;
-			//}
-			//if (_timerLast < 2 && _timer >= 2){
-			//_enemies.add(new EnemyRect());
-			//enemyCount++;
-			//}
-			//if (_timerLast < 3 && _timer >= 3){
-			//_enemies.add(new EnemyRect();
-			//enemyCount++;
-			//}
-			//if (_timerLast < 4 && _timer >= 4){
-			//_enemies.add(new EnemyRect());
-			//enemyCount++;
-			//}
-			//if (_timerLast < 5 && _timer >= 5){
-			//_enemies.add(new EnemyRect());
-			//enemyCount++;
-			//}
+			
+			// shuttle
+			if (_timer > 20 && _timer < 40 && _timer % 3 < _timerLast % 3){
+				_enemies.add(new EnemyShuttle());
+				_enemies.add(new EnemyShuttle());
+			}
+			// circle
+			if (_timer > 40 && _timer < 60 && _timer % 3 < _timerLast % 3){
+				_enemies.add(new EnemyCircle());
+				_enemies.add(new EnemyCircle());
+			}
+			// dart
+			if (_timer > 60 && _timer < 80 && _timer % 4 < _timerLast % 4){
+				_enemies.add(new EnemyDart(0));
+				_enemies.add(new EnemyDart(1));
+				_enemies.add(new EnemyDart(2));
+				_enemies.add(new EnemyDart(3));
+			}
+			// luna
+			if (_timer > 80 && _timer < 100 && _timer % 3 < _timerLast % 3){
+				_enemies.add(new EnemyLuna());
+				_enemies.add(new EnemyLuna());
+			}
+			// arrow
+			if (_timer % 30 < _timerLast % 30){
+				for (var i:int = 0; i < 22; i++){
+					_enemies.add(new EnemyArrow(2, i));
+				}
+				for (i = 0; i < 16; i++){
+					_enemies.add(new EnemyArrow(3, i));
+				}
+			}
+			// cross
+			if (_timer % 50 < _timerLast % 50){
+				_enemies.add(new EnemyCross());
+				_enemies.add(new EnemyCross());
+			}
+		}
+
+		protected function addEnemy2():void {
+			// rect
+			if (_timer % 2 < _timerLast % 2){
+				_enemies.add(new EnemyRect());
+			}
+			// luna
+			if (_timer % 5 < _timerLast % 5){
+				_enemies.add(new EnemyLuna());
+			}
+			// shuttle
+			if (_timer % 6 < _timerLast % 6){
+				_enemies.add(new EnemyShuttle());
+			}
+			// circle
+			if (_timer % 7 < _timerLast % 7){
+				_enemies.add(new EnemyCircle());
+			}
+			// dart
+			if (_timer % 9 < _timerLast % 9){
+				_enemies.add(new EnemyDart(0));
+				_enemies.add(new EnemyDart(1));
+				_enemies.add(new EnemyDart(2));
+				_enemies.add(new EnemyDart(3));
+			}
+			// arrow
+			if (_timer % 23 < _timerLast % 23){
+				for (var i:int = 0; i < 22; i++){
+					_enemies.add(new EnemyArrow(0, i));
+				}
+			}
+			if (_timer % 29 < _timerLast % 29){
+				for (i = 0; i < 16; i++){
+					_enemies.add(new EnemyArrow(1, i));
+				}
+			}
+			if (_timer % 31 < _timerLast % 31){
+				for (i = 0; i < 22; i++){
+					_enemies.add(new EnemyArrow(2, i));
+				}
+			}
+			if (_timer % 43 < _timerLast % 43){
+				for (i = 0; i < 16; i++){
+					_enemies.add(new EnemyArrow(3, i));
+				}
+			}
+			// cross
+			if (_timer % 15 < _timerLast % 15){
+				_enemies.add(new EnemyCross());
+			}
 		}
 
 		protected function makeEmitter():void {
@@ -448,7 +550,7 @@ package {
 			gibsDart.particleDrag.y = 100;
 			gibsDart.createSprites(ImgGibsDart, 100, 0, false);
 			add(gibsDart);
-			
+
 			gibsLuna = new FlxEmitter();
 			gibsLuna.setXSpeed(-500, 500);
 			gibsLuna.setYSpeed(-500, 500);
@@ -457,7 +559,7 @@ package {
 			gibsLuna.particleDrag.y = 100;
 			gibsLuna.createSprites(ImgGibsLuna, 100, 0, false);
 			add(gibsLuna);
-			
+
 			gibsShuttle = new FlxEmitter();
 			gibsShuttle.setXSpeed(-500, 500);
 			gibsShuttle.setYSpeed(-500, 500);
@@ -466,7 +568,7 @@ package {
 			gibsShuttle.particleDrag.y = 100;
 			gibsShuttle.createSprites(ImgGibsShuttle, 100, 0, false);
 			add(gibsShuttle);
-			
+
 			gibsCircle = new FlxEmitter();
 			gibsCircle.setXSpeed(-500, 500);
 			gibsCircle.setYSpeed(-500, 500);
@@ -475,7 +577,7 @@ package {
 			gibsCircle.particleDrag.y = 100;
 			gibsCircle.createSprites(ImgGibsCircle, 100, 0, false);
 			add(gibsCircle);
-			
+
 			gibsCross = new FlxEmitter();
 			gibsCross.setXSpeed(-500, 500);
 			gibsCross.setYSpeed(-500, 500);

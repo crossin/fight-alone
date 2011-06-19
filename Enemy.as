@@ -13,14 +13,18 @@ package {
 
 
 		protected var score:uint;
-		protected var gibs:FlxEmitter 
+		protected var gibs:FlxEmitter;
 
 		//private var _bulletIndex:uint;
 		//private var _explosionIndex:uint;
 
 
-		public function Enemy(img:Class){
-			super(100 + 600 * FlxU.random(), 100 + 400 * FlxU.random(),img);
+		public function Enemy(img:Class, ix:Number = 0, iy:Number = 0){
+			if (ix == 0 && iy == 0){
+				ix = 50 + 1050 * FlxU.random();
+				iy = 50 + 750 * FlxU.random();
+			}
+			super(ix, iy, img);
 			solid = false;
 			alpha = 0;
 			//gibs = PlayState.gibsRect;

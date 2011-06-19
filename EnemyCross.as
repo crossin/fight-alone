@@ -5,22 +5,27 @@ package {
 	 * ...
 	 * @author Crossin
 	 */
-	public class EnemyRect extends Enemy {
-		[Embed(source="res/rect.png")]
+	public class EnemyCross extends Enemy {
+		[Embed(source="res/cross.png")]
 		private var ImgEnemy:Class;
 
-		public function EnemyRect(){
+		public function EnemyCross(){
 			super(ImgEnemy);
-			gibs = PlayState.gibsRect;
+			gibs = PlayState.gibsCross;
 			score = 50;
+			health = 30;
 		}
 
 		override protected function start():void {
-			color = 0x19c919;
-			velocity.x = -150 + 300 * FlxU.random();
-			velocity.y = Math.sqrt(150 * 150 - velocity.x * velocity.x);
+			color = 0xea1a1a;
+			velocity.x = -50 + 100 * FlxU.random();
+			velocity.y = Math.sqrt(50 * 50 - velocity.x * velocity.x);
 			velocity.y = (FlxU.random() < 0.5) ? -velocity.y : velocity.y;
-			angularVelocity = (FlxU.random() < 0.5) ? -90 : 90;
+			angularVelocity = (FlxU.random() < 0.5) ? -45 : 45;
+		}
+		
+		override public function hurt(Damage:Number):void {
+			super.hurt(Damage);
 		}
 		
 		override public function hitLeft(Contact:FlxObject,Velocity:Number):void

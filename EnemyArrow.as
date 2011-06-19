@@ -46,7 +46,7 @@ package {
 					break;
 			}
 			gibs = PlayState.gibsArrow;
-			score = 40;
+			score = 20;
 		}
 
 		override protected function start():void {
@@ -55,16 +55,16 @@ package {
 			//velocity.y = Math.sqrt(150 * 150 - velocity.x * velocity.x);
 			switch (angle){
 				case 0:
-					velocity.x = 150;
+					velocity.x = 100;
 					break;
 				case 90:
-					velocity.y = 150;
+					velocity.y = 100;
 					break;
 				case 180:
-					velocity.x = -150;
+					velocity.x = -100;
 					break;
 				case 270:
-					velocity.y = -150;
+					velocity.y = -100;
 					break;
 			}
 

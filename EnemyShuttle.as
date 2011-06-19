@@ -15,7 +15,7 @@ package {
 		public function EnemyShuttle(){
 			super(ImgEnemy);
 			gibs = PlayState.gibsShuttle;
-			score = 50;
+			score = 60;
 			_timer = 0;// 2 + 4 * FlxU.random();
 		}
 
@@ -31,7 +31,7 @@ package {
 			if (color != 0xffffff){
 				//var moveAngle:Number = FlxU.getAngle(ship.x - x, ship.y - y);
 				_timer -= FlxG.elapsed;
-				velocity = FlxU.rotatePoint(100, 0, 0, 0, angle);
+				velocity = FlxU.rotatePoint(150, 0, 0, 0, angle);
 			}
 			if (_timer < 0){
 				angularVelocity = -angularVelocity;

@@ -35,7 +35,7 @@ package {
 			}
 			super(ImgEnemy, ix, iy);
 			gibs = PlayState.gibsDart;
-			score = 50;
+			score = 80;
 			ship = (FlxG.state as PlayState).ship;
 
 		}

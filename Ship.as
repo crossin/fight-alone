@@ -40,6 +40,8 @@ package {
 		//protected var ImgTankShadowBig:Class;
 		[Embed(source = "res/sound/shoot.mp3")]
 		private var SndShoot:Class;
+		[Embed(source = "res/sound/dead.mp3")]
+		private var SndDead:Class;
 		
 		public function Ship(startX:int, startY:int){
 			super(startX, startY);
@@ -58,10 +60,10 @@ package {
 			drag.x = 500;
 			drag.y = 500;
 			antialiasing = true;
-			shootInterval = 0.15;
+			shootInterval = 0.1;
 			restartClock();
 			shoot = shoot2;
-			shotSpeed = 400;
+			shotSpeed = 500;
 			direct = new FlxPoint();
 			//damage = 10;
 			//defence = 0.3;
@@ -132,7 +134,7 @@ package {
 				restartClock();
 				//battery.play("idle");
 				//battery.play("shot");
-				//FlxG.play(SndShoot);
+				FlxG.play(SndShoot);
 				shoot();
 			}
 			speed = Math.sqrt(velocity.x * velocity.x + velocity.y * velocity.y)
@@ -206,6 +208,7 @@ package {
 
 		override public function kill():void {
 			super.kill();
+			FlxG.play(SndDead);
 			FlxG.quake.start(0.01, 0.5);
 			//FlxG.flash.start(0xff000000, 0.35);
 			var gibs:FlxEmitter = PlayState.gibsShip;

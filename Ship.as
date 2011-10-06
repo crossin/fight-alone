@@ -43,6 +43,8 @@ package {
 		[Embed(source = "res/sound/dead.mp3")]
 		private var SndDead:Class;
 		
+		public static var speed:int;
+		
 		public function Ship(startX:int, startY:int){
 			super(startX, startY);
 			loadGraphic(ImgShip, true);
@@ -202,7 +204,7 @@ package {
 			//flicker(0.2);
 			//battery.flicker(0.2);
 //
-			//FlxG.score += 10;
+			//EndState.score += 10;
 //
 		//}
 

@@ -53,7 +53,8 @@ package {
 			FlxG.play(SndExplode, 0.5);
 			gibs.at(this);
 			gibs.start(true, 0.5, 20);
-			FlxG.score += score;
+			EndState.score += score;
+			EndState.kills ++;
 		}
 	}
 }

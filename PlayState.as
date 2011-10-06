@@ -131,7 +131,7 @@ package {
 			//txtScore.antialiasing = false;
 			txtScore.scrollFactor = ssf;
 			//txtScore.alpha = 0.5;
-			//txtGold = new FlxText(120, 20, 100, FlxG.score.toString());
+			//txtGold = new FlxText(120, 20, 100, EndState.score.toString());
 			//txtGold.size = 8;
 			//txtGold.alignment = "center";
 			//txtGold.color = 0x999933;
@@ -263,7 +263,10 @@ package {
 			_timerInterval = 5;
 			_timerEnd = 3;
 
-			FlxG.score = 0;
+			//EndState.score = 0;
+			EndState.kills = 0;
+			//EndState.time = 0;
+			
 			//_bulletIndex = 0;
 			//_explosionIndex = 0;
 			//enemyCount = 0;
@@ -296,7 +299,8 @@ package {
 			//_enemyLifeBarBack.visible = false;
 			//_enemyLifeBar.visible = false;
 
-			txtScore.text = FlxG.score.toString();
+			txtScore.text = EndState.score.toString();
+			//txtScore.text = "".concat(int(_timer / 60)).concat("'").concat(int(_timer % 60)).concat("\"").concat(int((_timer - int(_timer)) * 100))
 
 			super.update();
 
@@ -350,7 +354,8 @@ package {
 				//FlxG.music.volume -= 0.01;
 				FlxG.music.stop();
 				_timerEnd -= FlxG.elapsed;
-				if (_timerEnd < 0){
+				if (_timerEnd < 0) {
+					EndState.time = _timer - 3;
 					FlxG.state = new EndState();
 				}
 					//FlxG.fade.start(0xff1e150f, 2, onFade);
@@ -400,8 +405,8 @@ package {
 			//}
 			//if ((Object1 is Bonus) && (Object2 is Ship)){
 			// add gold
-			//FlxG.score += 1;
-			//txtGold.text = FlxG.score.toString();
+			//EndState.score += 1;
+			//txtGold.text = EndState.score.toString();
 			//(Object1 as Bonus).doEffect();
 			//}
 		}

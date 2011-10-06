@@ -185,7 +185,7 @@ package {
 			//FlxG.play(SndHit);
 			super.hurt(Damage);
 			flicker(0.2);
-			//FlxG.score += 10;
+			//EndState.score += 10;
 
 		}
 
@@ -207,7 +207,7 @@ package {
 			//explode();
 			//_gibs.at(this);
 			//_gibs.start(true, 1, 8);
-			//FlxG.score += 200;
+			//EndState.score += 200;
 		}
 
 		private function shoot():void {

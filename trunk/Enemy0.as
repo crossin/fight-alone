@@ -220,7 +220,7 @@ package {
 			//}
 			super.hurt(Damage * (1 - defence));
 			flicker(0.2);
-			//FlxG.score += 10;
+			//EndState.score += 10;
 		}
 
 		override public function kill():void {
@@ -241,7 +241,7 @@ package {
 			}
 			//_gibs.at(this);
 			//_gibs.start(true, 1, 8);
-			//FlxG.score += 200;
+			//EndState.score += 200;
 		}
 
 		private function shoot():void {

@@ -195,7 +195,7 @@ package {
 			flicker(0.2);
 			battery.flicker(0.2);
 
-			//FlxG.score += 10;
+			//EndState.score += 10;
 
 		}
 

@@ -91,7 +91,7 @@ package {
 			//txtScore.antialiasing = false;
 			txtScore.scrollFactor = ssf;
 			//txtScore.alpha = 0.5;
-			//txtGold = new FlxText(120, 20, 100, FlxG.score.toString());
+			//txtGold = new FlxText(120, 20, 100, EndState.score.toString());
 			//txtGold.size = 8;
 			//txtGold.alignment = "center";
 			//txtGold.color = 0x999933;
@@ -304,8 +304,8 @@ package {
 			}
 			if ((Object1 is Bonus) && (Object2 is Tank)){
 				// add gold
-				//FlxG.score += 1;
-				//txtGold.text = FlxG.score.toString();
+				//EndState.score += 1;
+				//txtGold.text = EndState.score.toString();
 				(Object1 as Bonus).doEffect();
 			}
 		}

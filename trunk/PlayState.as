@@ -34,6 +34,10 @@ package {
 		private var ImgBack2:Class;
 		[Embed(source="res/back3.png")]
 		private var ImgBack3:Class;
+		[Embed(source="res/bomb.png")]
+		private var ImgBomb:Class;
+		[Embed(source="res/life.png")]
+		private var ImgLife:Class;
 		//[Embed(source="res/shield.png")]
 		//private var ImgShield:Class;
 		[Embed(source="res/sound/bgm.mp3")]
@@ -66,7 +70,7 @@ package {
 
 		//public var _explosionIndex:uint;
 
-		protected var _enemies:FlxGroup;
+		public var _enemies:FlxGroup;
 		//protected var _objects:FlxGroup;
 		//protected var _rock:Box;
 		//protected var back:FlxTileblock;
@@ -92,7 +96,8 @@ package {
 		protected var back3:FlxSprite;
 
 		//public var score:int;
-
+		public var bombs:Array;
+		public var lives:Array;
 
 		// blur
 		private const _blur:Number = 0.3;
@@ -126,7 +131,7 @@ package {
 			//score
 			txtScore = new FlxText(0, 0, 640, "0");
 			txtScore.size = 24;
-			txtScore.alignment = "right";
+			txtScore.alignment = "center";
 			//txtScore.color = 0xf0f0f0;
 			//txtScore.antialiasing = false;
 			txtScore.scrollFactor = ssf;
@@ -252,6 +257,24 @@ package {
 			//_objects.add(_rock);
 			//_objects.add(_boss);
 
+			bombs = new Array(5);
+			for (i = 0; i < 5; i++){
+				bombs[i] = new FlxSprite(620 - i * 20, 5, ImgBomb);
+				bombs[i].scrollFactor = ssf;
+				add(bombs[i]);
+				if (i >= Ship.bombs) {
+					bombs[i].visible = false;
+				}
+			}
+			lives = new Array(5);
+			for (i = 0; i < 5; i++){
+				lives[i] = new FlxSprite(5 + i * 20, 5, ImgLife);
+				lives[i].scrollFactor = ssf;
+				add(lives[i]);
+				if (i >= Ship.lives) {
+					lives[i].visible = false;
+				}
+			}
 
 			FlxG.mouse.show(ImgCursor);
 			FlxG.follow(ship, 3);
@@ -266,7 +289,7 @@ package {
 			//EndState.score = 0;
 			EndState.kills = 0;
 			//EndState.time = 0;
-			
+
 			//_bulletIndex = 0;
 			//_explosionIndex = 0;
 			//enemyCount = 0;
@@ -354,7 +377,7 @@ package {
 				//FlxG.music.volume -= 0.01;
 				FlxG.music.stop();
 				_timerEnd -= FlxG.elapsed;
-				if (_timerEnd < 0) {
+				if (_timerEnd < 0){
 					EndState.time = _timer - 3;
 					FlxG.state = new EndState();
 				}
@@ -378,7 +401,12 @@ package {
 			//if ((Object1 is Bullet) && ((Object1 as Bullet).owner == Object2)){
 			//return;
 			//}
-			Object1.kill();
+			if (Object1 is Ship) {
+				Object1.hurt(1);
+			}
+			else {
+				Object1.kill();
+			}
 			if (Object2 is Enemy){
 				if (Object2 is EnemyCross){
 					Object2.hurt(1);
@@ -417,7 +445,7 @@ package {
 				_enemies.add(new EnemyRect());
 				_enemies.add(new EnemyRect());
 			}
-			
+
 			// shuttle
 			if (_timer > 20 && _timer < 40 && _timer % 3 < _timerLast % 3){
 				_enemies.add(new EnemyShuttle());
@@ -526,7 +554,7 @@ package {
 			gibsShip.gravity = 0;
 			gibsShip.particleDrag.x = 100;
 			gibsShip.particleDrag.y = 100;
-			gibsShip.createSprites(ImgGibsShip, 30, 0, false);
+			gibsShip.createSprites(ImgGibsShip, 50, 0, false);
 			add(gibsShip);
 
 			gibsRect = new FlxEmitter();

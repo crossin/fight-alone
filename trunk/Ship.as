@@ -7,7 +7,7 @@ package {
 	 */
 	public class Ship extends FlxSprite {
 		//protected var type:int;
-		protected var speed:Number;
+		protected var speed_temp:Number;
 		protected var direct:FlxPoint;
 		protected var angle_dest:Number;
 		//protected var battery:Battery;
@@ -38,13 +38,19 @@ package {
 		//protected var ImgTankShadowSmall:Class;
 		//[Embed(source="res/tank_shadow_big.png")]
 		//protected var ImgTankShadowBig:Class;
-		[Embed(source = "res/sound/shoot.mp3")]
+		[Embed(source="res/sound/shoot.mp3")]
 		private var SndShoot:Class;
-		[Embed(source = "res/sound/dead.mp3")]
+		[Embed(source="res/sound/dead.mp3")]
 		private var SndDead:Class;
-		
+		[Embed(source="res/sound/bomb.mp3")]
+		private var SndBomb:Class;
+
 		public static var speed:int;
-		
+		public static var rate:int;
+		public static var power:int;
+		public static var bombs:int;
+		public static var lives:int;
+
 		public function Ship(startX:int, startY:int){
 			super(startX, startY);
 			loadGraphic(ImgShip, true);
@@ -57,16 +63,20 @@ package {
 			//bulletIndex = (FlxG.state as PlayState)._bulletIndex;
 			//_explosionIndex = (FlxG.state as PlayState)._explosionIndex; = 0;
 			//lifeBar = PlayState._lifeBar;
-			maxVelocity.x = 170;
-			maxVelocity.y = 170;
 			drag.x = 500;
 			drag.y = 500;
 			antialiasing = true;
-			shootInterval = 0.1;
+			shootInterval = 1.1 - rate * 0.2;
 			restartClock();
-			shoot = shoot2;
+			shoot = this["shoot".concat(power)];
 			shotSpeed = 500;
 			direct = new FlxPoint();
+
+			maxVelocity.x = 50 + speed * 30;
+			maxVelocity.y = maxVelocity.x;
+
+			health = lives + 1;
+
 			//damage = 10;
 			//defence = 0.3;
 
@@ -130,6 +140,9 @@ package {
 				//}
 				direct.y = 1;
 			}
+			if (FlxG.keys.justPressed("SPACE")){
+				explode();
+			}
 
 			//if (FlxG.mouse.pressed() && shotClock < 0){
 			if (shotClock < 0){
@@ -139,16 +152,16 @@ package {
 				FlxG.play(SndShoot);
 				shoot();
 			}
-			speed = Math.sqrt(velocity.x * velocity.x + velocity.y * velocity.y)
-			if (speed > maxVelocity.x){
-				velocity.x *= (maxVelocity.x / speed);
-				velocity.y *= (maxVelocity.y / speed);
+			speed_temp = Math.sqrt(velocity.x * velocity.x + velocity.y * velocity.y)
+			if (speed_temp > maxVelocity.x){
+				velocity.x *= (maxVelocity.x / speed_temp);
+				velocity.y *= (maxVelocity.y / speed_temp);
 			}
 
 			//if (velocity.x != 0 || velocity.y != 0){
-				//play("move");
+			//play("move");
 			//} else {
-				//play("stop");
+			//play("stop");
 			//}
 
 			//x = (x < 0) ? 0 : x;
@@ -185,103 +198,113 @@ package {
 		}
 
 		//override public function render():void {
-			//_shadow.render();
-			//super.render();
+		//_shadow.render();
+		//super.render();
 		//}
 
-		//override public function hurt(Damage:Number):void {
-			//FlxG.play(SndHit);
-			//if (Damage >= defence){
-			//super.hurt(Damage * (1 - defence));
-			//var w:int = health / maxHealth * 50;
-			//if (w > 0){
-				//lifeBar.createGraphic(w, 4, 0xfff29a7d);
-				//lifeBar.fill(0xfff29a7d);
-			//} else {
-				//lifeBar.fill(0);
-			//}
-			//}
-			//flicker(0.2);
-			//battery.flicker(0.2);
+		override public function hurt(Damage:Number):void {
+			super.hurt(Damage);
+			5
+			if (health > 0){
+				lives--;
+				(FlxG.state as PlayState).lives[lives].visible = false;
+				FlxG.quake.start();
+				FlxG.play(SndDead);
+			}
+		}
+
+		//FlxG.play(SndHit);
+		//if (Damage >= defence){
+		//super.hurt(Damage * (1 - defence));
+		//var w:int = health / maxHealth * 50;
+		//if (w > 0){
+		//lifeBar.createGraphic(w, 4, 0xfff29a7d);
+		//lifeBar.fill(0xfff29a7d);
+		//} else {
+		//lifeBar.fill(0);
+		//}
+		//}
+		//flicker(0.2);
+		//battery.flicker(0.2);
 //
-			//EndState.score += 10;
+		//EndState.score += 10;
 //
 		//}
 
 		override public function kill():void {
 			super.kill();
 			FlxG.play(SndDead);
-			FlxG.quake.start(0.01, 0.5);
+			FlxG.quake.start();
 			//FlxG.flash.start(0xff000000, 0.35);
 			var gibs:FlxEmitter = PlayState.gibsShip;
 			gibs.at(this);
-			gibs.start(true, 1, 30);
+			gibs.start(true, 1, 50);
 		}
 
 		//public function setType(t:int):void {
-			//if (type != t){
-				//switch (t){
-					//case 1:
-						//loadGraphic(ImgTankPlain, true);
-						//battery.setType(1);
-						//shoot = shootPlain;
-						//break;
-					//case 2:
-						//loadGraphic(ImgTankDouble, true);
-						//battery.setType(2);
-						//shoot = shootDouble;
-						//break;
-					//case 3:
-						//battery.setType(3);
-						//shoot = shootThree;
-						//break;
-					//case 4:
-						//battery.setType(4);
-						//shoot = shootFour;
-						//break;
-					//case 5:
-						//loadGraphic(ImgTankSmall, true);
-						//_shadow.loadGraphic(ImgTankShadowSmall, true);
-						//defence = 0.2;
-						//maxVelocity.x = 70;
-						//maxVelocity.y = 70;
-						//break;
-					//case 6:
-						//loadGraphic(ImgTankBig, true);
-						//_shadow.loadGraphic(ImgTankShadowBig, true);
-						//defence = 0.5;
-						//maxVelocity.x = 30;
-						//maxVelocity.y = 30;
-						//break;
-				//}
-				//type = t;
-			//}
+		//if (type != t){
+		//switch (t){
+		//case 1:
+		//loadGraphic(ImgTankPlain, true);
+		//battery.setType(1);
+		//shoot = shootPlain;
+		//break;
+		//case 2:
+		//loadGraphic(ImgTankDouble, true);
+		//battery.setType(2);
+		//shoot = shootDouble;
+		//break;
+		//case 3:
+		//battery.setType(3);
+		//shoot = shootThree;
+		//break;
+		//case 4:
+		//battery.setType(4);
+		//shoot = shootFour;
+		//break;
+		//case 5:
+		//loadGraphic(ImgTankSmall, true);
+		//_shadow.loadGraphic(ImgTankShadowSmall, true);
+		//defence = 0.2;
+		//maxVelocity.x = 70;
+		//maxVelocity.y = 70;
+		//break;
+		//case 6:
+		//loadGraphic(ImgTankBig, true);
+		//_shadow.loadGraphic(ImgTankShadowBig, true);
+		//defence = 0.5;
+		//maxVelocity.x = 30;
+		//maxVelocity.y = 30;
+		//break;
+		//}
+		//type = t;
+		//}
 		//}
 
 		//public function addLife(h:Number):void {
-			//health = (health + h > maxHealth) ? maxHealth : (health + h);
-			//var w:int = health / maxHealth * 50;
-			//if (w > 0){
-				//lifeBar.createGraphic(w, 4, 0xfff29a7d);
-				//lifeBar.fill(0xfff29a7d);
-			//} else {
-				//lifeBar.fill(0);
-			//}
+		//health = (health + h > maxHealth) ? maxHealth : (health + h);
+		//var w:int = health / maxHealth * 50;
+		//if (w > 0){
+		//lifeBar.createGraphic(w, 4, 0xfff29a7d);
+		//lifeBar.fill(0xfff29a7d);
+		//} else {
+		//lifeBar.fill(0);
+		//}
 		//}
 
 		//public function changeBullet(t:int):void {
-			//switch (t){
-				//case 0:
-					//bullets = PlayState._bullets.members;
-					//shootInterval = 0.5;
-					//shotSpeed = 250;
-					//break;
-				//case 1:
-					//bullets = PlayState._bulletsSmall.members;
-					//shootInterval = 0.1;
-					//shotSpeed = 400;
-					//break;
-			//}
+		//switch (t){
+		//case 0:
+		//bullets = PlayState._bullets.members;
+		//shootInterval = 0.5;
+		//shotSpeed = 250;
+		//break;
+		//case 1:
+		//bullets = PlayState._bulletsSmall.members;
+		//shootInterval = 0.1;
+		//shotSpeed = 400;
+		//break;
+		//}
 		//}
 
 		protected function restartClock():void {
@@ -289,30 +312,23 @@ package {
 		}
 
 		//protected function shootPlain():void {
-			//var b:Bullet = bullets[Bullet.bulletIndex];
-			//b.owner = this;
-			//b.damage = damage;
-			//b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
-			//b.angle = battery.angle; //FlxU.getAngle(FlxG.mouse.x - x, FlxG.mouse.x - y);
-			//b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle);
-			//b.angle = battery.angle;
-			//b.velocity.x += velocity.x;
-			//b.velocity.y += velocity.y;
-			//Bullet.bulletIndex++;
-			//if (Bullet.bulletIndex >= bullets.length)
-				//Bullet.bulletIndex = 0;
+		//var b:Bullet = bullets[Bullet.bulletIndex];
+		//b.owner = this;
+		//b.damage = damage;
+		//b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+		//b.angle = battery.angle; //FlxU.getAngle(FlxG.mouse.x - x, FlxG.mouse.x - y);
+		//b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle);
+		//b.angle = battery.angle;
+		//b.velocity.x += velocity.x;
+		//b.velocity.y += velocity.y;
+		//Bullet.bulletIndex++;
+		//if (Bullet.bulletIndex >= bullets.length)
+		//Bullet.bulletIndex = 0;
 		//}
-
-		protected function shoot2():void {
+		protected function shoot0():void {
 			var b:Bullet = bullets[Bullet.bulletIndex];
-			var dist:FlxPoint = FlxU.rotatePoint(0, 5, 0, 0, b.angle);
-			//b.owner = this;
-			//b.damage = damage;
 			var shootAngle:Number = FlxU.getAngle((FlxG.mouse.x + FlxG.mouse.cursor.width / 2) - (x + width / 2), (FlxG.mouse.y + FlxG.mouse.cursor.height / 2) - (y + height / 2));
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
-			dist = FlxU.rotatePoint(0, height / 4, 0, 0, shootAngle);
-			b.x -= dist.x;
-			b.y -= dist.y;
 			b.angle = shootAngle;
 			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, shootAngle);
 			b.velocity.x += velocity.x;
@@ -320,14 +336,33 @@ package {
 			Bullet.bulletIndex++;
 			if (Bullet.bulletIndex >= bullets.length)
 				Bullet.bulletIndex = 0;
-				
+		}
+
+		protected function shoot1():void {
+			var b:Bullet = bullets[Bullet.bulletIndex];
+			var dist:FlxPoint;
+			//b.owner = this;
+			//b.damage = damage;
+			var shootAngle:Number = FlxU.getAngle((FlxG.mouse.x + FlxG.mouse.cursor.width / 2) - (x + width / 2), (FlxG.mouse.y + FlxG.mouse.cursor.height / 2) - (y + height / 2));
+			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+			dist = FlxU.rotatePoint(width / 2, height / 2, 0, 0, shootAngle);
+			b.x += dist.x;
+			b.y += dist.y;
+			b.angle = shootAngle;
+			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, shootAngle);
+			b.velocity.x += velocity.x;
+			b.velocity.y += velocity.y;
+			Bullet.bulletIndex++;
+			if (Bullet.bulletIndex >= bullets.length)
+				Bullet.bulletIndex = 0;
+
 			b = bullets[Bullet.bulletIndex];
 			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
 			//b.owner = this;
 			//b.damage = damage;
-			dist = FlxU.rotatePoint(0, -height / 4, 0, 0, shootAngle);
-			b.x -= dist.x;
-			b.y -= dist.y;
+			dist = FlxU.rotatePoint(width / 2, -height / 2, 0, 0, shootAngle);
+			b.x += dist.x;
+			b.y += dist.y;
 			b.angle = shootAngle;
 			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, shootAngle);
 			b.velocity.x += velocity.x;
@@ -338,87 +373,160 @@ package {
 
 		}
 
+		protected function shoot2():void {
+			shoot1();
+			var b:Bullet = bullets[Bullet.bulletIndex];
+			var shootAngle:Number = FlxU.getAngle((FlxG.mouse.x + FlxG.mouse.cursor.width / 2) - (x + width / 2), (FlxG.mouse.y + FlxG.mouse.cursor.height / 2) - (y + height / 2));
+			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+			var dist:FlxPoint = FlxU.rotatePoint(width, 0, 0, 0, shootAngle);
+			b.x += dist.x;
+			b.y += dist.y;
+			b.angle = shootAngle;
+			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, shootAngle);
+			b.velocity.x += velocity.x;
+			b.velocity.y += velocity.y;
+			Bullet.bulletIndex++;
+			if (Bullet.bulletIndex >= bullets.length)
+				Bullet.bulletIndex = 0;
+		}
+
+		protected function shoot3():void {
+			shoot0();
+			shoot2();
+		}
+
+		protected function shoot4():void {
+			shoot2();
+			var b:Bullet = bullets[Bullet.bulletIndex];
+			var dist:FlxPoint;
+			var shootAngle:Number = FlxU.getAngle((FlxG.mouse.x + FlxG.mouse.cursor.width / 2) - (x + width / 2), (FlxG.mouse.y + FlxG.mouse.cursor.height / 2) - (y + height / 2));
+			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+			dist = FlxU.rotatePoint(-width / 2, height, 0, 0, shootAngle);
+			b.x += dist.x;
+			b.y += dist.y;
+			b.angle = shootAngle;
+			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, shootAngle);
+			b.velocity.x += velocity.x;
+			b.velocity.y += velocity.y;
+			Bullet.bulletIndex++;
+			if (Bullet.bulletIndex >= bullets.length)
+				Bullet.bulletIndex = 0;
+
+			b = bullets[Bullet.bulletIndex];
+			b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+			dist = FlxU.rotatePoint(-width / 2, -height, 0, 0, shootAngle);
+			b.x += dist.x;
+			b.y += dist.y;
+			b.angle = shootAngle;
+			b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, shootAngle);
+			b.velocity.x += velocity.x;
+			b.velocity.y += velocity.y;
+			Bullet.bulletIndex++;
+			if (Bullet.bulletIndex >= bullets.length)
+				Bullet.bulletIndex = 0;
+		}
+
+		protected function shoot5():void {
+			shoot0();
+			shoot4();
+		}
+
+		protected function explode():void {
+			if (bombs > 0){
+				FlxG.play(SndBomb);
+				FlxG.quake.start();
+				FlxG.flash.start();
+				for each (var eny:Enemy in (FlxG.state as PlayState)._enemies.members){
+					if (eny.exists){
+						eny.kill();
+					}
+				}
+				bombs--;
+				(FlxG.state as PlayState).bombs[bombs].visible = false;
+			}
+		}
+
 		//protected function shootThree():void {
-			//var b:Bullet = bullets[Bullet.bulletIndex];
-			//b.owner = this;
-			//b.damage = damage;
-			//b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
-			//b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle);
-			//b.angle = battery.angle;
-			//Bullet.bulletIndex++;
-			//if (Bullet.bulletIndex >= bullets.length)
-				//Bullet.bulletIndex = 0;
+		//var b:Bullet = bullets[Bullet.bulletIndex];
+		//b.owner = this;
+		//b.damage = damage;
+		//b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+		//b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle);
+		//b.angle = battery.angle;
+		//Bullet.bulletIndex++;
+		//if (Bullet.bulletIndex >= bullets.length)
+		//Bullet.bulletIndex = 0;
 //
-			//b = bullets[Bullet.bulletIndex];
-			//b.owner = this;
-			//b.damage = damage;
-			//b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
-			//b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle - 45);
-			//b.angle = battery.angle - 45;
-			//Bullet.bulletIndex++;
-			//if (Bullet.bulletIndex >= bullets.length)
-				//Bullet.bulletIndex = 0;
+		//b = bullets[Bullet.bulletIndex];
+		//b.owner = this;
+		//b.damage = damage;
+		//b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+		//b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle - 45);
+		//b.angle = battery.angle - 45;
+		//Bullet.bulletIndex++;
+		//if (Bullet.bulletIndex >= bullets.length)
+		//Bullet.bulletIndex = 0;
 //
-			//b = bullets[Bullet.bulletIndex];
-			//b.owner = this;
-			//b.damage = damage;
-			//b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
-			//b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle + 45);
-			//b.angle = battery.angle + 45;
-			//Bullet.bulletIndex++;
-			//if (Bullet.bulletIndex >= bullets.length)
-				//Bullet.bulletIndex = 0;
+		//b = bullets[Bullet.bulletIndex];
+		//b.owner = this;
+		//b.damage = damage;
+		//b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+		//b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle + 45);
+		//b.angle = battery.angle + 45;
+		//Bullet.bulletIndex++;
+		//if (Bullet.bulletIndex >= bullets.length)
+		//Bullet.bulletIndex = 0;
 		//}
 
 		//protected function shootFour():void {
-			//var b:Bullet = bullets[Bullet.bulletIndex];
-			//b.owner = this;
-			//b.damage = damage;
-			//b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
-			//b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle);
-			//b.angle = battery.angle;
-			//Bullet.bulletIndex++;
-			//if (Bullet.bulletIndex >= bullets.length)
-				//Bullet.bulletIndex = 0;
+		//var b:Bullet = bullets[Bullet.bulletIndex];
+		//b.owner = this;
+		//b.damage = damage;
+		//b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+		//b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle);
+		//b.angle = battery.angle;
+		//Bullet.bulletIndex++;
+		//if (Bullet.bulletIndex >= bullets.length)
+		//Bullet.bulletIndex = 0;
 //
-			//b = bullets[Bullet.bulletIndex];
-			//b.owner = this;
-			//b.damage = damage;
-			//b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
-			//b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle - 90);
-			//b.angle = battery.angle - 90;
-			//Bullet.bulletIndex++;
-			//if (Bullet.bulletIndex >= bullets.length)
-				//Bullet.bulletIndex = 0;
+		//b = bullets[Bullet.bulletIndex];
+		//b.owner = this;
+		//b.damage = damage;
+		//b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+		//b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle - 90);
+		//b.angle = battery.angle - 90;
+		//Bullet.bulletIndex++;
+		//if (Bullet.bulletIndex >= bullets.length)
+		//Bullet.bulletIndex = 0;
 //
-			//b = bullets[Bullet.bulletIndex];
-			//b.owner = this;
-			//b.damage = damage;
-			//b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
-			//b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle + 90);
-			//b.angle = battery.angle + 90;
-			//Bullet.bulletIndex++;
-			//if (Bullet.bulletIndex >= bullets.length)
-				//Bullet.bulletIndex = 0;
+		//b = bullets[Bullet.bulletIndex];
+		//b.owner = this;
+		//b.damage = damage;
+		//b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+		//b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle + 90);
+		//b.angle = battery.angle + 90;
+		//Bullet.bulletIndex++;
+		//if (Bullet.bulletIndex >= bullets.length)
+		//Bullet.bulletIndex = 0;
 //
-			//b = bullets[Bullet.bulletIndex];
-			//b.owner = this;
-			//b.damage = damage;
-			//b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
-			//b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle + 180);
-			//b.angle = battery.angle + 180;
-			//Bullet.bulletIndex++;
-			//if (Bullet.bulletIndex >= bullets.length)
-				//Bullet.bulletIndex = 0;
+		//b = bullets[Bullet.bulletIndex];
+		//b.owner = this;
+		//b.damage = damage;
+		//b.reset(x + (width - b.width) / 2, y + (height - b.height) / 2);
+		//b.velocity = FlxU.rotatePoint(shotSpeed, 0, 0, 0, battery.angle + 180);
+		//b.angle = battery.angle + 180;
+		//Bullet.bulletIndex++;
+		//if (Bullet.bulletIndex >= bullets.length)
+		//Bullet.bulletIndex = 0;
 		//}
 
 		//private function explode():void {
-			//var e:Explosion = explosions[Explosion.explosionIndex];
-			//e.reset(x, y);
-			//e.play("explode");
-			//Explosion.explosionIndex++;
-			//if (Explosion.explosionIndex >= explosions.length)
-				//Explosion.explosionIndex = 0;
+		//var e:Explosion = explosions[Explosion.explosionIndex];
+		//e.reset(x, y);
+		//e.play("explode");
+		//Explosion.explosionIndex++;
+		//if (Explosion.explosionIndex >= explosions.length)
+		//Explosion.explosionIndex = 0;
 		//}
 	}
 }

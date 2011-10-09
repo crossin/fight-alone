@@ -12,6 +12,9 @@ package {
 		private var ImgBack:Class;
 		[Embed(source="res/up.png")]
 		private var ImgUp:Class;
+		
+		[Embed(source="res/sound/up.mp3")]
+		private var SndUp:Class;
 
 		//private var txtReplay:FlxText;
 		//private var action:Class;
@@ -533,6 +536,7 @@ package {
 			Ship.speed++;
 			_save.data.speed = Ship.speed;
 			_save.data.score = score;
+			FlxG.play(SndUp);
 		}
 
 		private function onRate():void {
@@ -541,6 +545,7 @@ package {
 			Ship.rate++;
 			_save.data.rate = Ship.rate;
 			_save.data.score = score;
+			FlxG.play(SndUp);
 		}
 
 		private function onPower():void {
@@ -549,6 +554,7 @@ package {
 			Ship.power++;
 			_save.data.power = Ship.power;
 			_save.data.score = score;
+			FlxG.play(SndUp);
 		}
 
 		private function onBombs():void {
@@ -557,6 +563,7 @@ package {
 			Ship.bombs++;
 			_save.data.bombs = Ship.bombs;
 			_save.data.score = score;
+			FlxG.play(SndUp);
 		}
 
 		private function onLives():void {
@@ -565,6 +572,7 @@ package {
 			Ship.lives++;
 			_save.data.lives = Ship.lives;
 			_save.data.score = score;
+			FlxG.play(SndUp);
 		}
 
 		private function onPlay():void {

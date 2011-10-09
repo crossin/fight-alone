@@ -26,6 +26,12 @@ package {
 		private var ImgGibsCircle:Class;
 		[Embed(source="res/gibs_cross.png")]
 		private var ImgGibsCross:Class;
+		[Embed(source="res/gibs_splinter.png")]
+		private var ImgGibsSplinter:Class;
+		[Embed(source="res/gibs_charge.png")]
+		private var ImgGibsCharge:Class;
+		[Embed(source="res/gibs_barrage.png")]
+		private var ImgGibsBarrage:Class;
 		//[Embed(source="res/upgrade.png")]
 		//private var ImgUpgrade:Class;
 		[Embed(source="res/back1.png")]
@@ -67,6 +73,9 @@ package {
 		public static var gibsShuttle:FlxEmitter;
 		public static var gibsCircle:FlxEmitter;
 		public static var gibsCross:FlxEmitter;
+		public static var gibsSplinter:FlxEmitter;
+		public static var gibsCharge:FlxEmitter;
+		public static var gibsBarrage:FlxEmitter;
 
 		//public var _explosionIndex:uint;
 
@@ -94,6 +103,8 @@ package {
 		protected var back1:FlxSprite;
 		protected var back2:FlxSprite;
 		protected var back3:FlxSprite;
+		
+		public static var lifeBoss:LifeBoss;
 
 		//public var score:int;
 		public var bombs:Array;
@@ -275,6 +286,11 @@ package {
 					lives[i].visible = false;
 				}
 			}
+			
+			lifeBoss = new LifeBoss();
+			
+
+			add(lifeBoss);
 
 			FlxG.mouse.show(ImgCursor);
 			FlxG.follow(ship, 3);
@@ -408,7 +424,7 @@ package {
 				Object1.kill();
 			}
 			if (Object2 is Enemy){
-				if (Object2 is EnemyCross){
+				if (Object2 is EnemyCross || Object2 is EnemyBoss){
 					Object2.hurt(1);
 				} else {
 					Object2.kill();
@@ -440,6 +456,10 @@ package {
 		}
 
 		protected function addEnemy1():void {
+			if (_timer < 3 && _timer % 2 < _timerLast % 2){
+				_enemies.add(new EnemyBossCharge());
+			}
+			
 			// rect
 			if (_timer < 20 && _timer % 2 < _timerLast % 2){
 				_enemies.add(new EnemyRect());
@@ -619,6 +639,33 @@ package {
 			gibsCross.particleDrag.y = 100;
 			gibsCross.createSprites(ImgGibsCross, 100, 0, false);
 			add(gibsCross);
+			
+			gibsSplinter = new FlxEmitter();
+			gibsSplinter.setXSpeed(-500, 500);
+			gibsSplinter.setYSpeed(-500, 500);
+			gibsSplinter.gravity = 0;
+			gibsSplinter.particleDrag.x = 100;
+			gibsSplinter.particleDrag.y = 100;
+			gibsSplinter.createSprites(ImgGibsSplinter, 100, 0, false);
+			add(gibsSplinter);
+			
+			gibsCharge = new FlxEmitter();
+			gibsCharge.setXSpeed(-700, 700);
+			gibsCharge.setYSpeed(-700, 700);
+			gibsCharge.gravity = 0;
+			//gibsCharge.particleDrag.x = 100;
+			//gibsCharge.particleDrag.y = 100;
+			gibsCharge.createSprites(ImgGibsCharge, 30, 0, false);
+			add(gibsCharge);
+			
+			gibsBarrage = new FlxEmitter();
+			gibsBarrage.setXSpeed(-700, 700);
+			gibsBarrage.setYSpeed(-700, 700);
+			gibsBarrage.gravity = 0;
+			//gibsBarrage.particleDrag.x = 100;
+			//gibsBarrage.particleDrag.y = 100;
+			gibsBarrage.createSprites(ImgGibsBarrage, 30, 0, false);
+			add(gibsBarrage);
 		}
 
 		protected function makeScene():void {

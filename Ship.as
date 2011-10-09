@@ -23,6 +23,7 @@ package {
 		//protected var damage:int;
 		//protected var defence:int;
 		protected var shootInterval:Number;
+		protected var rebornTime:Number;
 
 		[Embed(source="res/ship.png")]
 		protected var ImgShip:Class;
@@ -76,7 +77,7 @@ package {
 			maxVelocity.y = maxVelocity.x;
 
 			health = lives + 1;
-
+			rebornTime = 0;
 			//damage = 10;
 			//defence = 0.3;
 
@@ -94,10 +95,10 @@ package {
 			direct.x = 0;
 			direct.y = 0;
 			shotClock -= FlxG.elapsed;
-
+			rebornTime -= FlxG.elapsed;
 
 			if (FlxG.keys.LEFT || FlxG.keys.A){
-				acceleration.x -= drag.x;
+				acceleration.x = -drag.x;
 				//if (angle > 90 && angle < 265){
 				//angularVelocity += 240;
 				//} else if (angle <= 90 || angle > 275){
@@ -108,7 +109,7 @@ package {
 				direct.x = -1;
 			}
 			if (FlxG.keys.RIGHT || FlxG.keys.D){
-				acceleration.x += drag.x;
+				acceleration.x = drag.x;
 				//if (angle > 95 && angle < 270){
 				//angularVelocity -= 240;
 				//} else if (angle < 85 || angle >= 270){
@@ -119,7 +120,7 @@ package {
 				direct.x = 1;
 			}
 			if (FlxG.keys.UP || FlxG.keys.W){
-				acceleration.y -= drag.y;
+				acceleration.y = -drag.y;
 				//if (angle > 5 && angle < 180){
 				//angularVelocity -= 240;
 				//} else if (angle >= 180 && angle < 355){
@@ -130,7 +131,7 @@ package {
 				direct.y = -1;
 			}
 			if (FlxG.keys.DOWN || FlxG.keys.S){
-				acceleration.y += drag.y;
+				acceleration.y = drag.y;
 				//if (angle >= 0 && angle < 175){
 				//angularVelocity += 240;
 				//} else if (angle > 185 && angle < 360){
@@ -176,15 +177,15 @@ package {
 				} else {
 					if (angle_dest < 180){
 						if (angle > angle_dest && angle - angle_dest < 180){
-							angularVelocity -= 500;
+							angularVelocity = -500;
 						} else {
-							angularVelocity += 500;
+							angularVelocity = 500;
 						}
 					} else {
 						if (angle_dest > angle && angle_dest - angle < 180){
-							angularVelocity += 500;
+							angularVelocity = 500;
 						} else {
-							angularVelocity -= 500;
+							angularVelocity = -500;
 						}
 					}
 				}
@@ -203,14 +204,17 @@ package {
 		//}
 
 		override public function hurt(Damage:Number):void {
-			super.hurt(Damage);
-			5
-			if (health > 0){
-				lives--;
-				(FlxG.state as PlayState).lives[lives].visible = false;
-				FlxG.quake.start();
-				FlxG.play(SndDead);
+			if (rebornTime < 0){
+				super.hurt(Damage);
+				rebornTime = 1;
+				if (health > 0){
+					lives--;
+					(FlxG.state as PlayState).lives[lives].visible = false;
+					FlxG.quake.start();
+					FlxG.play(SndDead);
+				}
 			}
+
 		}
 
 		//FlxG.play(SndHit);
@@ -436,9 +440,14 @@ package {
 				FlxG.play(SndBomb);
 				FlxG.quake.start();
 				FlxG.flash.start();
-				for each (var eny:Enemy in (FlxG.state as PlayState)._enemies.members){
-					if (eny.exists){
-						eny.kill();
+				var enyList:Array = (FlxG.state as PlayState)._enemies.members;
+				for each (var eny:Enemy in enyList){
+					if (eny.exists && eny.solid){
+						if (eny is EnemyBoss){
+							eny.hurt(30);
+						} else {
+							eny.kill();
+						}
 					}
 				}
 				bombs--;

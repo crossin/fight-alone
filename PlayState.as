@@ -103,7 +103,7 @@ package {
 		protected var back1:FlxSprite;
 		protected var back2:FlxSprite;
 		protected var back3:FlxSprite;
-		
+
 		public static var lifeBoss:LifeBoss;
 
 		//public var score:int;
@@ -273,7 +273,7 @@ package {
 				bombs[i] = new FlxSprite(620 - i * 20, 5, ImgBomb);
 				bombs[i].scrollFactor = ssf;
 				add(bombs[i]);
-				if (i >= Ship.bombs) {
+				if (i >= Ship.bombs){
 					bombs[i].visible = false;
 				}
 			}
@@ -282,13 +282,13 @@ package {
 				lives[i] = new FlxSprite(5 + i * 20, 5, ImgLife);
 				lives[i].scrollFactor = ssf;
 				add(lives[i]);
-				if (i >= Ship.lives) {
+				if (i >= Ship.lives){
 					lives[i].visible = false;
 				}
 			}
-			
+
 			lifeBoss = new LifeBoss();
-			
+
 
 			add(lifeBoss);
 
@@ -417,15 +417,16 @@ package {
 			//if ((Object1 is Bullet) && ((Object1 as Bullet).owner == Object2)){
 			//return;
 			//}
-			if (Object1 is Ship) {
+			if (Object1 is Ship){
 				Object1.hurt(1);
-			}
-			else {
+			} else {
 				Object1.kill();
 			}
 			if (Object2 is Enemy){
-				if (Object2 is EnemyCross || Object2 is EnemyBoss){
-					Object2.hurt(1);
+				if ((Object2 is EnemyCross || Object2 is EnemyBoss)){
+					if (!(Object1 is Ship)){
+						Object2.hurt(1);
+					}
 				} else {
 					Object2.kill();
 				}
@@ -456,10 +457,11 @@ package {
 		}
 
 		protected function addEnemy1():void {
-			if (_timer < 3 && _timer % 2 < _timerLast % 2){
-				_enemies.add(new EnemyBossCharge());
+			if (_timer < 2 && _timer % 1 < _timerLast % 1){
+				_enemies.add(new EnemyBossBarrage());
+				_enemies.add(new EnemyCross());
 			}
-			
+
 			// rect
 			if (_timer < 20 && _timer % 2 < _timerLast % 2){
 				_enemies.add(new EnemyRect());
@@ -639,7 +641,7 @@ package {
 			gibsCross.particleDrag.y = 100;
 			gibsCross.createSprites(ImgGibsCross, 100, 0, false);
 			add(gibsCross);
-			
+
 			gibsSplinter = new FlxEmitter();
 			gibsSplinter.setXSpeed(-500, 500);
 			gibsSplinter.setYSpeed(-500, 500);
@@ -648,23 +650,23 @@ package {
 			gibsSplinter.particleDrag.y = 100;
 			gibsSplinter.createSprites(ImgGibsSplinter, 100, 0, false);
 			add(gibsSplinter);
-			
+
 			gibsCharge = new FlxEmitter();
 			gibsCharge.setXSpeed(-700, 700);
 			gibsCharge.setYSpeed(-700, 700);
 			gibsCharge.gravity = 0;
 			//gibsCharge.particleDrag.x = 100;
 			//gibsCharge.particleDrag.y = 100;
-			gibsCharge.createSprites(ImgGibsCharge, 30, 0, false);
+			gibsCharge.createSprites(ImgGibsCharge, 50, 0, false);
 			add(gibsCharge);
-			
+
 			gibsBarrage = new FlxEmitter();
 			gibsBarrage.setXSpeed(-700, 700);
 			gibsBarrage.setYSpeed(-700, 700);
 			gibsBarrage.gravity = 0;
 			//gibsBarrage.particleDrag.x = 100;
 			//gibsBarrage.particleDrag.y = 100;
-			gibsBarrage.createSprites(ImgGibsBarrage, 30, 0, false);
+			gibsBarrage.createSprites(ImgGibsBarrage, 100, 0, false);
 			add(gibsBarrage);
 		}
 

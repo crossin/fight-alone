@@ -16,7 +16,7 @@ package {
 		public function Scrap(){
 			super(0, 0, ImgScrap);
 			angularVelocity = 90;
-			color = 0xea1a1a;
+			//color = 0xea1a1a;
 			exists = false;
 		}
 		

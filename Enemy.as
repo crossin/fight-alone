@@ -21,8 +21,8 @@ package {
 
 		public function Enemy(img:Class, ix:Number = 0, iy:Number = 0){
 			if (ix == 0 && iy == 0){
-				ix = 50 + 1050 * FlxU.random();
-				iy = 50 + 750 * FlxU.random();
+				ix = 50 + 1000 * FlxU.random();
+				iy = 50 + 700 * FlxU.random();
 			}
 			super(ix, iy, img);
 			solid = false;

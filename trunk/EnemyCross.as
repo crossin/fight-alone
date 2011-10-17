@@ -39,6 +39,7 @@ package {
 			var s:Scrap;
 			for (var i:int = 0; i < 18; i++){
 				s = scraps[Scrap.scrapIndex];
+				s.color = color;
 				s.reset(x + (width - s.width) / 2, y + (height - s.height) / 2);
 				s.velocity = FlxU.rotatePoint(100, 0, 0, 0, i * 20);
 				Scrap.scrapIndex++;

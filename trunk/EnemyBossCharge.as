@@ -76,5 +76,11 @@ package {
 			super.hurt(Damage);
 			PlayState.lifeBoss.decrease(Damage);
 		}
+		
+		override public function kill():void {
+			super.kill();
+			gibs.at(this);
+			gibs.start(true, 0.5, 50);
+		}
 	}
 }

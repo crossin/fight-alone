@@ -203,7 +203,7 @@ package {
 			}
 
 			_scraps = new FlxGroup();
-			for (i = 0; i < 36; i++){
+			for (i = 0; i < 48; i++){
 				s = new Scrap();
 				_scraps.add(s);
 			}

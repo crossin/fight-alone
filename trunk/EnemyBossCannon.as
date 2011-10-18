@@ -16,10 +16,12 @@ package {
 		private var index:int;
 		private var invincible:Boolean;
 		private var shot:Boolean;
+		private var scraps:Array;
 
 		public function EnemyBossCannon(b:EnemyBossBarrage, i:int){
 			super(ImgEnemy);
 			boss = b;
+			scraps = (FlxG.state as PlayState)._scraps.members;
 			index = i;
 			gibs = PlayState.gibsBarrage;
 			score = 0;
@@ -83,6 +85,20 @@ package {
 
 		public function shoot():void {
 			shot = true;
+			var s:Scrap = scraps[Scrap.scrapIndex];
+			//var shootAngle:Number = FlxU.getAngle((FlxG.mouse.x + FlxG.mouse.cursor.width / 2) - (x + width / 2), (FlxG.mouse.y + FlxG.mouse.cursor.height / 2) - (y + height / 2));
+			s.reset(x + (width - s.width) / 2, y + (height - s.height) / 2);
+			s.angle = angle - 90;
+			var dist:FlxPoint = FlxU.rotatePoint(height/2, 0, 0, 0, s.angle);
+			s.x += dist.x;
+			s.y += dist.y;
+			s.color = 0xd90395;
+			s.velocity = FlxU.rotatePoint(200, 0, 0, 0, s.angle);
+			//b.velocity.x += velocity.x;
+			//b.velocity.y += velocity.y;
+			Scrap.scrapIndex++;
+			if (Scrap.scrapIndex >= scraps.length)
+				Scrap.scrapIndex = 0;
 		}
 	}
 }

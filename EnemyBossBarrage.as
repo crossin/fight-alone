@@ -63,11 +63,14 @@ package {
 						numGun++;
 						if (numGun >= 8){
 							phase = 1;
-							angularVelocity = -30;
+							//angularVelocity = -30;
+							angularAcceleration = 20;
 						}
 					}
 				}
 				if (phase == 1){
+					angularAcceleration = (angularVelocity > 200) ? -20 : angularAcceleration;
+					angularAcceleration = (angularVelocity < -200) ? 20 : angularAcceleration;
 					if (_timer % 1 < _timerLast % 1){
 						if (cannons[count % 8].exists){
 							cannons[count % 8].action(1);

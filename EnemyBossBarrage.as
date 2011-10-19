@@ -13,12 +13,14 @@ package {
 		private var _timer:Number;
 		private var _timerLast:Number;
 		private var _timerInterval:Number;
+		private var timerShoot:Number;
 
 		private var cannons:Array;
 		private var invincible:Boolean;
 		private var numGun:int;
 		private var phase:int;
 		private var count:int;
+		private var clockwise:Boolean;
 
 		public function EnemyBossBarrage(){
 			super(ImgEnemy, 550, 400);
@@ -32,7 +34,7 @@ package {
 
 
 			//if (level == 0) {
-			PlayState.lifeBoss.start(health);
+			PlayState.lifeBoss.start(health + 200);
 			//}
 			phase = 0;
 			numGun = 0;
@@ -41,6 +43,10 @@ package {
 			_timer = 0;
 			_timerLast = 0;
 			count = 0;
+			clockwise = true;
+			timerShoot = 1;
+			maxVelocity.x = 200;
+			maxVelocity.y = 200;
 		}
 
 		override protected function start():void {
@@ -63,7 +69,7 @@ package {
 						numGun++;
 						if (numGun >= 8){
 							phase = 1;
-							//angularVelocity = -30;
+							angularVelocity = 1;
 							angularAcceleration = 20;
 						}
 					}
@@ -71,11 +77,34 @@ package {
 				if (phase == 1){
 					angularAcceleration = (angularVelocity > 200) ? -20 : angularAcceleration;
 					angularAcceleration = (angularVelocity < -200) ? 20 : angularAcceleration;
-					if (_timer % 1 < _timerLast % 1){
+					if (_timer % timerShoot < _timerLast % timerShoot){
 						if (cannons[count % 8].exists){
-							cannons[count % 8].action(1);
+							cannons[count % 8].action(timerShoot);
 						}
 						count++;
+					}
+					if (FlxU.abs(angularVelocity) < 1){
+						phase = 2;
+						angularVelocity = 0;
+						angularAcceleration = 0;
+						_timer = 0;
+						_timerLast = 0;
+					}
+				}
+				if (phase == 2){
+					//angularAcceleration = (angularVelocity > 200) ? -20 : angularAcceleration;
+					if (_timer > 3){
+						phase = 1;
+						clockwise = !clockwise;
+						angularAcceleration = clockwise ? 20 : -20;
+						angularVelocity = clockwise ? 1 : -1;
+					}
+					if (_timer % timerShoot < _timerLast % timerShoot){
+						for (var i:int = 0; i < 8; i++){
+							if (cannons[i].exists){
+								cannons[i].shoot();
+							}
+						}
 					}
 				}
 				_timerLast = _timer;
@@ -125,10 +154,33 @@ package {
 
 		public function loseGun():void {
 			numGun--;
+			timerShoot -= 0.1;
+			PlayState.lifeBoss.decrease(25);
 			if (numGun <= 0){
 				color = 0xd90395;
 				invincible = false;
+				velocity.x = 100;
+				velocity.y = 100;
+				angularVelocity = 200;
+				angularAcceleration = 0;
+				phase = 3;
 			}
+		}
+
+		override public function hitLeft(Contact:FlxObject, Velocity:Number):void {
+			velocity.x = -1.1 * velocity.x;
+		}
+
+		override public function hitRight(Contact:FlxObject, Velocity:Number):void {
+			velocity.x = -1.1 * velocity.x;
+		}
+
+		override public function hitTop(Contact:FlxObject, Velocity:Number):void {
+			velocity.y = -1.1 * velocity.y;
+		}
+
+		override public function hitBottom(Contact:FlxObject, Velocity:Number):void {
+			velocity.y = -1.1 * velocity.y;
 		}
 	}
 }

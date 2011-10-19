@@ -25,14 +25,11 @@ package {
 			index = i;
 			gibs = PlayState.gibsBarrage;
 			score = 0;
-			health = 20;
+			health = 10;
 
 			_timer = 0;
 			shot = false;
-			//ship = (FlxG.state as PlayState).ship;
 
-			//if (level == 0) {
-			PlayState.lifeBoss.start(health);
 			invincible = true;
 			//origin.x = boss.x - x;
 			//origin.y = boss.y - y;
@@ -69,7 +66,6 @@ package {
 			if (!invincible){
 				super.hurt(Damage);
 			}
-			//PlayState.lifeBoss.decrease(Damage);
 		}
 
 		override public function kill():void {

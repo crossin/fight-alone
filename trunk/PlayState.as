@@ -203,7 +203,7 @@ package {
 			}
 
 			_scraps = new FlxGroup();
-			for (i = 0; i < 48; i++){
+			for (i = 0; i < 64; i++){
 				s = new Scrap();
 				_scraps.add(s);
 			}
@@ -459,9 +459,9 @@ package {
 		protected function addEnemy1():void {
 			if (_timer < 2 && _timer % 1 < _timerLast % 1){
 				_enemies.add(new EnemyBossBarrage());
-				_enemies.add(new EnemyCross());
+				//_enemies.add(new EnemyCross());
 			}
-
+/*
 			// rect
 			if (_timer < 20 && _timer % 2 < _timerLast % 2){
 				_enemies.add(new EnemyRect());
@@ -504,6 +504,7 @@ package {
 				_enemies.add(new EnemyCross());
 				_enemies.add(new EnemyCross());
 			}
+			*/
 		}
 
 		protected function addEnemy2():void {

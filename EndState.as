@@ -12,7 +12,7 @@ package {
 		private var ImgBack:Class;
 		[Embed(source="res/up.png")]
 		private var ImgUp:Class;
-		
+
 		[Embed(source="res/sound/up.mp3")]
 		private var SndUp:Class;
 
@@ -45,6 +45,7 @@ package {
 		private var btn_bombs:FlxButton;
 		private var btn_lives:FlxButton;
 		private var btn_play:FlxButton;
+		private var btn_achieve:FlxButton;
 
 		private var txt_speed:FlxText;
 		private var txt_rate:FlxText;
@@ -85,9 +86,9 @@ package {
 			// new max
 			_save.data.score = score;
 			if (score > _save.data.score){
-				
-					// kong stats api
-					//FlxG.kong.API.stats.submitArray([{name: "SCORE", value: EndState.score_max}]);
+
+				// kong stats api
+				//FlxG.kong.API.stats.submitArray([{name: "SCORE", value: EndState.score_max}]);
 			}
 			if (time > time_max){
 				time_max = time;
@@ -97,7 +98,7 @@ package {
 				kills_max = kills;
 				_save.data.kills_max = kills_max;
 			}
-			
+
 			_save.data.bombs = Ship.bombs;
 			_save.data.lives = Ship.lives;
 
@@ -277,18 +278,29 @@ package {
 
 			var t1:FlxText;
 			var t2:FlxText;
-			btn_play = new FlxButton(220, 400, onPlay);
-			btn_play.loadGraphic((new FlxSprite()).createGraphic(200, 60, 0x00000000));
-			t1 = new FlxText(0, 0, 200, "PLAY");
+			btn_play = new FlxButton(240, 400, onPlay);
+			btn_play.loadGraphic((new FlxSprite()).createGraphic(160, 60, 0x00000000));
+			t1 = new FlxText(0, 0, 160, "PLAY");
 			t1.size = 48;
 			t1.alignment = "center";
-			t2 = new FlxText(0, 0, 200, "PLAY");
+			t2 = new FlxText(0, 0, 160, "PLAY");
 			t2.color = 0xff888888;
 			t2.size = 48;
 			t2.alignment = "center";
 			btn_play.loadText(t1, t2);
 			add(btn_play);
 
+			btn_achieve = new FlxButton(0, 424, onAchieve);
+			btn_achieve.loadGraphic((new FlxSprite()).createGraphic(230, 30, 0x00000000));
+			t1 = new FlxText(0, 0, 230, "ACHIEVEMENTS");
+			t1.size = 24;
+			t1.alignment = "center";
+			t2 = new FlxText(0, 0, 230, "ACHIEVEMENTS");
+			t2.color = 0xff888888;
+			t2.size = 24;
+			t2.alignment = "center";
+			btn_achieve.loadText(t1, t2);
+			add(btn_achieve);
 
 			// choose levels
 			//b = new FlxButton(40, 200, onLevels);
@@ -486,9 +498,19 @@ package {
 				Ship.power = _save.data.power;
 				Ship.bombs = _save.data.bombs;
 				Ship.lives = _save.data.lives;
+
+				if (_save.data.wins == null){
+					_save.data.wins = new Array(10);
+					for (var i:int = 0; i < 10; i++){
+						_save.data.wins[i] = false;
+					}
+					_save.data.wins[0] = true;
+				}
+				AchieveState.wins = _save.data.wins;
 			}
 
-			//_save.erase();
+
+			_save.erase();
 		}
 
 		//private function onLevels():void {
@@ -577,6 +599,10 @@ package {
 
 		private function onPlay():void {
 			FlxG.state = new PlayState();
+		}
+
+		private function onAchieve():void {
+			FlxG.state = new AchieveState();
 		}
 	}
 }

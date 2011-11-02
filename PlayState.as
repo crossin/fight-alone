@@ -109,6 +109,7 @@ package {
 		//public var score:int;
 		public var bombs:Array;
 		public var lives:Array;
+		public var tip:Tip;
 
 		// blur
 		private const _blur:Number = 0.3;
@@ -288,9 +289,11 @@ package {
 			}
 
 			lifeBoss = new LifeBoss();
-
-
 			add(lifeBoss);
+			
+			tip = new Tip();
+			tip.scrollFactor = ssf;
+			add(tip);
 
 			FlxG.mouse.show(ImgCursor);
 			FlxG.follow(ship, 3);
@@ -461,6 +464,7 @@ package {
 				_enemies.add(new EnemyBossBarrage());
 				//_enemies.add(new EnemyCross());
 			}
+			
 /*
 			// rect
 			if (_timer < 20 && _timer % 2 < _timerLast % 2){

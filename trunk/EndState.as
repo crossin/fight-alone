@@ -79,28 +79,7 @@ package {
 			// total
 			//score_total += score;
 			//_save.data.score_total = score_total;
-			time_total += time;
-			_save.data.time_total = time_total;
-			kills_total += kills;
-			_save.data.kills_total = kills_total;
-			// new max
-			_save.data.score = score;
-			if (score > _save.data.score){
 
-				// kong stats api
-				//FlxG.kong.API.stats.submitArray([{name: "SCORE", value: EndState.score_max}]);
-			}
-			if (time > time_max){
-				time_max = time;
-				_save.data.time_max = time_max;
-			}
-			if (kills > kills_max){
-				kills_max = kills;
-				_save.data.kills_max = kills_max;
-			}
-
-			_save.data.bombs = Ship.bombs;
-			_save.data.lives = Ship.lives;
 
 			var txtTemp:FlxText;
 			// time
@@ -504,7 +483,6 @@ package {
 					for (var i:int = 0; i < 10; i++){
 						_save.data.wins[i] = false;
 					}
-					_save.data.wins[0] = true;
 				}
 				AchieveState.wins = _save.data.wins;
 			}
@@ -603,6 +581,33 @@ package {
 
 		private function onAchieve():void {
 			FlxG.state = new AchieveState();
+		}
+		
+		public static function calc():void {
+			time_total += time;
+			_save.data.time_total = time_total;
+			kills_total += kills;
+			_save.data.kills_total = kills_total;
+
+			_save.data.score = score;
+			_save.data.wins = AchieveState.wins;
+			
+			if (score > _save.data.score){
+
+				// kong stats api
+				//FlxG.kong.API.stats.submitArray([{name: "SCORE", value: EndState.score_max}]);
+			}
+			if (time > time_max){
+				time_max = time;
+				_save.data.time_max = time_max;
+			}
+			if (kills > kills_max){
+				kills_max = kills;
+				_save.data.kills_max = kills_max;
+			}
+
+			_save.data.bombs = Ship.bombs;
+			_save.data.lives = Ship.lives;
 		}
 	}
 }

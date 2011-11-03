@@ -391,6 +391,29 @@ package {
 			back2.x = -w / 2;
 			back2.y = -h / 2;
 
+			
+			// check achievements
+			 // kill 1
+			 if (!AchieveState.wins[0] && EndState.kills >= 1) {
+				 AchieveState.wins[0] = true;
+				 tip.show();
+			 }
+			 
+			 // kill 5
+			 if (!AchieveState.wins[1] && EndState.kills >= 5) {
+				 AchieveState.wins[1] = true;
+				 tip.show();
+			 }
+			 
+			 // kill 10
+			 if (!AchieveState.wins[2] && EndState.kills + EndState.kills_total >= 10) {
+				 trace(EndState.kills + EndState.kills_total)
+				 AchieveState.wins[2] = true;
+				 tip.show();
+			 } 
+				 
+				 
+				 
 			// check lose
 			if (!ship.exists /*|| !base.active*/){
 				//FlxG.music.volume -= 0.01;
@@ -398,6 +421,7 @@ package {
 				_timerEnd -= FlxG.elapsed;
 				if (_timerEnd < 0){
 					EndState.time = _timer - 3;
+					EndState.calc();
 					FlxG.state = new EndState();
 				}
 					//FlxG.fade.start(0xff1e150f, 2, onFade);
@@ -412,6 +436,8 @@ package {
 			 //shield.angle = ship.angle;
 			 //shield.x = ship.x + (ship.width - shield.width) / 2;
 			 //shield.y = ship.y + (ship.height - shield.height) / 2;
+			 
+
 		}
 
 		protected function overlapped(Object1:FlxObject, Object2:FlxObject):void {
@@ -460,12 +486,12 @@ package {
 		}
 
 		protected function addEnemy1():void {
-			if (_timer < 2 && _timer % 1 < _timerLast % 1){
-				_enemies.add(new EnemyBossBarrage());
+			//if (_timer < 2 && _timer % 1 < _timerLast % 1){
+				//_enemies.add(new EnemyBossBarrage());
 				//_enemies.add(new EnemyCross());
-			}
+			//}
 			
-/*
+
 			// rect
 			if (_timer < 20 && _timer % 2 < _timerLast % 2){
 				_enemies.add(new EnemyRect());
@@ -508,7 +534,7 @@ package {
 				_enemies.add(new EnemyCross());
 				_enemies.add(new EnemyCross());
 			}
-			*/
+			
 		}
 
 		protected function addEnemy2():void {

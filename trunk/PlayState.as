@@ -407,11 +407,27 @@ package {
 			 
 			 // kill 10
 			 if (!AchieveState.wins[2] && EndState.kills + EndState.kills_total >= 10) {
-				 trace(EndState.kills + EndState.kills_total)
 				 AchieveState.wins[2] = true;
 				 tip.show();
 			 } 
 				 
+			 // survive 30 sec
+			 if (!AchieveState.wins[3] && _timer >= 30) {
+				 AchieveState.wins[3] = true;
+				 tip.show();
+			 } 
+			 
+			 // survive 3 sec
+			 if (!AchieveState.wins[4] && _timer >= 3) {
+				 AchieveState.wins[4] = true;
+				 tip.show();
+			 } 
+			 
+			 // play 30 sec
+			 if (!AchieveState.wins[5] && ship.exists && EndState.time_total + _timer >= 15) {
+				 AchieveState.wins[5] = true;
+				 tip.show();
+			 } 
 				 
 				 
 			// check lose

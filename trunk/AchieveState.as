@@ -14,7 +14,13 @@ package {
 		private var btn_play:FlxButton;
 		private var btn_shop:FlxButton;
 		private var achievements:Array;
-		private var names:Array = ["first blood", "killed 5 enemies in a game", "killed 10 enemies", "d", "e", "f", "g", "h", "i", "j"];
+		private var names:Array = ["first blood", 
+								   "killed 5 enemies in a game", 
+								   "killed 10 enemies", 
+								   "survived 30 seconds", 
+								   "survived 3 seconds", 
+								   "played 15 seconds", 
+								   "g", "h", "i", "j"];
 
 		public static var wins:Array;
 

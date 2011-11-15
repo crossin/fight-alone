@@ -290,7 +290,7 @@ package {
 
 			lifeBoss = new LifeBoss();
 			add(lifeBoss);
-			
+
 			tip = new Tip();
 			tip.scrollFactor = ssf;
 			add(tip);
@@ -391,45 +391,63 @@ package {
 			back2.x = -w / 2;
 			back2.y = -h / 2;
 
-			
+
 			// check achievements
-			 // kill 1
-			 if (!AchieveState.wins[0] && EndState.kills >= 1) {
-				 AchieveState.wins[0] = true;
-				 tip.show();
-			 }
-			 
-			 // kill 5
-			 if (!AchieveState.wins[1] && EndState.kills >= 5) {
-				 AchieveState.wins[1] = true;
-				 tip.show();
-			 }
-			 
-			 // kill 10
-			 if (!AchieveState.wins[2] && EndState.kills + EndState.kills_total >= 10) {
-				 AchieveState.wins[2] = true;
-				 tip.show();
-			 } 
-				 
-			 // survive 30 sec
-			 if (!AchieveState.wins[3] && _timer >= 30) {
-				 AchieveState.wins[3] = true;
-				 tip.show();
-			 } 
-			 
-			 // survive 3 sec
-			 if (!AchieveState.wins[4] && _timer >= 3) {
-				 AchieveState.wins[4] = true;
-				 tip.show();
-			 } 
-			 
-			 // play 30 sec
-			 if (!AchieveState.wins[5] && ship.exists && EndState.time_total + _timer >= 15) {
-				 AchieveState.wins[5] = true;
-				 tip.show();
-			 } 
-				 
-				 
+			// kill 1
+			if (!AchieveState.wins[0] && EndState.kills >= 1){
+				AchieveState.wins[0] = true;
+				tip.show();
+			}
+
+			// kill 5
+			if (!AchieveState.wins[1] && EndState.kills >= 5){
+				AchieveState.wins[1] = true;
+				tip.show();
+			}
+
+			// kill 10
+			if (!AchieveState.wins[2] && EndState.kills + EndState.kills_total >= 10){
+				AchieveState.wins[2] = true;
+				tip.show();
+			}
+
+			// survive 30 sec
+			if (!AchieveState.wins[3] && _timer >= 30){
+				AchieveState.wins[3] = true;
+				tip.show();
+			}
+
+			// survive 3 sec
+			if (!AchieveState.wins[4] && _timer >= 3){
+				AchieveState.wins[4] = true;
+				tip.show();
+			}
+
+			// play 30 sec
+			if (!AchieveState.wins[5] && ship.exists && EndState.time_total + _timer >= 15){
+				AchieveState.wins[5] = true;
+				tip.show();
+			}
+
+			// 100 points
+			if (!AchieveState.wins[6] && EndState.score >= 100){
+				AchieveState.wins[6] = true;
+				tip.show();
+			}
+
+			// 200 points
+			if (!AchieveState.wins[7] && EndState.score >= 200){
+				AchieveState.wins[7] = true;
+				tip.show();
+			}
+
+			// 500 points
+			if (!AchieveState.wins[8] && EndState.score >= 500){
+				AchieveState.wins[8] = true;
+				tip.show();
+			}
+
+
 			// check lose
 			if (!ship.exists /*|| !base.active*/){
 				//FlxG.music.volume -= 0.01;
@@ -452,7 +470,7 @@ package {
 			 //shield.angle = ship.angle;
 			 //shield.x = ship.x + (ship.width - shield.width) / 2;
 			 //shield.y = ship.y + (ship.height - shield.height) / 2;
-			 
+
 
 		}
 
@@ -503,10 +521,10 @@ package {
 
 		protected function addEnemy1():void {
 			//if (_timer < 2 && _timer % 1 < _timerLast % 1){
-				//_enemies.add(new EnemyBossBarrage());
-				//_enemies.add(new EnemyCross());
+			//_enemies.add(new EnemyBossBarrage());
+			//_enemies.add(new EnemyCross());
 			//}
-			
+
 
 			// rect
 			if (_timer < 20 && _timer % 2 < _timerLast % 2){
@@ -550,7 +568,7 @@ package {
 				_enemies.add(new EnemyCross());
 				_enemies.add(new EnemyCross());
 			}
-			
+
 		}
 
 		protected function addEnemy2():void {

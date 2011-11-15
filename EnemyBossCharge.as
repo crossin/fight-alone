@@ -26,7 +26,7 @@ package {
 			ship = (FlxG.state as PlayState).ship;
 
 			//if (level == 0) {
-			PlayState.lifeBoss.start(health);
+			PlayState.lifeBoss.start(health, 2);
 			//}
 
 			_timerInterval = 5;

@@ -447,6 +447,42 @@ package {
 				tip.show();
 			}
 
+			// speed 5
+			if (!AchieveState.wins[12] && Ship.speed == 5){
+				AchieveState.wins[12] = true;
+				tip.show();
+			}
+
+			// rate 5
+			if (!AchieveState.wins[13] && Ship.rate == 5){
+				AchieveState.wins[13] = true;
+				tip.show();
+			}
+
+			// power 5
+			if (!AchieveState.wins[14] && Ship.power == 5){
+				AchieveState.wins[14] = true;
+				tip.show();
+			}
+
+			// bomb 5
+			if (!AchieveState.wins[15] && Ship.bombs == 5){
+				AchieveState.wins[15] = true;
+				tip.show();
+			}
+
+			// lives 5
+			if (!AchieveState.wins[16] && Ship.lives == 5){
+				AchieveState.wins[16] = true;
+				tip.show();
+			}
+
+			// all
+			if (!AchieveState.wins[17] && Ship.speed == 5 && Ship.rate == 5 && Ship.power == 5 && Ship.bombs == 5 && Ship.lives == 5){
+				AchieveState.wins[17] = true;
+				tip.show();
+			}
+
 
 			// check lose
 			if (!ship.exists /*|| !base.active*/){
@@ -520,10 +556,12 @@ package {
 		}
 
 		protected function addEnemy1():void {
-			//if (_timer < 2 && _timer % 1 < _timerLast % 1){
-			//_enemies.add(new EnemyBossBarrage());
-			//_enemies.add(new EnemyCross());
-			//}
+			if (_timer < 2 && _timer % 1 < _timerLast % 1){
+				//_enemies.add(new EnemyBossSplinter());
+				//_enemies.add(new EnemyBossCharge());
+				//_enemies.add(new EnemyBossBarrage());
+				//_enemies.add(new EnemyCross());
+			}
 
 
 			// rect

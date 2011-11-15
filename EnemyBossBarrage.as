@@ -34,7 +34,7 @@ package {
 
 
 			//if (level == 0) {
-			PlayState.lifeBoss.start(health + 200);
+			PlayState.lifeBoss.start(health + 200, 3);
 			//}
 			phase = 0;
 			numGun = 0;

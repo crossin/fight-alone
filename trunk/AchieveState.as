@@ -20,7 +20,10 @@ package {
 								   "survived 30 seconds", 
 								   "survived 3 seconds", 
 								   "played 15 seconds", 
-								   "g", "h", "i", "j"];
+								   "got 100 points", 
+								   "got 200 points", 
+								   "got 500 points", 
+								   "j"];
 
 		public static var wins:Array;
 

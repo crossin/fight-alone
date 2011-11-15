@@ -14,16 +14,7 @@ package {
 		private var btn_play:FlxButton;
 		private var btn_shop:FlxButton;
 		private var achievements:Array;
-		private var names:Array = ["first blood", 
-								   "killed 5 enemies in a game", 
-								   "killed 10 enemies", 
-								   "survived 30 seconds", 
-								   "survived 3 seconds", 
-								   "played 15 seconds", 
-								   "got 100 points", 
-								   "got 200 points", 
-								   "got 500 points", 
-								   "j"];
+		private var names:Array = ["first blood", "killed 5 enemies in a game", "killed 10 enemies", "survived 30 seconds", "survived 3 seconds", "played 15 seconds", "got 100 points", "got 200 points", "got 500 points", "killed boss 1", "killed boss 2", "killed final boss", "full speed", "full fire rate", "full power", "max bombs", "max lives", "the most powerful ship"];
 
 		public static var wins:Array;
 
@@ -63,15 +54,16 @@ package {
 			btn_shop.loadText(t1, t2);
 			add(btn_shop);
 
-			achievements = new Array(10);
-			for (var i:int = 0; i < 10; i++){
-				achievements[i] = new Achievement(names[i], 0, 100 + i * 20);
+			var len:int = names.length;
+			achievements = new Array(len);
+			for (var i:int = 0; i < len; i++){
+				achievements[i] = new Achievement(names[i], i % 2 * 320, 100 + int(i / 2) * 30);
 				if (wins[i]){
 					achievements[i].achieve();
 				}
 				add(achievements[i]);
 			}
-			
+
 			FlxG.mouse.show(ImgCursor);
 		}
 

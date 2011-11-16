@@ -41,8 +41,10 @@ package {
 		public function decrease(value:int):void {
 			life -= value;
 			bar.scale.x = life / lifeMax;
-			if (life <= 0){
+			if (visible && life <= 0){
 				visible = false;
+				(FlxG.state as PlayState).step ++;
+				(FlxG.state as PlayState)._timerBegin = (FlxG.state as PlayState)._timer;
 				if (!AchieveState.wins[9] && index == 1){
 					AchieveState.wins[9] = true;
 					(FlxG.state as PlayState).tip.show();

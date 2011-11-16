@@ -25,7 +25,7 @@ package {
 			angle = FlxU.random() * 360;
 			
 			if (level == 0) {
-				PlayState.lifeBoss.start(127, 1);
+				PlayState.lifeBoss.start(127, 2);
 			}
 			//_timer = 0;
 			//ship = (FlxG.state as PlayState).ship;

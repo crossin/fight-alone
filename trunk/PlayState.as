@@ -87,10 +87,11 @@ package {
 		//protected var bonuses:FlxGroup;
 		//protected var base:FlxSprite;
 		//protected var _boss:FlxSprite;
-		protected var _timer:Number;
-		protected var _timerLast:Number;
-		protected var _timerInterval:Number;
-		protected var _timerEnd:Number;
+		public var _timer:Number;
+		public var _timerLast:Number;
+		public var _timerInterval:Number;
+		public var _timerEnd:Number;
+		public var _timerBegin:Number;
 		//protected var enemyCount:uint;
 		//protected var progress:Number;
 		//protected var hasWin:Boolean;
@@ -103,6 +104,7 @@ package {
 		protected var back1:FlxSprite;
 		protected var back2:FlxSprite;
 		protected var back3:FlxSprite;
+		
 
 		public static var lifeBoss:LifeBoss;
 
@@ -110,6 +112,7 @@ package {
 		public var bombs:Array;
 		public var lives:Array;
 		public var tip:Tip;
+		public var step:int;
 
 		// blur
 		private const _blur:Number = 0.3;
@@ -304,6 +307,9 @@ package {
 			_timerLast = 0;
 			_timerInterval = 5;
 			_timerEnd = 3;
+			_timerBegin = 0;
+			
+			step = 1;
 
 			//EndState.score = 0;
 			EndState.kills = 0;
@@ -376,11 +382,7 @@ package {
 
 			// add enemies
 			_timer += FlxG.elapsed;
-			if (_timer < 120){
-				addEnemy1();
-			} else {
-				addEnemy2();
-			}
+			this["addEnemy".concat(step)]();
 			_timerLast = _timer;
 
 			// move background
@@ -556,25 +558,46 @@ package {
 		}
 
 		protected function addEnemy1():void {
-			if (_timer < 2 && _timer % 1 < _timerLast % 1){
+			//if (_timer < 2 && _timer % 1 < _timerLast % 1){
 				//_enemies.add(new EnemyBossSplinter());
 				//_enemies.add(new EnemyBossCharge());
 				//_enemies.add(new EnemyBossBarrage());
 				//_enemies.add(new EnemyCross());
-			}
+			//}
 
 
 			// rect
-			if (_timer < 20 && _timer % 2 < _timerLast % 2){
-				_enemies.add(new EnemyRect());
+			if (_timer < 30 && _timer % 2 < _timerLast % 2){
 				_enemies.add(new EnemyRect());
 			}
 
 			// shuttle
-			if (_timer > 20 && _timer < 40 && _timer % 3 < _timerLast % 3){
-				_enemies.add(new EnemyShuttle());
+			if (_timer > 30 && _timer < 60 && _timer % 2 < _timerLast % 2){
 				_enemies.add(new EnemyShuttle());
 			}
+			
+			// cross
+			if (_timer > 60 && _timerLast <= 60) {
+				_enemies.add(new EnemyCross());
+				_enemies.add(new EnemyCross());
+			}
+			
+			if (_timer > 60 && _timer < 90 && _timer % 3 < _timerLast % 3) {
+				_enemies.add(new EnemyRect());
+				_enemies.add(new EnemyShuttle());
+			}
+			
+			// boss 1
+			if (_timer > 90 && _timerLast <= 90) {
+				_enemies.add(new EnemyBossCharge());
+			}
+			
+			if (_timer > 90 && _timer % 4 < _timerLast % 4){
+				_enemies.add(new EnemyRect());
+				_enemies.add(new EnemyShuttle());
+			}
+			
+/*
 			// circle
 			if (_timer > 40 && _timer < 60 && _timer % 3 < _timerLast % 3){
 				_enemies.add(new EnemyCircle());
@@ -606,7 +629,8 @@ package {
 				_enemies.add(new EnemyCross());
 				_enemies.add(new EnemyCross());
 			}
-
+*/
+			
 		}
 
 		protected function addEnemy2():void {

@@ -488,7 +488,7 @@ package {
 			}
 
 
-			_save.erase();
+			//_save.erase();
 		}
 
 		//private function onLevels():void {

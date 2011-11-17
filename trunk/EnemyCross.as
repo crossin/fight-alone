@@ -16,7 +16,7 @@ package {
 		public function EnemyCross(){
 			super(ImgEnemy);
 			gibs = PlayState.gibsCross;
-			score = 100;
+			score = 200;
 			health = 30;
 			scraps = (FlxG.state as PlayState)._scraps.members;
 		}

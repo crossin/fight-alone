@@ -104,7 +104,7 @@ package {
 		protected var back1:FlxSprite;
 		protected var back2:FlxSprite;
 		protected var back3:FlxSprite;
-		
+
 
 		public static var lifeBoss:LifeBoss;
 
@@ -308,8 +308,8 @@ package {
 			_timerInterval = 5;
 			_timerEnd = 3;
 			_timerBegin = 0;
-			
-			step = 1;
+
+			step = 4;
 
 			//EndState.score = 0;
 			EndState.kills = 0;
@@ -341,6 +341,7 @@ package {
 			_helper.alpha = _blur;
 
 			FlxG.playMusic(SndBgm, 0.7);
+
 		}
 
 		override public function update():void {
@@ -559,10 +560,10 @@ package {
 
 		protected function addEnemy1():void {
 			//if (_timer < 2 && _timer % 1 < _timerLast % 1){
-				//_enemies.add(new EnemyBossSplinter());
-				//_enemies.add(new EnemyBossCharge());
-				//_enemies.add(new EnemyBossBarrage());
-				//_enemies.add(new EnemyCross());
+			//_enemies.add(new EnemyBossSplinter());
+			//_enemies.add(new EnemyBossCharge());
+			//_enemies.add(new EnemyBossBarrage());
+			//_enemies.add(new EnemyCross());
 			//}
 
 
@@ -575,65 +576,151 @@ package {
 			if (_timer > 30 && _timer < 60 && _timer % 2 < _timerLast % 2){
 				_enemies.add(new EnemyShuttle());
 			}
-			
+
 			// cross
-			if (_timer > 60 && _timerLast <= 60) {
+			if (_timer > 60 && _timerLast <= 60){
 				_enemies.add(new EnemyCross());
 				_enemies.add(new EnemyCross());
 			}
-			
-			if (_timer > 60 && _timer < 90 && _timer % 3 < _timerLast % 3) {
+
+			if (_timer > 60 && _timer < 90 && _timer % 3 < _timerLast % 3){
 				_enemies.add(new EnemyRect());
 				_enemies.add(new EnemyShuttle());
 			}
-			
+
 			// boss 1
-			if (_timer > 90 && _timerLast <= 90) {
+			if (_timer > 90 && _timerLast <= 90){
 				_enemies.add(new EnemyBossCharge());
 			}
-			
+
 			if (_timer > 90 && _timer % 4 < _timerLast % 4){
 				_enemies.add(new EnemyRect());
 				_enemies.add(new EnemyShuttle());
 			}
-			
-/*
+
+		/*
+		   // circle
+		   if (_timer > 40 && _timer < 60 && _timer % 3 < _timerLast % 3){
+		   _enemies.add(new EnemyCircle());
+		   _enemies.add(new EnemyCircle());
+		   }
+		   // dart
+		   if (_timer > 60 && _timer < 80 && _timer % 4 < _timerLast % 4){
+		   _enemies.add(new EnemyDart(0));
+		   _enemies.add(new EnemyDart(1));
+		   _enemies.add(new EnemyDart(2));
+		   _enemies.add(new EnemyDart(3));
+		   }
+		   // luna
+		   if (_timer > 80 && _timer < 100 && _timer % 3 < _timerLast % 3){
+		   _enemies.add(new EnemyLuna());
+		   _enemies.add(new EnemyLuna());
+		   }
+		   // arrow
+		   if (_timer % 30 < _timerLast % 30){
+		   for (var i:int = 0; i < 22; i++){
+		   _enemies.add(new EnemyArrow(2, i));
+		   }
+		   for (i = 0; i < 16; i++){
+		   _enemies.add(new EnemyArrow(3, i));
+		   }
+		   }
+		   // cross
+		   if (_timer % 50 < _timerLast % 50){
+		   _enemies.add(new EnemyCross());
+		   _enemies.add(new EnemyCross());
+		   }
+		 */
+
+		}
+
+		protected function addEnemy2():void {
+			// luna
+			if (_timer - _timerBegin < 30 && _timer % 1 < _timerLast % 1){
+				_enemies.add(new EnemyLuna());
+			}
+
+			// arrow
+			if (_timer - _timerBegin > 30 && _timer - _timerBegin < 60 && _timer % 7 < _timerLast % 7){
+				for (var i:int = 0; i < 22; i++){
+					_enemies.add(new EnemyArrow(0, i));
+					_enemies.add(new EnemyArrow(2, i));
+				}
+				for (i = 0; i < 16; i++){
+					_enemies.add(new EnemyArrow(1, i));
+					_enemies.add(new EnemyArrow(3, i));
+				}
+			}
+
+			// cross
+			if (_timer - _timerBegin > 60 && _timerLast - _timerBegin <= 60){
+				_enemies.add(new EnemyCross());
+				_enemies.add(new EnemyCross());
+			}
+
+			if (_timer - _timerBegin > 60 && _timer % 3 < _timerLast % 3){
+				_enemies.add(new EnemyLuna());
+			}
+
+			if (_timer - _timerBegin > 60 && _timer % 15 < _timerLast % 15){
+				for (i= 0; i < 22; i++){
+					_enemies.add(new EnemyArrow(0, i));
+					_enemies.add(new EnemyArrow(2, i));
+				}
+				for (i = 0; i < 16; i++){
+					_enemies.add(new EnemyArrow(1, i));
+					_enemies.add(new EnemyArrow(3, i));
+				}
+			}
+
+			// boss 2
+			if (_timer - _timerBegin > 90 && _timerLast - _timerBegin <= 90){
+				_enemies.add(new EnemyBossSplinter());
+			}
+
+
+		}
+
+		protected function addEnemy3():void {
 			// circle
-			if (_timer > 40 && _timer < 60 && _timer % 3 < _timerLast % 3){
-				_enemies.add(new EnemyCircle());
+			if (_timer - _timerBegin < 30 && _timer % 1 < _timerLast % 1){
 				_enemies.add(new EnemyCircle());
 			}
+
 			// dart
-			if (_timer > 60 && _timer < 80 && _timer % 4 < _timerLast % 4){
+			if (_timer - _timerBegin > 30 && _timer - _timerBegin < 60 && _timer % 3 < _timerLast % 3){
 				_enemies.add(new EnemyDart(0));
 				_enemies.add(new EnemyDart(1));
 				_enemies.add(new EnemyDart(2));
 				_enemies.add(new EnemyDart(3));
 			}
-			// luna
-			if (_timer > 80 && _timer < 100 && _timer % 3 < _timerLast % 3){
-				_enemies.add(new EnemyLuna());
-				_enemies.add(new EnemyLuna());
-			}
-			// arrow
-			if (_timer % 30 < _timerLast % 30){
-				for (var i:int = 0; i < 22; i++){
-					_enemies.add(new EnemyArrow(2, i));
-				}
-				for (i = 0; i < 16; i++){
-					_enemies.add(new EnemyArrow(3, i));
-				}
-			}
+
 			// cross
-			if (_timer % 50 < _timerLast % 50){
+			if (_timer - _timerBegin > 60 && _timerLast - _timerBegin <= 60){
 				_enemies.add(new EnemyCross());
 				_enemies.add(new EnemyCross());
 			}
-*/
-			
+
+			if (_timer - _timerBegin > 60 && _timer % 2 < _timerLast % 2){
+				_enemies.add(new EnemyCircle());
+
+			}
+
+			if (_timer - _timerBegin > 60 && _timer % 5 < _timerLast % 5){
+				_enemies.add(new EnemyDart(0));
+				_enemies.add(new EnemyDart(1));
+				_enemies.add(new EnemyDart(2));
+				_enemies.add(new EnemyDart(3));
+
+			}
+
+			// boss 3
+			if (_timer - _timerBegin > 90 && _timerLast - _timerBegin <= 90){
+				_enemies.add(new EnemyBossBarrage());
+			}
 		}
 
-		protected function addEnemy2():void {
+		protected function addEnemy4():void {
 			// rect
 			if (_timer % 2 < _timerLast % 2){
 				_enemies.add(new EnemyRect());
@@ -682,6 +769,7 @@ package {
 			if (_timer % 15 < _timerLast % 15){
 				_enemies.add(new EnemyCross());
 			}
+
 		}
 
 		protected function makeEmitter():void {

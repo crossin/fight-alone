@@ -25,7 +25,7 @@ package {
 		public function EnemyBossBarrage(){
 			super(ImgEnemy, 550, 400);
 			gibs = PlayState.gibsBarrage;
-			score = 5;
+			score = 1000;
 			health = 200;
 
 			ship = (FlxG.state as PlayState).ship;

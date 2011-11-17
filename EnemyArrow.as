@@ -46,7 +46,7 @@ package {
 					break;
 			}
 			gibs = PlayState.gibsArrow;
-			score = 20;
+			score = 5;
 		}
 
 		override protected function start():void {

@@ -16,8 +16,8 @@ package {
 		public function EnemyBossCharge(){
 			super(null);
 			gibs = PlayState.gibsCharge;
-			score = 5;
-			health = 200;
+			score = 500;
+			health = 100;
 
 			loadGraphic(ImgEnemy, true, false, 96, 64);
 			addAnimation("action", [0, 1, 2], 15);
@@ -38,7 +38,7 @@ package {
 		}
 
 		override public function update():void {
-			_timerInterval = (health < 100) ? 3 : _timerInterval;
+			_timerInterval = (health < 50) ? 3 : _timerInterval;
 			if (solid){
 				_timer -= FlxG.elapsed;
 				_timer = (_timer < 0) ? _timerInterval : _timer;

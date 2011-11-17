@@ -14,7 +14,7 @@ package {
 		private var btn_play:FlxButton;
 		private var btn_shop:FlxButton;
 		private var achievements:Array;
-		private var names:Array = ["first blood", "killed 5 enemies in a game", "killed 10 enemies in total", "survived 30 seconds", "survived 3 seconds", "played 15 seconds", "got 100 points", "got 200 points", "got 500 points", "killed boss 1", "killed boss 2", "killed final boss", "full speed", "full fire rate", "full power", "max bombs", "max lives", "the most powerful ship"];
+		private var names:Array = ["first blood", "killed 500 enemies in a game", "killed 1000 enemies in total", "survived 100 seconds", "survived 200 seconds", "played 15 minutes", "got 1000 points", "got 10000 points", "got 50000 points", "killed boss 1", "killed boss 2", "killed final boss", "full speed", "full fire rate", "full power", "max bombs", "max lives", "the most powerful ship"];
 
 		public static var wins:Array;
 

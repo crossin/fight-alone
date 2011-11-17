@@ -33,11 +33,11 @@ package {
 		public static var kills_max:Number;
 		public static var kills_total:Number;
 
-		private const price_speed:Array = [100, 200, 300, 400, 500];
-		private const price_rate:Array = [100, 200, 300, 400, 500];
-		private const price_power:Array = [100, 200, 300, 400, 500];
-		private const price_bombs:Array = [100, 200, 300, 400, 500];
-		private const price_lives:Array = [100, 200, 300, 400, 500];
+		private const price_speed:Array = [500, 1000, 2000, 5000, 10000];
+		private const price_rate:Array = [500, 1000, 2000, 5000, 10000];
+		private const price_power:Array = [500, 1000, 2000, 5000, 10000];
+		private const price_bombs:Array = [100, 200, 500, 1000, 2000];
+		private const price_lives:Array = [100, 200, 500, 1000, 2000];
 
 		private var btn_speed:FlxButton;
 		private var btn_rate:FlxButton;

@@ -309,7 +309,7 @@ package {
 			_timerEnd = 3;
 			_timerBegin = 0;
 
-			step = 4;
+			step = 1;
 
 			//EndState.score = 0;
 			EndState.kills = 0;
@@ -402,50 +402,50 @@ package {
 				tip.show();
 			}
 
-			// kill 5
-			if (!AchieveState.wins[1] && EndState.kills >= 5){
+			// kill 500
+			if (!AchieveState.wins[1] && EndState.kills >= 500){
 				AchieveState.wins[1] = true;
 				tip.show();
 			}
 
-			// kill 10
-			if (!AchieveState.wins[2] && EndState.kills + EndState.kills_total >= 10){
+			// kill 1000
+			if (!AchieveState.wins[2] && EndState.kills + EndState.kills_total >= 1000){
 				AchieveState.wins[2] = true;
 				tip.show();
 			}
 
-			// survive 30 sec
-			if (!AchieveState.wins[3] && _timer >= 30){
+			// survive 100 sec
+			if (!AchieveState.wins[3] && _timer >= 100){
 				AchieveState.wins[3] = true;
 				tip.show();
 			}
 
-			// survive 3 sec
-			if (!AchieveState.wins[4] && _timer >= 3){
+			// survive 200 sec
+			if (!AchieveState.wins[4] && _timer >= 200){
 				AchieveState.wins[4] = true;
 				tip.show();
 			}
 
-			// play 30 sec
-			if (!AchieveState.wins[5] && ship.exists && EndState.time_total + _timer >= 15){
+			// play 15 min
+			if (!AchieveState.wins[5] && ship.exists && EndState.time_total + _timer >= 900){
 				AchieveState.wins[5] = true;
 				tip.show();
 			}
 
-			// 100 points
-			if (!AchieveState.wins[6] && EndState.score >= 100){
+			// 1000 points
+			if (!AchieveState.wins[6] && EndState.score >= 1000){
 				AchieveState.wins[6] = true;
 				tip.show();
 			}
 
-			// 200 points
-			if (!AchieveState.wins[7] && EndState.score >= 200){
+			// 10000 points
+			if (!AchieveState.wins[7] && EndState.score >= 10000){
 				AchieveState.wins[7] = true;
 				tip.show();
 			}
 
-			// 500 points
-			if (!AchieveState.wins[8] && EndState.score >= 500){
+			// 50000 points
+			if (!AchieveState.wins[8] && EndState.score >= 50000){
 				AchieveState.wins[8] = true;
 				tip.show();
 			}
@@ -568,35 +568,31 @@ package {
 
 
 			// rect
-			if (_timer < 30 && _timer % 2 < _timerLast % 2){
+			if (_timer < 20 && _timer % 2 < _timerLast % 2){
 				_enemies.add(new EnemyRect());
 			}
 
 			// shuttle
-			if (_timer > 30 && _timer < 60 && _timer % 2 < _timerLast % 2){
+			if (_timer >= 20 && _timer < 40 && _timer % 2 < _timerLast % 2){
 				_enemies.add(new EnemyShuttle());
 			}
 
 			// cross
-			if (_timer > 60 && _timerLast <= 60){
+			if (_timer > 40 && _timerLast <= 40){
 				_enemies.add(new EnemyCross());
 				_enemies.add(new EnemyCross());
 			}
 
-			if (_timer > 60 && _timer < 90 && _timer % 3 < _timerLast % 3){
+			if (_timer >= 40 && _timer % 3 < _timerLast % 3){
 				_enemies.add(new EnemyRect());
 				_enemies.add(new EnemyShuttle());
 			}
 
 			// boss 1
-			if (_timer > 90 && _timerLast <= 90){
+			if (_timer > 60 && _timerLast <= 60){
 				_enemies.add(new EnemyBossCharge());
 			}
 
-			if (_timer > 90 && _timer % 4 < _timerLast % 4){
-				_enemies.add(new EnemyRect());
-				_enemies.add(new EnemyShuttle());
-			}
 
 		/*
 		   // circle
@@ -636,12 +632,12 @@ package {
 
 		protected function addEnemy2():void {
 			// luna
-			if (_timer - _timerBegin < 30 && _timer % 1 < _timerLast % 1){
+			if (_timer - _timerBegin < 20 && _timer % 1 < _timerLast % 1){
 				_enemies.add(new EnemyLuna());
 			}
 
 			// arrow
-			if (_timer - _timerBegin > 30 && _timer - _timerBegin < 60 && _timer % 7 < _timerLast % 7){
+			if (_timer - _timerBegin >= 20 && _timer - _timerBegin < 40 && _timer % 11 < _timerLast % 11){
 				for (var i:int = 0; i < 22; i++){
 					_enemies.add(new EnemyArrow(0, i));
 					_enemies.add(new EnemyArrow(2, i));
@@ -653,16 +649,16 @@ package {
 			}
 
 			// cross
-			if (_timer - _timerBegin > 60 && _timerLast - _timerBegin <= 60){
+			if (_timer - _timerBegin > 40 && _timerLast - _timerBegin <= 40){
 				_enemies.add(new EnemyCross());
 				_enemies.add(new EnemyCross());
 			}
 
-			if (_timer - _timerBegin > 60 && _timer % 3 < _timerLast % 3){
+			if (_timer - _timerBegin >= 40 && _timer % 3 < _timerLast % 3){
 				_enemies.add(new EnemyLuna());
 			}
 
-			if (_timer - _timerBegin > 60 && _timer % 15 < _timerLast % 15){
+			if (_timer - _timerBegin >= 40 && _timer % 23 < _timerLast % 23){
 				for (i= 0; i < 22; i++){
 					_enemies.add(new EnemyArrow(0, i));
 					_enemies.add(new EnemyArrow(2, i));
@@ -674,7 +670,7 @@ package {
 			}
 
 			// boss 2
-			if (_timer - _timerBegin > 90 && _timerLast - _timerBegin <= 90){
+			if (_timer - _timerBegin > 60 && _timerLast - _timerBegin <= 60){
 				_enemies.add(new EnemyBossSplinter());
 			}
 
@@ -683,12 +679,12 @@ package {
 
 		protected function addEnemy3():void {
 			// circle
-			if (_timer - _timerBegin < 30 && _timer % 1 < _timerLast % 1){
+			if (_timer - _timerBegin < 20 && _timer % 1 < _timerLast % 1){
 				_enemies.add(new EnemyCircle());
 			}
 
 			// dart
-			if (_timer - _timerBegin > 30 && _timer - _timerBegin < 60 && _timer % 3 < _timerLast % 3){
+			if (_timer - _timerBegin >= 20 && _timer - _timerBegin < 40 && _timer % 3 < _timerLast % 3){
 				_enemies.add(new EnemyDart(0));
 				_enemies.add(new EnemyDart(1));
 				_enemies.add(new EnemyDart(2));
@@ -696,17 +692,17 @@ package {
 			}
 
 			// cross
-			if (_timer - _timerBegin > 60 && _timerLast - _timerBegin <= 60){
+			if (_timer - _timerBegin > 40 && _timerLast - _timerBegin <= 40){
 				_enemies.add(new EnemyCross());
 				_enemies.add(new EnemyCross());
 			}
 
-			if (_timer - _timerBegin > 60 && _timer % 2 < _timerLast % 2){
+			if (_timer - _timerBegin >= 40 && _timer % 2 < _timerLast % 2){
 				_enemies.add(new EnemyCircle());
 
 			}
 
-			if (_timer - _timerBegin > 60 && _timer % 5 < _timerLast % 5){
+			if (_timer - _timerBegin >= 40 && _timer % 5 < _timerLast % 5){
 				_enemies.add(new EnemyDart(0));
 				_enemies.add(new EnemyDart(1));
 				_enemies.add(new EnemyDart(2));
@@ -715,7 +711,7 @@ package {
 			}
 
 			// boss 3
-			if (_timer - _timerBegin > 90 && _timerLast - _timerBegin <= 90){
+			if (_timer - _timerBegin > 60 && _timerLast - _timerBegin <= 60){
 				_enemies.add(new EnemyBossBarrage());
 			}
 		}

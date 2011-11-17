@@ -18,7 +18,7 @@ package {
 			level = lvl;
 			gibs = PlayState.gibsSplinter;
 			score = 5;
-			health = 20 - level * 2;
+			health = 15 - level * 2;
 			scale.x = 1 - level * 0.1;
 			scale.y = scale.x;
 			alpha = (level > 0) ? 0.96 : 0;

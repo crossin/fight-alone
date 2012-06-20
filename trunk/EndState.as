@@ -592,11 +592,9 @@ package {
 			_save.data.score = score;
 			_save.data.wins = AchieveState.wins;
 			
-			if (score > _save.data.score){
-
-				// kong stats api
-				//FlxG.kong.API.stats.submitArray([{name: "SCORE", value: EndState.score_max}]);
-			}
+			// kong stats api
+			//FlxG.kong.API.stats.submitArray([ { name: "SCORE", value: score } ]);
+				
 			if (time > time_max){
 				time_max = time;
 				_save.data.time_max = time_max;

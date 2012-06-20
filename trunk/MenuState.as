@@ -18,7 +18,7 @@ package {
 
 		private static var _save:FlxSave;
 		private static var _loaded:Boolean = false;
-
+		
 		public function MenuState(){
 
 			var back:FlxSprite = new FlxSprite(-200, -200, ImgBack);
@@ -40,16 +40,20 @@ package {
 			add(txtReplay);
 
 
-			var txtTitle:FlxText = new FlxText(0, 150, 640, "BATTLE FRAME");
+			var txtTitle:FlxText = new FlxText(0, 130, 640, "BATTLE FRAME");
 			txtTitle.size = 64;
 			txtTitle.alignment = "center";
 			add(txtTitle);
-			var txtName:FlxText = new FlxText(0, 220, 640, "A Crossin's Game");
+			//txtTitle = new FlxText(0, 200, 640, "2");
+			//txtTitle.size = 96;
+			//txtTitle.alignment = "center";
+			//add(txtTitle);
+			var txtName:FlxText = new FlxText(0, 100, 640, "A Crossin's Game");
 			txtName.size = 16;
 			txtName.alignment = "center";
 			add(txtName);
 
-			var txtHi:FlxText = new FlxText(0, 0, 640, "HI SCORE: ".concat(FlxG.save));
+			var txtHi:FlxText = new FlxText(0, 0, 640, "SCORE: ".concat(EndState.score));
 			txtHi.size = 16;
 			txtHi.alignment = "left";
 			add(txtHi);
@@ -62,7 +66,6 @@ package {
 			delta = -0.03;
 
 			FlxG.mouse.show(ImgCursor);
-
 		}
 
 		override public function update():void {

@@ -950,8 +950,8 @@ package {
 		//}
 		//}
 
-		override public function preProcess():void {
-			screen.draw(_helper);
-		}
+		//override public function preProcess():void {
+			//screen.draw(_helper);
+		//}
 	}
 }

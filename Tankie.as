@@ -3,8 +3,8 @@ package {
 	import org.flixel.*;
 	import org.flixel.data.*;
 	import flash.events.Event;
-	import mochi.as3.MochiSocial;
-    import mochi.as3.MochiServices;
+//	import mochi.as3.MochiSocial;
+//  import mochi.as3.MochiServices;
 
 	
 	[SWF(width="640",height="480",backgroundColor="#000000")]
